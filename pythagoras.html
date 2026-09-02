@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pythagorean Numerology Calculator</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #f4f7ff, #e8edff);
+    color: #222;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+
+/* ============================
+   INPUT SECTION
+============================ */
+
+.input-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+input {
+    padding: 14px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #4b42d1;
+}
+
+
+/* ============================
+   RESULT CARDS
+============================ */
+
+.results {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.result-card {
+    padding: 20px 10px;
+    text-align: center;
+    background: #f7f8ff;
+    border-radius: 15px;
+    border: 1px solid #e0e2ff;
+}
+
+.result-title {
+    font-size: 14px;
+    color: #666;
+    min-height: 42px;
+}
+
+.result-number {
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #4b42d1;
+    word-break: break-word;
+}
+
+
+/* ============================
+   SECTION TITLE
+============================ */
+
+.section-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 30px 0 20px;
+}
+
+
+/* ============================
+   PYTHAGOREAN MATRIX
+============================ */
+
+.matrix-container {
+    max-width: 650px;
+    margin: auto;
+}
+
+.matrix {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 3px solid #333;
+}
+
+.matrix-cell {
+    height: 160px;
+    border: 1px solid #777;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.matrix-number {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #777;
+}
+
+
+/*
+   ONLY SINGLE DIGIT VALUES
+   ARE SHOWN INSIDE MATRIX
+*/
+
+.matrix-values {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 25px 10px 10px;
+}
+
+.matrix-value {
+    font-size: 32px;
+    font-weight: bold;
+    color: #4b42d1;
+    background: #f0efff;
+    border-radius: 10px;
+    padding: 8px 14px;
+}
+
+
+/* ============================
+   ALPHABET CHART
+============================ */
+
+.alphabet-chart {
+    margin-top: 40px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background: #4b42d1;
+    color: white;
+}
+
+
+/* ============================
+   MOBILE
+============================ */
+
+@media(max-width:800px) {
+
+    .input-section {
+        grid-template-columns: 1fr;
+    }
+
+    .results {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .matrix-cell {
+        height: 130px;
+    }
+
+    .matrix-value {
+        font-size: 25px;
+    }
+
+}
+
+
+@media(max-width:450px) {
+
+    .results {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .matrix-cell {
+        height: 110px;
+    }
+
+    .matrix-number {
+        font-size: 14px;
+    }
+
+    .matrix-value {
+        font-size: 21px;
+        padding: 6px 10px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🔢 Pythagorean Numerology Calculator</h1>
+
+<p class="subtitle">
+Calculate your Heart's Desire, Expression, Life Path and Maturity Numbers
+</p>
+
+<!-- ============================
+     INPUTS
+============================ -->
+
+<div class="input-section">
+
+
+<div class="input-box">
+
+    <label>Enter Full Name</label>
+
+    <input
+        type="text"
+        id="nameInput"
+        placeholder="Enter your full name"
+        oninput="calculateNumerology()"
+    >
+
+</div>
+
+
+<div class="input-box">
+
+    <label>Select Date of Birth</label>
+
+    <input
+        type="date"
+        id="dobInput"
+        onchange="calculateNumerology()"
+    >
+
+</div>
+
+</div>
+
+<!-- ============================
+     RESULTS
+============================ -->
+
+<div class="results">
+
+
+<div class="result-card">
+
+    <div class="result-title">
+        ❤️ Heart's Desire Number
+    </div>
+
+    <div
+        class="result-number"
+        id="heartDesire"
+    >
+        -
+    </div>
+
+</div>
+
+
+<div class="result-card">
+
+    <div class="result-title">
+        🔢 Expression Number
+    </div>
+
+    <div
+        class="result-number"
+        id="expressionNumber"
+    >
+        -
+    </div>
+
+</div>
+
+
+<div class="result-card">
+
+    <div class="result-title">
+        🎂 Life Path Number
+    </div>
+
+    <div
+        class="result-number"
+        id="lifePath"
+    >
+        -
+    </div>
+
+</div>
+
+
+<div class="result-card">
+
+    <div class="result-title">
+        ✨ Maturity Number
+    </div>
+
+    <div
+        class="result-number"
+        id="maturityNumber"
+    >
+        -
+    </div>
+
+</div>
+
+</div>
+
+<!-- ============================
+     PYTHAGOREAN MATRIX
+============================ -->
+
+<div class="section-title">
+
+Pythagorean Numerology Chart
+
+</div>
+
+<div class="matrix-container">
+
+<div class="matrix">
+
+<!-- ROW 1 : 3 6 9 -->
+
+<div class="matrix-cell">
+
+
+<div class="matrix-number">3</div>
+
+<div
+    class="matrix-values"
+    id="cell3"
+></div>
+
+
+</div>
+
+<div class="matrix-cell">
+
+
+<div class="matrix-number">6</div>
+
+<div
+    class="matrix-values"
+    id="cell6"
+></div>
+
+
+</div>
+
+<div class="matrix-cell">
+
+
+<div class="matrix-number">9</div>
+
+<div
+    class="matrix-values"
+    id="cell9"
+></div>
+
+
+</div>
+
+<!-- ROW 2 : 2 5 8 -->
+
+<div class="matrix-cell">
+
+
+<div class="matrix-number">2</div>
+
+<div
+    class="matrix-values"
+    id="cell2"
+></div>
+
+
+</div>
+
+<div class="matrix-cell">
+
+
+<div class="matrix-number">5</div>
+
+<div
+    class="matrix-values"
+    id="cell5"
+></div>
+
+
+</div>
+
+<div class="matrix-cell">
+
+
+<div class="matrix-number">8</div>
+
+<div
+    class="matrix-values"
+    id="cell8"
+></div>
+
+
+</div>
+
+<!-- ROW 3 : 1 4 7 -->
+
+<div class="matrix-cell">
+
+<div class="matrix-number">1</div>
+
+<div
+    class="matrix-values"
+    id="cell1"
+></div>
+
+
+</div>
+
+<div class="matrix-cell">
+
+
+<div class="matrix-number">4</div>
+
+<div
+    class="matrix-values"
+    id="cell4"
+></div>
+
+
+</div>
+
+<div class="matrix-cell">
+
+
+<div class="matrix-number">7</div>
+
+<div
+    class="matrix-values"
+    id="cell7"
+></div>
+
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ============================
+     ALPHABET CHART
+============================ -->
+
+<div class="section-title">
+
+Pythagorean Alphabet Chart
+
+</div>
+
+<div class="alphabet-chart">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Number</th>
+
+<th>Letters</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>1</td>
+<td>A, J, S</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>B, K, T</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>C, L, U</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>D, M, V</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>E, N, W</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>F, O, X</td>
+</tr>
+
+<tr>
+<td>7</td>
+<td>G, P, Y</td>
+</tr>
+
+<tr>
+<td>8</td>
+<td>H, Q, Z</td>
+</tr>
+
+<tr>
+<td>9</td>
+<td>I, R</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+
+/* =========================================
+   PYTHAGOREAN ALPHABET VALUES
+========================================= */
+
+const letterValues = {
+
+    A:1, J:1, S:1,
+
+    B:2, K:2, T:2,
+
+    C:3, L:3, U:3,
+
+    D:4, M:4, V:4,
+
+    E:5, N:5, W:5,
+
+    F:6, O:6, X:6,
+
+    G:7, P:7, Y:7,
+
+    H:8, Q:8, Z:8,
+
+    I:9, R:9
+
+};
+
+
+
+/* =========================================
+   REDUCE NUMBER
+========================================= */
+
+function reduceNumber(number) {
+
+    while (number > 9) {
+
+        number =
+            number
+            .toString()
+            .split("")
+            .reduce(
+                (sum, digit) =>
+                sum + parseInt(digit),
+                0
+            );
+
+    }
+
+    return number;
+
+}
+
+
+
+/* =========================================
+   SHOW CALCULATION
+
+   Example:
+
+   23 = 5
+   47 = 11 = 2
+   40 = 4
+========================================= */
+
+function formatCalculation(number) {
+
+    if (
+        number === null ||
+        number === undefined ||
+        number === 0
+    ) {
+
+        return "-";
+
+    }
+
+
+    let steps = [number];
+
+    let current = number;
+
+
+    while (current > 9) {
+
+        current =
+            current
+            .toString()
+            .split("")
+            .reduce(
+                (sum, digit) =>
+                sum + parseInt(digit),
+                0
+            );
+
+
+        steps.push(current);
+
+    }
+
+
+    return steps.join(" = ");
+
+}
+
+
+
+/* =========================================
+   LIFE PATH CALCULATION
+========================================= */
+
+function calculateLifePath(dob) {
+
+    if (!dob) {
+
+        return {
+            total: null,
+            final: null
+        };
+
+    }
+
+
+    const digits =
+        dob.replace(/-/g, "");
+
+
+    let total = 0;
+
+
+    for (
+        let digit of digits
+    ) {
+
+        total += parseInt(digit);
+
+    }
+
+
+    return {
+
+        total: total,
+
+        final: reduceNumber(total)
+
+    };
+
+}
+
+
+
+/* =========================================
+   CLEAR MATRIX
+========================================= */
+
+function resetMatrix() {
+
+    for (
+        let i = 1;
+        i <= 9;
+        i++
+    ) {
+
+        document
+            .getElementById(
+                "cell" + i
+            )
+            .innerHTML = "";
+
+    }
+
+}
+
+
+
+/* =========================================
+   PUT ONLY SINGLE DIGIT
+   INSIDE MATRIX
+========================================= */
+
+function addToMatrix(
+    finalNumber
+) {
+
+    if (
+        finalNumber === null ||
+        finalNumber === undefined
+    ) {
+
+        return;
+
+    }
+
+
+    const cell =
+        document.getElementById(
+            "cell" + finalNumber
+        );
+
+
+    if (cell) {
+
+        cell.innerHTML += `
+
+            <div class="matrix-value">
+
+                ${finalNumber}
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+/* =========================================
+   MAIN CALCULATION
+========================================= */
+
+function calculateNumerology() {
+
+
+    const name =
+        document
+        .getElementById(
+            "nameInput"
+        )
+        .value
+        .toUpperCase();
+
+
+    const dob =
+        document
+        .getElementById(
+            "dobInput"
+        )
+        .value;
+
+
+    /* CLEAR MATRIX */
+
+    resetMatrix();
+
+
+    let heartTotal = 0;
+
+    let expressionTotal = 0;
+
+
+
+    /* =====================================
+       CALCULATE NAME
+    ===================================== */
+
+    for (
+        let letter of name
+    ) {
+
+
+        if (
+            letterValues.hasOwnProperty(
+                letter
+            )
+        ) {
+
+
+            const value =
+                letterValues[letter];
+
+
+            /* EXPRESSION */
+
+            expressionTotal += value;
+
+
+            /* HEART DESIRE */
+
+            if (
+                "AEIOU".includes(
+                    letter
+                )
+            ) {
+
+                heartTotal += value;
+
+            }
+
+        }
+
+    }
+
+
+
+    /* =====================================
+       HEART DESIRE
+    ===================================== */
+
+    const heartNumber =
+
+        heartTotal > 0
+
+        ? reduceNumber(
+            heartTotal
+        )
+
+        : null;
+
+
+
+    /* =====================================
+       EXPRESSION
+    ===================================== */
+
+    const expressionNumber =
+
+        expressionTotal > 0
+
+        ? reduceNumber(
+            expressionTotal
+        )
+
+        : null;
+
+
+
+    /* =====================================
+       LIFE PATH
+    ===================================== */
+
+    const lifePath =
+        calculateLifePath(
+            dob
+        );
+
+
+
+    /* =====================================
+       MATURITY
+
+       LIFE PATH + EXPRESSION
+    ===================================== */
+
+    let maturityTotal = null;
+
+    let maturityNumber = null;
+
+
+    if (
+
+        lifePath.final !== null &&
+
+        expressionNumber !== null
+
+    ) {
+
+
+        maturityTotal =
+
+            lifePath.final +
+
+            expressionNumber;
+
+
+        maturityNumber =
+
+            reduceNumber(
+                maturityTotal
+            );
+
+    }
+
+
+
+    /* =====================================
+       DISPLAY CALCULATIONS
+    ===================================== */
+
+
+    document
+        .getElementById(
+            "heartDesire"
+        )
+        .innerText =
+
+        heartTotal > 0
+
+        ? formatCalculation(
+            heartTotal
+        )
+
+        : "-";
+
+
+
+    document
+        .getElementById(
+            "expressionNumber"
+        )
+        .innerText =
+
+        expressionTotal > 0
+
+        ? formatCalculation(
+            expressionTotal
+        )
+
+        : "-";
+
+
+
+    document
+        .getElementById(
+            "lifePath"
+        )
+        .innerText =
+
+        lifePath.total !== null
+
+        ? formatCalculation(
+            lifePath.total
+        )
+
+        : "-";
+
+
+
+    document
+        .getElementById(
+            "maturityNumber"
+        )
+        .innerText =
+
+        maturityTotal !== null
+
+        ? formatCalculation(
+            maturityTotal
+        )
+
+        : "-";
+
+
+
+    /* =====================================
+       FILL PYTHAGOREAN MATRIX
+
+       IMPORTANT:
+       ONLY FINAL SINGLE DIGITS
+       ARE PLACED IN MATRIX.
+
+       NO LABELS.
+    ===================================== */
+
+
+    addToMatrix(
+        heartNumber
+    );
+
+
+    addToMatrix(
+        expressionNumber
+    );
+
+
+    addToMatrix(
+        lifePath.final
+    );
+
+
+    addToMatrix(
+        maturityNumber
+    );
+
+
+}
+
+
+</script>
+
+</body>
+
+</html>

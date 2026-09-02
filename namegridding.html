@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Name Gridding Calculator</title>
+
+<style>
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at top left, #eef5ff 0%, transparent 35%),
+        radial-gradient(circle at top right, #f8edff 0%, transparent 35%),
+        #f4f7fb;
+    color: #20242a;
+}
+
+.container {
+    max-width: 1550px;
+    margin: auto;
+    padding: 25px;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.header {
+    background: linear-gradient(135deg, #171b2e, #343b68, #5b3c88);
+    color: white;
+    padding: 30px 25px;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 0 12px 35px rgba(36, 40, 80, 0.22);
+    margin-bottom: 22px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 34px;
+    letter-spacing: 0.5px;
+}
+
+.header p {
+    margin: 9px 0 0;
+    opacity: 0.9;
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   TABS
+   ========================================================= */
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.tab-button {
+    border: none;
+    padding: 14px 34px;
+    border-radius: 50px;
+    background: white;
+    color: #333;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+    transition: all 0.25s ease;
+}
+
+.tab-button:hover {
+    transform: translateY(-2px);
+}
+
+.tab-button.active {
+    color: white;
+    background: linear-gradient(135deg, #252b4b, #5b3c88);
+    box-shadow: 0 8px 22px rgba(65, 53, 120, 0.28);
+}
+
+
+/* =========================================================
+   CALCULATOR
+   ========================================================= */
+
+.calculator {
+    display: none;
+}
+
+.calculator.active {
+    display: block;
+}
+
+
+/* =========================================================
+   RULE BOX
+   ========================================================= */
+
+.rule-box {
+    background: white;
+    border-radius: 16px;
+    padding: 17px 20px;
+    margin-bottom: 18px;
+    border-left: 6px solid #5b3c88;
+    box-shadow: 0 6px 22px rgba(0,0,0,0.07);
+}
+
+.rule-box strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #4c3379;
+}
+
+
+/* =========================================================
+   INPUT CARD
+   ========================================================= */
+
+.input-card {
+    background: white;
+    border-radius: 18px;
+    padding: 23px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+}
+
+.input-card label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 9px;
+    font-size: 16px;
+}
+
+.name-input {
+    width: 100%;
+    border: 2px solid #d9dce5;
+    border-radius: 13px;
+    padding: 16px 18px;
+    font-size: 20px;
+    outline: none;
+    transition: 0.2s;
+    background: #fbfcff;
+}
+
+.name-input:focus {
+    border-color: #6350a5;
+    box-shadow: 0 0 0 4px rgba(99,80,165,0.10);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.button-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.action {
+    border: none;
+    padding: 11px 22px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.action:hover {
+    transform: translateY(-1px);
+}
+
+.clear-btn {
+    background: #edf0f5;
+    color: #30343a;
+}
+
+.print-btn {
+    background: linear-gradient(135deg, #252b4b, #5b3c88);
+    color: white;
+}
+
+
+/* =========================================================
+   GRID CARD
+   ========================================================= */
+
+.grid-card {
+    background: white;
+    border-radius: 18px;
+    padding: 15px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+}
+
+.grid-title {
+    font-size: 18px;
+    font-weight: 800;
+    padding: 5px 5px 15px;
+}
+
+
+/* =========================================================
+   GRID
+   ========================================================= */
+
+.grid-wrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 5px;
+    min-width: 650px;
+}
+
+td {
+    text-align: center;
+    padding: 12px 10px;
+    white-space: nowrap;
+}
+
+.label-cell {
+    background: #24283d !important;
+    color: white !important;
+    font-weight: 800;
+    min-width: 105px;
+    position: sticky;
+    left: 0;
+    z-index: 5;
+    border-radius: 8px;
+}
+
+
+/* =========================================================
+   NORMAL
+   ========================================================= */
+
+.normal {
+    background: #ffffff;
+    color: #171717;
+    border: 1px solid #dfe2e8;
+}
+
+
+/* =========================================================
+   EXACT MATCH
+   ========================================================= */
+
+.exact {
+    background: linear-gradient(
+        135deg,
+        #d9fbe0,
+        #a9edb8
+    ) !important;
+
+    color: #08751a !important;
+
+    border: 2px solid #35b653 !important;
+
+    box-shadow:
+        0 3px 10px rgba(37, 170, 75, 0.20);
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   BITTER ENEMY
+   ========================================================= */
+
+.enemy {
+    background: linear-gradient(
+        135deg,
+        #ffe0e0,
+        #ffadad
+    ) !important;
+
+    color: #a40000 !important;
+
+    border: 2px solid #e34242 !important;
+
+    box-shadow:
+        0 3px 10px rgba(210, 45, 45, 0.18);
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   POSITION
+   ========================================================= */
+
+.position-cell {
+    font-size: 17px;
+    font-weight: 800;
+    border-radius: 9px;
+}
+
+
+/* =========================================================
+   NAME
+   ========================================================= */
+
+.name-cell {
+    font-size: 21px;
+    font-weight: 900;
+    border-radius: 9px;
+}
+
+
+/* =========================================================
+   CHALDEAN
+   ========================================================= */
+
+.chaldean-cell {
+    font-size: 20px;
+    font-weight: 900;
+    border-radius: 9px;
+}
+
+
+/* =========================================================
+   LEGEND
+   ========================================================= */
+
+.legend {
+    background: white;
+    border-radius: 16px;
+    padding: 18px 20px;
+    box-shadow: 0 6px 22px rgba(0,0,0,0.07);
+    margin-bottom: 20px;
+}
+
+.legend-title {
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.legend-items {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.legend-box {
+    width: 25px;
+    height: 25px;
+    border-radius: 7px;
+}
+
+.green-box {
+    background: #b9f2c0;
+    border: 2px solid #35b653;
+}
+
+.red-box {
+    background: #ffb5b5;
+    border: 2px solid #e34242;
+}
+
+.black-box {
+    background: white;
+    border: 1px solid #aaa;
+}
+
+
+/* =========================================================
+   INFORMATION
+   ========================================================= */
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.info-card {
+    background: white;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.07);
+}
+
+.info-card h2 {
+    margin-top: 0;
+    margin-bottom: 17px;
+    font-size: 21px;
+    color: #292d43;
+}
+
+
+/* =========================================================
+   POSITION MEANINGS
+   ========================================================= */
+
+.position-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.position-item {
+    padding: 14px;
+    border-radius: 12px;
+    background: #f8f9fc;
+    border: 1px solid #e2e4eb;
+}
+
+.position-number {
+    font-weight: 900;
+    color: #503d82;
+    margin-bottom: 5px;
+}
+
+.position-description {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   KEY AREAS
+   ========================================================= */
+
+.key-area {
+    padding: 14px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    background: #f8f9fc;
+    border: 1px solid #e2e4eb;
+}
+
+.key-area strong {
+    display: block;
+    color: #503d82;
+    margin-bottom: 4px;
+}
+
+
+/* =========================================================
+   REFERENCE
+   ========================================================= */
+
+.reference-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.reference-card {
+    background: white;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.07);
+}
+
+.reference-card h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.reference-table {
+    width: 100%;
+    min-width: 0;
+    border-collapse: collapse;
+}
+
+.reference-table th,
+.reference-table td {
+    border: 1px solid #ddd;
+    padding: 9px;
+}
+
+.reference-table th {
+    background: #292d43;
+    color: white;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer {
+    text-align: center;
+    padding: 25px 10px 5px;
+    color: #777;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .info-grid,
+    .reference-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .position-list {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .container {
+        padding: 10px;
+    }
+
+    .header {
+        padding: 25px 15px;
+    }
+
+    .header h1 {
+        font-size: 26px;
+    }
+
+    .tabs {
+        flex-direction: column;
+    }
+
+    .tab-button {
+        width: 100%;
+    }
+
+    .name-input {
+        font-size: 17px;
+    }
+
+    .button-row {
+        flex-direction: column;
+    }
+
+    .action {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   PRINT
+   ========================================================= */
+
+@media print {
+
+    body {
+        background: white;
+    }
+
+    .tabs,
+    .button-row {
+        display: none !important;
+    }
+
+    .calculator {
+        display: none !important;
+    }
+
+    .calculator.active {
+        display: block !important;
+    }
+
+    .header,
+    .input-card,
+    .grid-card,
+    .legend,
+    .info-card,
+    .reference-card {
+        box-shadow: none;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+<!-- ======================================================
+     HEADER
+     ====================================================== -->
+
+<div class="header">
+
+    <h1>✨ Name Gridding Calculator ✨</h1>
+
+    <p>
+        Chaldean Numerology • Personal Name & Business Name
+    </p>
+
+</div>
+
+
+<!-- ======================================================
+     TABS
+     ====================================================== -->
+
+<div class="tabs">
+
+    <button
+        class="tab-button active"
+        onclick="showCalculator('person')">
+
+        👤 Person's Name
+
+    </button>
+
+
+    <button
+        class="tab-button"
+        onclick="showCalculator('business')">
+
+        🏢 Business Name
+
+    </button>
+
+</div>
+
+
+<!-- ======================================================
+     PERSON CALCULATOR
+     ====================================================== -->
+
+<div
+    id="personCalculator"
+    class="calculator active">
+
+
+ <!--   <div class="rule-box">
+
+        <strong>
+            👤 Person's Name Position Rule
+        </strong>
+
+        First alphabet = <b>Position 0</b>.
+        The remaining positions continue
+        <b>1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9</b>
+        and repeat.
+
+    </div> -->
+
+
+    <div class="input-card">
+
+        <label for="personName">
+            Enter Person's Full Name
+        </label>
+
+        <input
+            id="personName"
+            class="name-input"
+            type="text"
+            autocomplete="off"
+            placeholder="Type person's full name..."
+            oninput="calculatePerson()"
+        >
+
+
+        <div class="button-row">
+
+            <button
+                class="action clear-btn"
+                onclick="clearPerson()">
+
+                ✕ Clear
+
+            </button>
+
+
+            <button
+                class="action print-btn"
+                onclick="printCurrentCalculator()">
+
+                🖨 Print
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="grid-card">
+
+        <div class="grid-title">
+            Personal Name Gridding
+        </div>
+
+        <div class="grid-wrapper">
+
+            <table>
+
+                <tbody>
+
+                    <tr id="personPositions">
+
+                        <td class="label-cell">
+                            Position
+                        </td>
+
+                    </tr>
+
+
+                    <tr id="personNameRow">
+
+                        <td class="label-cell">
+                            Alphabet
+                        </td>
+
+                    </tr>
+
+
+                    <tr id="personChaldean">
+
+                        <td class="label-cell">
+                            Chaldean
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <div class="legend">
+
+        <div class="legend-title">
+            Colour Interpretation
+        </div>
+
+        <div class="legend-items">
+
+            <div class="legend-item">
+
+                <span class="legend-box green-box"></span>
+
+                Exact Match
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <span class="legend-box red-box"></span>
+
+                Bitter Enemy
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <span class="legend-box black-box"></span>
+
+                Normal
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     BUSINESS CALCULATOR
+     ====================================================== -->
+
+<div
+    id="businessCalculator"
+    class="calculator">
+
+
+  <!--  <div class="rule-box">
+
+        <strong>
+            🏢 Business Name Position Rule
+        </strong>
+
+        First alphabet = <b>Position 1</b>.
+        Positions continue
+        <b>1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9</b>
+        and repeat.
+
+    </div> -->
+
+
+    <div class="input-card">
+
+        <label for="businessName">
+            Enter Business Name
+        </label>
+
+        <input
+            id="businessName"
+            class="name-input"
+            type="text"
+            autocomplete="off"
+            placeholder="Type business name..."
+            oninput="calculateBusiness()"
+        >
+
+
+        <div class="button-row">
+
+            <button
+                class="action clear-btn"
+                onclick="clearBusiness()">
+
+                ✕ Clear
+
+            </button>
+
+
+            <button
+                class="action print-btn"
+                onclick="printCurrentCalculator()">
+
+                🖨 Print
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="grid-card">
+
+        <div class="grid-title">
+            Business Name Gridding
+        </div>
+
+        <div class="grid-wrapper">
+
+            <table>
+
+                <tbody>
+
+                    <tr id="businessPositions">
+
+                        <td class="label-cell">
+                            Position
+                        </td>
+
+                    </tr>
+
+
+                    <tr id="businessNameRow">
+
+                        <td class="label-cell">
+                            Alphabet
+                        </td>
+
+                    </tr>
+
+
+                    <tr id="businessChaldean">
+
+                        <td class="label-cell">
+                            Chaldean
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <div class="legend">
+
+        <div class="legend-title">
+            Colour Interpretation
+        </div>
+
+        <div class="legend-items">
+
+            <div class="legend-item">
+
+                <span class="legend-box green-box"></span>
+
+                Exact Match
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <span class="legend-box red-box"></span>
+
+                Bitter Enemy
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <span class="legend-box black-box"></span>
+
+                Normal
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     POSITION MEANINGS
+     ====================================================== -->
+
+<div class="info-grid">
+
+
+<div class="info-card">
+
+    <h2>🔢 Position Meanings</h2>
+
+    <div class="position-list">
+
+
+        <div class="position-item">
+
+            <div class="position-number">
+                Position 1
+            </div>
+
+            <div class="position-description">
+                Career Opportunities, Self Income, Respect, Money,
+                Courage to Handle Project, Patience, Mental Abilities,
+                Wisdom.
+            </div>
+
+        </div>
+
+
+        <div class="position-item">
+
+            <div class="position-number">
+                Position 2
+            </div>
+
+            <div class="position-description">
+                Family Life, Family Support, Own House,
+                Problem in House Construction, Vehicle,
+                Food Habits.
+            </div>
+
+        </div>
+
+
+        <div class="position-item">
+
+            <div class="position-number">
+                Position 3
+            </div>
+
+            <div class="position-description">
+                Growth and Expansion, Knowledge, Primary Education,
+                Mental Support, Education, Work is Seldom Delayed.
+            </div>
+
+        </div>
+
+
+        <div class="position-item">
+
+            <div class="position-number">
+                Position 4
+            </div>
+
+            <div class="position-description">
+                Cash Flow, Mass Attraction, Marketing,
+                Branding and Heart.
+            </div>
+
+        </div>
+
+
+        <div class="position-item">
+
+            <div class="position-number">
+                Position 5
+            </div>
+
+            <div class="position-description">
+                Higher Education, Money, Luck, Immunity,
+                Intelligence, Communication Skills, Debts,
+                Children, Politics, Hidden Enemies.
+            </div>
+
+        </div>
+
+
+        <div class="position-item">
+
+            <div class="position-number">
+                Position 6
+            </div>
+
+            <div class="position-description">
+                Spouse, Relationship, Love, Romance, Selectivity,
+                Luxury, Comfort, Creativity, Partnership,
+                Foreign Support.
+            </div>
+
+        </div>
+
+
+        <div class="position-item">
+
+            <div class="position-number">
+                Position 7
+            </div>
+
+            <div class="position-description">
+                Bank Savings, Spirituality, Research,
+                Paternal Properties, Longevity (Age),
+                Occult Practitioner, Doctors, Scientists.
+            </div>
+
+        </div>
+
+
+        <div class="position-item">
+
+            <div class="position-number">
+                Position 8
+            </div>
+
+            <div class="position-description">
+                Profit and Loss, Karmic Relations, Politics,
+                Decision Making, Respect, Honour, Pride.
+            </div>
+
+        </div>
+
+
+        <div class="position-item">
+
+            <div class="position-number">
+                Position 9
+            </div>
+
+            <div class="position-description">
+                Completion of Work, Achievement of Any Task,
+                Gains / Wish Fulfilment, Long Travel,
+                Foreign Travel.
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     KEY AREAS
+     ====================================================== -->
+
+<div class="info-card">
+
+    <h2>⭐ Key Areas</h2>
+
+
+    <div class="key-area">
+
+        <strong>💰 Money</strong>
+
+        Positions 1, 5, 6, 9
+
+    </div>
+
+
+    <div class="key-area">
+
+        <strong>❤️ Relationship</strong>
+
+        Positions 2, 3, 6
+
+    </div>
+
+
+    <div class="key-area">
+
+        <strong>💚 Health</strong>
+
+        Positions 1, 3, 5
+
+    </div>
+
+
+    <div class="key-area">
+
+        <strong>🌍 Foreign</strong>
+
+        Positions 3, 7, 9
+
+    </div>
+
+</div>
+
+</div>
+
+
+<!-- ======================================================
+     REFERENCE CHARTS
+     ====================================================== -->
+
+<div class="reference-grid">
+
+
+<div class="reference-card">
+
+    <h2>🔢 Chaldean Numerology</h2>
+
+    <table class="reference-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Number</th>
+                <th>Alphabets</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr><td>1</td><td>A, I, J, Q, Y</td></tr>
+            <tr><td>2</td><td>B, K, R</td></tr>
+            <tr><td>3</td><td>C, G, L, S</td></tr>
+            <tr><td>4</td><td>D, M, T</td></tr>
+            <tr><td>5</td><td>E, H, N, X</td></tr>
+            <tr><td>6</td><td>U, V, W</td></tr>
+            <tr><td>7</td><td>O, Z</td></tr>
+            <tr><td>8</td><td>F, P</td></tr>
+            <tr><td>9</td><td>—</td></tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<div class="reference-card">
+
+    <h2>⚡ Bitter Enemy Numbers</h2>
+
+    <table class="reference-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Position</th>
+                <th>Bitter Enemy Numbers</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr><td>1</td><td>6, 8</td></tr>
+            <tr><td>2</td><td>4, 5, 8</td></tr>
+            <tr><td>3</td><td>4, 6, 8</td></tr>
+            <tr><td>4</td><td>2, 3, 9</td></tr>
+            <tr><td>5</td><td>2</td></tr>
+            <tr><td>6</td><td>3, 1</td></tr>
+            <tr><td>7</td><td>8</td></tr>
+            <tr><td>8</td><td>1, 2, 9</td></tr>
+            <tr><td>9</td><td>4, 8</td></tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</div>
+
+
+<div class="footer">
+
+    Name Gridding Calculator • Chaldean Numerology
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CHALDEAN MAPPING
+   ========================================================= */
+
+const chaldeanMap = {
+
+    A: 1,
+    I: 1,
+    J: 1,
+    Q: 1,
+    Y: 1,
+
+    B: 2,
+    K: 2,
+    R: 2,
+
+    C: 3,
+    G: 3,
+    L: 3,
+    S: 3,
+
+    D: 4,
+    M: 4,
+    T: 4,
+
+    E: 5,
+    H: 5,
+    N: 5,
+    X: 5,
+
+    U: 6,
+    V: 6,
+    W: 6,
+
+    O: 7,
+    Z: 7,
+
+    F: 8,
+    P: 8
+};
+
+
+/* =========================================================
+   BITTER ENEMY RULES
+   ========================================================= */
+
+const bitterEnemies = {
+
+    1: [6, 8],
+
+    2: [4, 5, 8],
+
+    3: [4, 6, 8],
+
+    4: [2, 3, 9],
+
+    5: [2],
+
+    6: [3, 1],
+
+    7: [8],
+
+    8: [1, 2, 9],
+
+    9: [4, 8]
+
+};
+
+
+/* =========================================================
+   PERSON POSITION
+   =========================================================
+
+   Index 0 → Position 0
+
+   Index 1 → Position 1
+   Index 2 → Position 2
+   ...
+   Index 9 → Position 9
+
+   Index 10 → Position 1
+   Index 11 → Position 2
+   ...
+   ========================================================= */
+
+function getPersonPosition(index) {
+
+    if (index === 0) {
+        return 0;
+    }
+
+    return ((index - 1) % 9) + 1;
+}
+
+
+/* =========================================================
+   BUSINESS POSITION
+   =========================================================
+
+   Index 0 → Position 1
+   Index 1 → Position 2
+   ...
+   Index 8 → Position 9
+   Index 9 → Position 1
+   ========================================================= */
+
+function getBusinessPosition(index) {
+
+    return (index % 9) + 1;
+}
+
+
+/* =========================================================
+   CLEAN NAME
+   ========================================================= */
+
+function cleanName(value) {
+
+    return value
+        .toUpperCase()
+        .replace(/[^A-Z]/g, "");
+
+}
+
+
+/* =========================================================
+   DETERMINE STATUS
+   ========================================================= */
+
+function getStatus(position, value) {
+
+    /*
+       Person's first Position 0
+       is not evaluated.
+    */
+
+    if (position === 0) {
+        return "normal";
+    }
+
+
+    /*
+       EXACT MATCH HAS PRIORITY
+       OVER BITTER ENEMY.
+    */
+
+    if (position === value) {
+        return "exact";
+    }
+
+
+    /*
+       DIRECTIONAL BITTER ENEMY CHECK.
+    */
+
+    if (
+        bitterEnemies[position] &&
+        bitterEnemies[position].includes(value)
+    ) {
+
+        return "enemy";
+
+    }
+
+
+    return "normal";
+}
+
+
+/* =========================================================
+   CREATE GRID DATA
+   ========================================================= */
+
+function createGrid(name, type) {
+
+    const positions = [];
+    const values = [];
+
+    for (let i = 0; i < name.length; i++) {
+
+        const letter = name[i];
+
+        let position;
+
+        if (type === "person") {
+
+            position = getPersonPosition(i);
+
+        } else {
+
+            position = getBusinessPosition(i);
+
+        }
+
+
+        /*
+           Position 0 has no Chaldean comparison.
+        */
+
+        let value = chaldeanMap[letter];
+
+        if (position === 0) {
+            value = null;
+        }
+
+
+        positions.push(position);
+        values.push(value);
+
+    }
+
+
+    return {
+        positions,
+        values
+    };
+
+}
+
+
+/* =========================================================
+   RENDER GRID
+   ========================================================= */
+
+function renderGrid(name, type) {
+
+    const data = createGrid(name, type);
+
+    const positions = data.positions;
+    const values = data.values;
+
+
+    let positionsRow;
+    let nameRow;
+    let chaldeanRow;
+
+
+    if (type === "person") {
+
+        positionsRow =
+            document.getElementById("personPositions");
+
+        nameRow =
+            document.getElementById("personNameRow");
+
+        chaldeanRow =
+            document.getElementById("personChaldean");
+
+    } else {
+
+        positionsRow =
+            document.getElementById("businessPositions");
+
+        nameRow =
+            document.getElementById("businessNameRow");
+
+        chaldeanRow =
+            document.getElementById("businessChaldean");
+
+    }
+
+
+    /*
+       RESET GRID
+    */
+
+    positionsRow.innerHTML =
+        '<td class="label-cell">Position</td>';
+
+    nameRow.innerHTML =
+        '<td class="label-cell">Alphabet</td>';
+
+    chaldeanRow.innerHTML =
+        '<td class="label-cell">Chaldean</td>';
+
+
+    /*
+       CREATE EACH COLUMN
+    */
+
+    for (let i = 0; i < name.length; i++) {
+
+        /*
+           VERY IMPORTANT:
+
+           Position and Chaldean value are taken
+           from THE SAME INDEX.
+
+           We never use indexOf(position).
+
+           This correctly handles repeated positions.
+        */
+
+        const position = positions[i];
+
+        const value = values[i];
+
+        const letter = name[i];
+
+        const status = getStatus(
+            position,
+            value
+        );
+
+
+        /* ---------------------------------------------
+           POSITION CELL
+           --------------------------------------------- */
+
+        const positionCell =
+            document.createElement("td");
+
+        positionCell.className =
+            "position-cell " + status;
+
+        positionCell.textContent =
+            position;
+
+        positionsRow.appendChild(
+            positionCell
+        );
+
+
+        /* ---------------------------------------------
+           ALPHABET CELL
+           --------------------------------------------- */
+
+        const alphabetCell =
+            document.createElement("td");
+
+        alphabetCell.className =
+            "name-cell " + status;
+
+        alphabetCell.textContent =
+            letter;
+
+        nameRow.appendChild(
+            alphabetCell
+        );
+
+
+        /* ---------------------------------------------
+           CHALDEAN CELL
+           --------------------------------------------- */
+
+        const chaldeanCell =
+            document.createElement("td");
+
+        chaldeanCell.className =
+            "chaldean-cell " + status;
+
+
+        if (value === null) {
+
+            chaldeanCell.textContent = "—";
+
+        } else {
+
+            chaldeanCell.textContent = value;
+
+        }
+
+
+        chaldeanRow.appendChild(
+            chaldeanCell
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PERSON CALCULATOR
+   ========================================================= */
+
+function calculatePerson() {
+
+    const input =
+        document.getElementById("personName").value;
+
+    const name =
+        cleanName(input);
+
+    renderGrid(
+        name,
+        "person"
+    );
+
+}
+
+
+/* =========================================================
+   BUSINESS CALCULATOR
+   ========================================================= */
+
+function calculateBusiness() {
+
+    const input =
+        document.getElementById("businessName").value;
+
+    const name =
+        cleanName(input);
+
+    renderGrid(
+        name,
+        "business"
+    );
+
+}
+
+
+/* =========================================================
+   CLEAR PERSON
+   ========================================================= */
+
+function clearPerson() {
+
+    document.getElementById(
+        "personName"
+    ).value = "";
+
+    calculatePerson();
+
+}
+
+
+/* =========================================================
+   CLEAR BUSINESS
+   ========================================================= */
+
+function clearBusiness() {
+
+    document.getElementById(
+        "businessName"
+    ).value = "";
+
+    calculateBusiness();
+
+}
+
+
+/* =========================================================
+   TAB SWITCHING
+   ========================================================= */
+
+function showCalculator(type) {
+
+    const person =
+        document.getElementById(
+            "personCalculator"
+        );
+
+    const business =
+        document.getElementById(
+            "businessCalculator"
+        );
+
+    const buttons =
+        document.querySelectorAll(
+            ".tab-button"
+        );
+
+
+    buttons.forEach(
+        button =>
+            button.classList.remove("active")
+    );
+
+
+    if (type === "person") {
+
+        person.classList.add("active");
+
+        business.classList.remove("active");
+
+        buttons[0].classList.add("active");
+
+    } else {
+
+        person.classList.remove("active");
+
+        business.classList.add("active");
+
+        buttons[1].classList.add("active");
+
+    }
+
+}
+
+
+/* =========================================================
+   PRINT
+   ========================================================= */
+
+function printCurrentCalculator() {
+
+    window.print();
+
+}
+
+
+/* =========================================================
+   INITIALISE
+   ========================================================= */
+
+calculatePerson();
+
+calculateBusiness();
+
+</script>
+
+</body>
+</html>

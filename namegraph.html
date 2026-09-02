@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Name Graph Calculator</title>
+
+<style>
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 5% 5%,
+            #eee7ff 0%,
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 95% 5%,
+            #e2f5ff 0%,
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            #fff1f5 0%,
+            transparent 35%
+        ),
+        #f8f9fd;
+
+    color: #3d3b4a;
+}
+
+.container {
+    max-width: 1450px;
+    margin: auto;
+    padding: 24px;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.header {
+
+    background:
+        linear-gradient(
+            135deg,
+            #eee8ff,
+            #e8f5ff,
+            #fff0f5
+        );
+
+    border: 1px solid #e2daf5;
+
+    border-radius: 26px;
+
+    padding: 30px 20px;
+
+    text-align: center;
+
+    box-shadow:
+        0 12px 35px rgba(120, 100, 160, 0.12);
+
+    margin-bottom: 22px;
+}
+
+.header h1 {
+
+    margin: 0;
+
+    font-size: 36px;
+
+    font-weight: 800;
+
+    color: #5b4a82;
+
+    letter-spacing: .5px;
+}
+
+.header p {
+
+    margin: 8px 0 0;
+
+    color: #77718a;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   INPUT CARD
+   ========================================================= */
+
+.input-card {
+
+    background: rgba(255,255,255,0.94);
+
+    border: 1px solid #e9e5f1;
+
+    border-radius: 22px;
+
+    padding: 24px;
+
+    box-shadow:
+        0 8px 28px rgba(100,90,130,0.09);
+
+    margin-bottom: 20px;
+}
+
+.input-card label {
+
+    display: block;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    color: #5b5570;
+
+    margin-bottom: 9px;
+}
+
+.name-input {
+
+    width: 100%;
+
+    padding: 16px 18px;
+
+    font-size: 21px;
+
+    color: #494456;
+
+    background: #fcfbff;
+
+    border: 2px solid #ddd7ed;
+
+    border-radius: 14px;
+
+    outline: none;
+
+    transition: .25s;
+}
+
+.name-input::placeholder {
+
+    color: #aaa4b8;
+}
+
+.name-input:focus {
+
+    border-color: #b5a4dc;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 4px rgba(181,164,220,0.15);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.button-row {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 15px;
+
+    flex-wrap: wrap;
+}
+
+button {
+
+    border: none;
+
+    padding: 11px 23px;
+
+    border-radius: 11px;
+
+    font-weight: 700;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+button:hover {
+
+    transform: translateY(-2px);
+}
+
+.clear-btn {
+
+    background: #f1eff5;
+
+    color: #686273;
+
+    border: 1px solid #e1dce8;
+}
+
+.print-btn {
+
+    background: #ddd2f3;
+
+    color: #554078;
+
+    border: 1px solid #cfc0e9;
+}
+
+
+/* =========================================================
+   GRAPH CARD
+   ========================================================= */
+
+.graph-card {
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #fbfaff
+        );
+
+    border: 1px solid #e7e1f0;
+
+    border-radius: 24px;
+
+    padding: 22px;
+
+    box-shadow:
+        0 10px 32px rgba(100,90,130,0.10);
+
+    margin-bottom: 20px;
+}
+
+.graph-title {
+
+    font-size: 24px;
+
+    font-weight: 800;
+
+    color: #5b4b80;
+
+    margin-bottom: 4px;
+}
+
+.graph-subtitle {
+
+    color: #928ca0;
+
+    font-size: 14px;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   GRAPH AREA
+   ========================================================= */
+
+.graph-wrapper {
+
+    overflow-x: auto;
+
+    padding: 8px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fbfaff,
+            #f8fcff
+        );
+
+    border: 1px solid #ebe7f2;
+}
+
+#nameGraph {
+
+    display: block;
+
+    width: 100%;
+
+    min-width: 900px;
+
+    height: 610px;
+}
+
+
+/* =========================================================
+   SVG GRAPH
+   ========================================================= */
+
+.axis {
+
+    stroke: #aaa4b4;
+
+    stroke-width: 2;
+}
+
+.grid-line {
+
+    stroke: #e5e2eb;
+
+    stroke-width: 1;
+}
+
+.section-line {
+
+    stroke: #d8c8a3;
+
+    stroke-width: 2;
+
+    stroke-dasharray: 8 6;
+}
+
+.graph-line {
+
+    fill: none;
+
+    stroke: #a58ac9;
+
+    stroke-width: 4;
+
+    stroke-linejoin: round;
+
+    stroke-linecap: round;
+}
+
+.graph-point {
+
+    fill: #ffffff;
+
+    stroke: #9a80c0;
+
+    stroke-width: 3;
+}
+
+.point-label {
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    fill: #6b5a82;
+}
+
+.letter-label {
+
+    font-size: 19px;
+
+    font-weight: 800;
+
+    fill: #554d64;
+}
+
+.position-label {
+
+    font-size: 13px;
+
+    fill: #9a94a5;
+}
+
+.y-label {
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    fill: #726b7c;
+}
+
+.section-label {
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    fill: #a08348;
+}
+
+
+/* =========================================================
+   DATA CARD
+   ========================================================= */
+
+.data-card {
+
+    background: #ffffff;
+
+    border: 1px solid #e8e3ef;
+
+    border-radius: 21px;
+
+    padding: 22px;
+
+    box-shadow:
+        0 8px 28px rgba(100,90,130,0.08);
+
+    margin-bottom: 20px;
+
+    overflow-x: auto;
+}
+
+.data-card h2 {
+
+    margin-top: 0;
+
+    color: #5b4b80;
+}
+
+.data-table {
+
+    width: 100%;
+
+    border-collapse: separate;
+
+    border-spacing: 5px;
+
+    min-width: 700px;
+}
+
+.data-table th {
+
+    background: #eee8f8;
+
+    color: #5d5272;
+
+    border: 1px solid #ddd5ea;
+
+    padding: 11px;
+
+    border-radius: 8px;
+}
+
+.data-table td {
+
+    background: #faf9fd;
+
+    color: #625b6d;
+
+    border: 1px solid #e8e3ed;
+
+    padding: 10px;
+
+    text-align: center;
+
+    font-weight: 600;
+
+    border-radius: 8px;
+}
+
+.data-table tbody tr:hover td {
+
+    background: #f4f0fb;
+}
+
+
+/* =========================================================
+   REFERENCE CARD
+   ========================================================= */
+
+.reference-card {
+
+    background: #ffffff;
+
+    border: 1px solid #e7e2ee;
+
+    border-radius: 21px;
+
+    padding: 22px;
+
+    box-shadow:
+        0 8px 28px rgba(100,90,130,0.08);
+}
+
+.reference-card h2 {
+
+    margin-top: 0;
+
+    color: #5b4b80;
+}
+
+.reference-table {
+
+    width: 100%;
+
+    border-collapse: separate;
+
+    border-spacing: 4px;
+}
+
+.reference-table th {
+
+    background: #e8e1f6;
+
+    color: #5b4b80;
+
+    padding: 10px;
+
+    border-radius: 7px;
+}
+
+.reference-table td {
+
+    background: #faf9fd;
+
+    border: 1px solid #e7e2ed;
+
+    padding: 9px;
+
+    text-align: center;
+
+    color: #625b6d;
+
+    border-radius: 7px;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer {
+
+    text-align: center;
+
+    padding: 25px 10px 5px;
+
+    color: #9993a3;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media(max-width:700px) {
+
+    .container {
+        padding: 10px;
+    }
+
+    .header {
+        padding: 25px 15px;
+    }
+
+    .header h1 {
+        font-size: 28px;
+    }
+
+    .graph-card,
+    .input-card,
+    .data-card,
+    .reference-card {
+        padding: 15px;
+    }
+
+    .name-input {
+        font-size: 18px;
+    }
+
+    #nameGraph {
+        min-width: 850px;
+    }
+
+    .button-row {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   PRINT
+   ========================================================= */
+
+@media print {
+
+    body {
+        background: white;
+    }
+
+    .input-card {
+        box-shadow: none;
+    }
+
+    .button-row {
+        display: none;
+    }
+
+    .graph-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+<!-- ======================================================
+     HEADER
+     ====================================================== -->
+
+<div class="header">
+
+    <h1>✨ Name Graph Calculator ✨</h1>
+
+    <p>
+        Chaldean Numerology • Alphabet-wise Name Analysis
+    </p>
+
+</div>
+
+
+<!-- ======================================================
+     INPUT
+     ====================================================== -->
+
+<div class="input-card">
+
+    <label for="nameInput">
+        Enter Name
+    </label>
+
+    <input
+        type="text"
+        id="nameInput"
+        class="name-input"
+        value="Sadhna Gulati"
+        placeholder="Enter name..."
+        autocomplete="off"
+        oninput="generateGraph()"
+    >
+
+    <div class="button-row">
+
+        <button
+            class="clear-btn"
+            onclick="clearName()">
+
+            ✕ Clear
+
+        </button>
+
+        <button
+            class="print-btn"
+            onclick="window.print()">
+
+            🖨 Print Graph
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     GRAPH
+     ====================================================== -->
+
+<div class="graph-card">
+
+    <div class="graph-title">
+        📈 Name Graph
+    </div>
+
+    <div
+        class="graph-subtitle"
+        id="graphSubtitle">
+
+        Chaldean values plotted against alphabet position
+
+    </div>
+
+
+    <div class="graph-wrapper">
+
+        <svg
+            id="nameGraph"
+            viewBox="0 0 1200 610"
+            preserveAspectRatio="none">
+        </svg>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     DATA TABLE
+     ====================================================== -->
+
+<div class="data-card">
+
+    <h2>🔢 Alphabet & Chaldean Values</h2>
+
+    <table class="data-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Alphabet Position</th>
+
+                <th>Alphabet</th>
+
+                <th>Chaldean Number</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="dataTableBody">
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<!-- ======================================================
+     REFERENCE
+     ====================================================== -->
+
+<div class="reference-card">
+
+    <h2>🌸 Chaldean Numerology Reference</h2>
+
+    <table class="reference-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Number</th>
+
+                <th>Alphabets</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+                <td>1</td>
+                <td>A, I, J, Q, Y</td>
+            </tr>
+
+            <tr>
+                <td>2</td>
+                <td>B, K, R</td>
+            </tr>
+
+            <tr>
+                <td>3</td>
+                <td>C, G, L, S</td>
+            </tr>
+
+            <tr>
+                <td>4</td>
+                <td>D, M, T</td>
+            </tr>
+
+            <tr>
+                <td>5</td>
+                <td>E, H, N, X</td>
+            </tr>
+
+            <tr>
+                <td>6</td>
+                <td>U, V, W</td>
+            </tr>
+
+            <tr>
+                <td>7</td>
+                <td>O, Z</td>
+            </tr>
+
+            <tr>
+                <td>8</td>
+                <td>F, P</td>
+            </tr>
+
+            <tr>
+                <td>9</td>
+                <td>—</td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<div class="footer">
+
+    Name Graph Calculator • Chaldean Numerology
+
+</div>
+
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CHALDEAN MAPPING
+   ========================================================= */
+
+const chaldeanMap = {
+
+    A: 1,
+    I: 1,
+    J: 1,
+    Q: 1,
+    Y: 1,
+
+    B: 2,
+    K: 2,
+    R: 2,
+
+    C: 3,
+    G: 3,
+    L: 3,
+    S: 3,
+
+    D: 4,
+    M: 4,
+    T: 4,
+
+    E: 5,
+    H: 5,
+    N: 5,
+    X: 5,
+
+    U: 6,
+    V: 6,
+    W: 6,
+
+    O: 7,
+    Z: 7,
+
+    F: 8,
+    P: 8
+
+};
+
+
+/* =========================================================
+   CLEAN NAME
+   ========================================================= */
+
+function cleanName(value) {
+
+    return value
+        .toUpperCase()
+        .replace(/[^A-Z]/g, "");
+
+}
+
+
+/* =========================================================
+   SVG HELPER
+   ========================================================= */
+
+function svgElement(tag, attributes) {
+
+    const element =
+        document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            tag
+        );
+
+    for (const key in attributes) {
+
+        element.setAttribute(
+            key,
+            attributes[key]
+        );
+
+    }
+
+    return element;
+}
+
+
+/* =========================================================
+   GENERATE GRAPH
+   ========================================================= */
+
+function generateGraph() {
+
+    const input =
+        document.getElementById(
+            "nameInput"
+        ).value;
+
+    const name =
+        cleanName(input);
+
+    const svg =
+        document.getElementById(
+            "nameGraph"
+        );
+
+    const tableBody =
+        document.getElementById(
+            "dataTableBody"
+        );
+
+    const subtitle =
+        document.getElementById(
+            "graphSubtitle"
+        );
+
+
+    svg.innerHTML = "";
+
+    tableBody.innerHTML = "";
+
+
+    if (!name.length) {
+
+        subtitle.textContent =
+            "Enter a name to generate the graph.";
+
+        return;
+
+    }
+
+
+    subtitle.textContent =
+        "Chaldean values plotted for: " +
+        name;
+
+
+    /* =====================================================
+       VALUES
+       ===================================================== */
+
+    const letters = [];
+
+    const values = [];
+
+
+    for (
+        let i = 0;
+        i < name.length;
+        i++
+    ) {
+
+        const letter =
+            name[i];
+
+        letters.push(letter);
+
+        values.push(
+            chaldeanMap[letter]
+        );
+
+    }
+
+
+    /* =====================================================
+       GRAPH DIMENSIONS
+       ===================================================== */
+
+    const width = 1200;
+
+    const height = 610;
+
+    const left = 85;
+
+    const right = 45;
+
+    const top = 70;
+
+    const bottom = 115;
+
+    const graphWidth =
+        width - left - right;
+
+    const graphHeight =
+        height - top - bottom;
+
+
+    /* =====================================================
+       X POSITION
+       ===================================================== */
+
+    function xPosition(index) {
+
+        if (name.length === 1) {
+
+            return left +
+                graphWidth / 2;
+
+        }
+
+        return left +
+            (
+                index /
+                (name.length - 1)
+            ) *
+            graphWidth;
+
+    }
+
+
+    /* =====================================================
+       Y POSITION
+       ===================================================== */
+
+    function yPosition(value) {
+
+        return top +
+            graphHeight -
+            (
+                value / 9
+            ) *
+            graphHeight;
+
+    }
+
+
+    /* =====================================================
+       HORIZONTAL GRID
+       ===================================================== */
+
+    for (
+        let n = 1;
+        n <= 9;
+        n++
+    ) {
+
+        const y =
+            yPosition(n);
+
+
+        const line =
+            svgElement(
+                "line",
+                {
+                    x1: left,
+                    y1: y,
+                    x2: width - right,
+                    y2: y,
+                    class: "grid-line"
+                }
+            );
+
+
+        svg.appendChild(line);
+
+
+        const label =
+            svgElement(
+                "text",
+                {
+                    x: left - 27,
+                    y: y + 5,
+                    class: "y-label",
+                    "text-anchor":
+                        "middle"
+                }
+            );
+
+
+        label.textContent = n;
+
+        svg.appendChild(label);
+
+    }
+
+
+    /* =====================================================
+       AXES
+       ===================================================== */
+
+    svg.appendChild(
+
+        svgElement(
+            "line",
+            {
+                x1: left,
+                y1: top,
+                x2: left,
+                y2: top + graphHeight,
+                class: "axis"
+            }
+        )
+
+    );
+
+
+    svg.appendChild(
+
+        svgElement(
+            "line",
+            {
+                x1: left,
+                y1: top + graphHeight,
+                x2: width - right,
+                y2: top + graphHeight,
+                class: "axis"
+            }
+        )
+
+    );
+
+
+    /* =====================================================
+       HALF DIVISIONS
+       ===================================================== */
+
+    if (name.length >= 6) {
+
+        const division1 =
+            left +
+            graphWidth / 3;
+
+        const division2 =
+            left +
+            (
+                graphWidth * 2 / 3
+            );
+
+
+        svg.appendChild(
+
+            svgElement(
+                "line",
+                {
+                    x1: division1,
+                    y1: top,
+                    x2: division1,
+                    y2: top + graphHeight,
+                    class: "section-line"
+                }
+            )
+
+        );
+
+
+        svg.appendChild(
+
+            svgElement(
+                "line",
+                {
+                    x1: division2,
+                    y1: top,
+                    x2: division2,
+                    y2: top + graphHeight,
+                    class: "section-line"
+                }
+            )
+
+        );
+
+
+        const sections = [
+
+            {
+                text: "1st Half",
+                x:
+                    left +
+                    graphWidth / 6
+            },
+
+            {
+                text: "2nd Half",
+                x:
+                    left +
+                    graphWidth / 2
+            },
+
+            {
+                text: "3rd Half",
+                x:
+                    left +
+                    graphWidth * 5 / 6
+            }
+
+        ];
+
+
+        sections.forEach(section => {
+
+            const label =
+                svgElement(
+                    "text",
+                    {
+                        x: section.x,
+                        y: 38,
+                        class: "section-label",
+                        "text-anchor":
+                            "middle"
+                    }
+                );
+
+            label.textContent =
+                section.text;
+
+            svg.appendChild(label);
+
+        });
+
+    }
+
+
+    /* =====================================================
+       GRAPH LINE
+       ===================================================== */
+
+    let path = "";
+
+
+    for (
+        let i = 0;
+        i < values.length;
+        i++
+    ) {
+
+        const x =
+            xPosition(i);
+
+        const y =
+            yPosition(values[i]);
+
+
+        if (i === 0) {
+
+            path +=
+                `M ${x} ${y}`;
+
+        } else {
+
+            path +=
+                ` L ${x} ${y}`;
+
+        }
+
+    }
+
+
+    const graphLine =
+        svgElement(
+            "path",
+            {
+                d: path,
+                class: "graph-line"
+            }
+        );
+
+
+    svg.appendChild(graphLine);
+
+
+    /* =====================================================
+       POINTS + LABELS
+       ===================================================== */
+
+    for (
+        let i = 0;
+        i < values.length;
+        i++
+    ) {
+
+        const x =
+            xPosition(i);
+
+        const y =
+            yPosition(values[i]);
+
+
+        /* Point */
+
+        const point =
+            svgElement(
+                "circle",
+                {
+                    cx: x,
+                    cy: y,
+                    r: 9,
+                    class: "graph-point"
+                }
+            );
+
+
+        svg.appendChild(point);
+
+
+        /* Chaldean number */
+
+        const valueLabel =
+            svgElement(
+                "text",
+                {
+                    x: x,
+                    y: y - 17,
+                    class: "point-label",
+                    "text-anchor":
+                        "middle"
+                }
+            );
+
+
+        valueLabel.textContent =
+            values[i];
+
+        svg.appendChild(valueLabel);
+
+
+        /* Alphabet */
+
+        const letterLabel =
+            svgElement(
+                "text",
+                {
+                    x: x,
+                    y:
+                        top +
+                        graphHeight +
+                        32,
+                    class: "letter-label",
+                    "text-anchor":
+                        "middle"
+                }
+            );
+
+
+        letterLabel.textContent =
+            letters[i];
+
+        svg.appendChild(letterLabel);
+
+
+        /* Position */
+
+        const positionLabel =
+            svgElement(
+                "text",
+                {
+                    x: x,
+                    y:
+                        top +
+                        graphHeight +
+                        55,
+                    class: "position-label",
+                    "text-anchor":
+                        "middle"
+                }
+            );
+
+
+        positionLabel.textContent =
+            i + 1;
+
+        svg.appendChild(positionLabel);
+
+
+        /* =================================================
+           TABLE
+           ================================================= */
+
+        const row =
+            document.createElement("tr");
+
+
+        const positionCell =
+            document.createElement("td");
+
+        positionCell.textContent =
+            i + 1;
+
+
+        const alphabetCell =
+            document.createElement("td");
+
+        alphabetCell.textContent =
+            letters[i];
+
+
+        const valueCell =
+            document.createElement("td");
+
+        valueCell.textContent =
+            values[i];
+
+
+        row.appendChild(
+            positionCell
+        );
+
+        row.appendChild(
+            alphabetCell
+        );
+
+        row.appendChild(
+            valueCell
+        );
+
+
+        tableBody.appendChild(row);
+
+    }
+
+
+    /* =====================================================
+       AXIS TITLES
+       ===================================================== */
+
+    const xTitle =
+        svgElement(
+            "text",
+            {
+                x: width / 2,
+                y: height - 20,
+                class: "y-label",
+                "text-anchor":
+                    "middle"
+            }
+        );
+
+
+    xTitle.textContent =
+        "Alphabet Position";
+
+
+    svg.appendChild(xTitle);
+
+
+    const yTitle =
+        svgElement(
+            "text",
+            {
+                x: 20,
+                y: height / 2,
+                class: "y-label",
+                "text-anchor":
+                    "middle",
+                transform:
+                    `rotate(-90 20 ${height / 2})`
+            }
+        );
+
+
+    yTitle.textContent =
+        "Chaldean Number";
+
+
+    svg.appendChild(yTitle);
+
+}
+
+
+/* =========================================================
+   CLEAR
+   ========================================================= */
+
+function clearName() {
+
+    document.getElementById(
+        "nameInput"
+    ).value = "";
+
+    generateGraph();
+
+}
+
+
+/* =========================================================
+   INITIALISE
+   ========================================================= */
+
+generateGraph();
+
+</script>
+
+</body>
+</html>

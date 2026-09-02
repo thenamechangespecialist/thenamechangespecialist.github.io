@@ -1,0 +1,2365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Name & DOB Pyramid Numbers Calculator</title>
+
+<style>
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #4d4858;
+
+    background:
+        radial-gradient(circle at 10% 5%, #eee9ff 0%, transparent 28%),
+        radial-gradient(circle at 90% 10%, #e7f5ff 0%, transparent 30%),
+        radial-gradient(circle at 50% 100%, #fff0f5 0%, transparent 35%),
+        #faf9fd;
+}
+
+.container {
+    width: 100%;
+    max-width: 1450px;
+    margin: auto;
+    padding: 24px;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.header {
+    text-align: center;
+    padding: 32px 20px;
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eee8fb,
+            #eef8ff,
+            #fff1f6
+        );
+
+    border: 1px solid #e2dced;
+
+    box-shadow:
+        0 12px 35px rgba(100, 85, 140, 0.10);
+
+    margin-bottom: 22px;
+}
+
+.header h1 {
+    margin: 0;
+    color: #5d4887;
+    font-size: 36px;
+    font-weight: 800;
+}
+
+.header p {
+    margin: 9px 0 0;
+    color: #81798c;
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   INPUT CARD
+   ========================================================= */
+
+.input-card {
+    background: rgba(255,255,255,0.96);
+    border: 1px solid #e4deeb;
+    border-radius: 23px;
+    padding: 25px;
+
+    box-shadow:
+        0 9px 28px rgba(90,80,120,0.08);
+
+    margin-bottom: 22px;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #5f5870;
+    font-weight: 700;
+}
+
+.field input {
+    width: 100%;
+    padding: 15px 17px;
+
+    border: 2px solid #ddd7e7;
+    border-radius: 13px;
+
+    background: #fcfbff;
+    color: #45404f;
+
+    font-size: 18px;
+    outline: none;
+
+    transition: 0.25s;
+}
+
+.field input:focus {
+    border-color: #b6a1d9;
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 4px rgba(182,161,217,0.13);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 19px;
+}
+
+button {
+    border: none;
+    border-radius: 12px;
+
+    padding: 12px 24px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+.calculate-btn {
+    background: #e2d5f4;
+    color: #57427e;
+    border: 1px solid #ccb9e6;
+}
+
+.clear-btn {
+    background: #f4edf2;
+    color: #746a76;
+    border: 1px solid #e2d8df;
+}
+
+.print-btn {
+    background: #e7f2f8;
+    color: #486c81;
+    border: 1px solid #d0e2ec;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+   ========================================================= */
+
+.section-title {
+    text-align: center;
+    color: #5b4684;
+
+    font-size: 27px;
+    font-weight: 800;
+
+    margin: 30px 0 17px;
+}
+
+
+/* =========================================================
+   PYRAMID NUMBER CARDS
+   ========================================================= */
+
+.number-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.number-card {
+    position: relative;
+
+    background: white;
+
+    border: 1px solid #e4deeb;
+    border-radius: 24px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    box-shadow:
+        0 10px 30px rgba(90,80,120,0.08);
+
+    overflow: hidden;
+}
+
+.number-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 5px;
+
+    background: #cbb8e7;
+}
+
+.number-card.dob-card::before {
+    background: #a9cce4;
+}
+
+.number-card h3 {
+    margin: 0;
+    color: #5c4a80;
+    font-size: 22px;
+}
+
+.dob-card h3 {
+    color: #4d7088;
+}
+
+.number-card .subtitle {
+    margin-top: 6px;
+    color: #8a8393;
+    font-size: 13px;
+}
+
+.big-result {
+    margin-top: 15px;
+
+    font-size: 58px;
+    line-height: 1;
+
+    font-weight: 900;
+
+    color: #68518f;
+}
+
+.dob-card .big-result {
+    color: #527990;
+}
+
+
+/* =========================================================
+   PYRAMID DISPLAY
+   ========================================================= */
+
+.pyramid-display {
+    margin-top: 20px;
+
+    padding: 18px;
+
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fbf9ff,
+            #f8fcff
+        );
+
+    border: 1px solid #e7e1ed;
+
+    overflow-x: auto;
+}
+
+.pyramid-row {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    margin: 6px 0;
+}
+
+.pyramid-cell {
+    min-width: 38px;
+    height: 38px;
+
+    padding: 0 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: white;
+
+    border: 1px solid #ded7e6;
+
+    color: #625a6d;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    box-shadow:
+        0 3px 7px rgba(80,70,100,0.06);
+}
+
+.pyramid-row:first-child .pyramid-cell {
+    background: #f0eafb;
+    border-color: #d9ccec;
+    color: #604b85;
+}
+
+.row-title {
+    font-size: 11px;
+    color: #aaa2b0;
+    margin-bottom: 5px;
+}
+
+
+/* =========================================================
+   FORMULA
+   ========================================================= */
+
+.formula {
+    margin-top: 15px;
+
+    color: #777080;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+.formula strong {
+    color: #5e4a80;
+}
+
+
+/* =========================================================
+   THREE TRIANGLES
+   ========================================================= */
+
+.triangle-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.triangle-card {
+    background: white;
+
+    border: 1px solid #e3ddea;
+
+    border-radius: 24px;
+
+    padding: 20px;
+
+    text-align: center;
+
+    box-shadow:
+        0 10px 30px rgba(90,80,120,0.08);
+}
+
+.triangle-heading {
+    display: inline-block;
+
+    padding: 9px 21px;
+
+    border-radius: 13px;
+
+    background: #f0eafa;
+
+    border: 1px solid #ded2ef;
+
+    color: #604b86;
+
+    font-weight: 800;
+
+    margin-bottom: 8px;
+}
+
+.triangle-heading.blue {
+    background: #eaf5fb;
+    border-color: #d2e6f1;
+    color: #4f748b;
+}
+
+.triangle-heading.green {
+    background: #edf8ef;
+    border-color: #d5e9d8;
+    color: #507b58;
+}
+
+.triangle-svg {
+    width: 100%;
+    height: 330px;
+    display: block;
+}
+
+.triangle-outline {
+    fill: none;
+    stroke: #b59bcf;
+    stroke-width: 3;
+}
+
+.triangle-card:nth-child(2)
+.triangle-outline {
+    stroke: #8eb7d5;
+}
+
+.triangle-card:nth-child(3)
+.triangle-outline {
+    stroke: #91bf98;
+}
+
+.triangle-circle {
+    fill: #ffffff;
+    stroke: #aa91c7;
+    stroke-width: 2.5;
+}
+
+.triangle-card:nth-child(2)
+.triangle-circle {
+    stroke: #80abc9;
+}
+
+.triangle-card:nth-child(3)
+.triangle-circle {
+    stroke: #83b58b;
+}
+
+.triangle-number {
+    font-size: 27px;
+
+    font-weight: 900;
+
+    text-anchor: middle;
+
+    dominant-baseline: middle;
+
+    fill: #624c86;
+}
+
+.triangle-card:nth-child(2)
+.triangle-number {
+    fill: #50748c;
+}
+
+.triangle-card:nth-child(3)
+.triangle-number {
+    fill: #517c59;
+}
+
+.triangle-label {
+    font-size: 14px;
+
+    font-weight: 800;
+
+    text-anchor: middle;
+
+    fill: #71697c;
+}
+
+.triangle-value-label {
+    font-size: 12px;
+
+    fill: #918999;
+
+    text-anchor: middle;
+}
+
+
+/* =========================================================
+   INFO BOX
+   ========================================================= */
+
+.info-box {
+    margin-top: 8px;
+
+    padding: 13px;
+
+    border-radius: 13px;
+
+    background: #faf8fd;
+
+    border: 1px solid #e8e2ed;
+
+    color: #706879;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+.info-box strong {
+    color: #5f4a82;
+}
+
+
+/* =========================================================
+   RULES
+   ========================================================= */
+
+.details-card {
+    margin-top: 22px;
+
+    padding: 23px;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fffdf8,
+            #fffaf1
+        );
+
+    border: 1px solid #eee2ca;
+
+    box-shadow:
+        0 8px 25px rgba(130,110,70,0.06);
+}
+
+.details-card h2 {
+    margin-top: 0;
+
+    color: #846b3f;
+
+    font-size: 22px;
+}
+
+.details-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 13px;
+}
+
+.detail-box {
+    padding: 15px;
+
+    background: white;
+
+    border: 1px solid #eadfc9;
+
+    border-radius: 13px;
+}
+
+.detail-box strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #735c37;
+}
+
+
+/* =========================================================
+   CHALDEAN REFERENCE
+   ========================================================= */
+
+.reference-card {
+    margin-top: 22px;
+
+    background: white;
+
+    border: 1px solid #e3ddea;
+
+    border-radius: 22px;
+
+    padding: 22px;
+
+    box-shadow:
+        0 8px 25px rgba(90,80,120,0.06);
+}
+
+.reference-card h2 {
+    margin-top: 0;
+
+    color: #5c4782;
+}
+
+.reference-table {
+    width: 100%;
+
+    border-collapse: separate;
+
+    border-spacing: 4px;
+}
+
+.reference-table th {
+    background: #eee8f7;
+
+    color: #5d5072;
+
+    padding: 10px;
+
+    border-radius: 7px;
+}
+
+.reference-table td {
+    padding: 9px;
+
+    text-align: center;
+
+    background: #faf9fd;
+
+    border: 1px solid #e7e1eb;
+
+    border-radius: 7px;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer {
+    text-align: center;
+
+    padding: 25px 10px 5px;
+
+    color: #9a939f;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:1000px) {
+
+    .triangle-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .number-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width:650px) {
+
+    .container {
+        padding: 10px;
+    }
+
+    .input-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 27px;
+    }
+
+    .section-title {
+        font-size: 23px;
+    }
+
+    .big-result {
+        font-size: 48px;
+    }
+}
+
+
+/* =========================================================
+   PRINT
+   ========================================================= */
+
+@media print {
+
+    body {
+        background: white;
+    }
+
+    .button-row {
+        display: none;
+    }
+
+    .input-card,
+    .number-card,
+    .triangle-card,
+    .details-card,
+    .reference-card {
+        box-shadow: none;
+    }
+
+    .number-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .triangle-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
+
+<div class="header">
+
+    <h1>
+        🔺 Pyramid Numbers Calculator ✨
+    </h1>
+
+    <p>
+        Name Pyramid • DOB Pyramid • Three Original Pyramid Triangles
+    </p>
+
+</div>
+
+
+<!-- =====================================================
+     INPUT
+     ===================================================== -->
+
+<div class="input-card">
+
+    <div class="input-grid">
+
+        <div class="field">
+
+            <label for="nameInput">
+                👤 Full Name
+            </label>
+
+            <input
+                type="text"
+                id="nameInput"
+                placeholder="Enter full name"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="dobInput">
+                📅 Date of Birth
+            </label>
+
+            <input
+                type="date"
+                id="dobInput"
+            >
+
+        </div>
+
+    </div>
+
+
+    <div class="button-row">
+
+        <button
+            class="calculate-btn"
+            onclick="calculateAll()">
+
+            🔢 Calculate
+
+        </button>
+
+
+        <button
+            class="clear-btn"
+            onclick="clearAll()">
+
+            ✕ Clear
+
+        </button>
+
+
+        <button
+            class="print-btn"
+            onclick="window.print()">
+
+            🖨 Print
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     PYRAMID NUMBERS
+     ===================================================== -->
+
+<div class="section-title">
+
+    ✨ Pyramid Numbers
+
+</div>
+
+
+<div class="number-grid">
+
+
+    <!-- NAME PYRAMID -->
+
+    <div class="number-card">
+
+        <h3>
+            🔤 Name Pyramid Number
+        </h3>
+
+        <div class="subtitle">
+            Based on Chaldean values of the name
+        </div>
+
+        <div
+            id="namePyramidResult"
+            class="big-result">
+
+            —
+
+        </div>
+
+        <div
+            id="namePyramidDisplay"
+            class="pyramid-display">
+
+        </div>
+
+        <div
+            id="namePyramidFormula"
+            class="formula">
+
+        </div>
+
+    </div>
+
+
+    <!-- DOB PYRAMID -->
+
+    <div class="number-card dob-card">
+
+        <h3>
+            📅 DOB Pyramid Number
+        </h3>
+
+        <div class="subtitle">
+            Calculated strictly from DDMMYYYY
+        </div>
+
+        <div
+            id="dobPyramidResult"
+            class="big-result">
+
+            —
+
+        </div>
+
+        <div
+            id="dobPyramidDisplay"
+            class="pyramid-display">
+
+        </div>
+
+        <div
+            id="dobPyramidFormula"
+            class="formula">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     THREE ORIGINAL TRIANGLES
+     ===================================================== -->
+
+<div class="section-title">
+
+    🔺 Three Original Pyramid Triangles
+
+</div>
+
+
+<div class="triangle-grid">
+
+
+    <!-- TRIANGLE 1 -->
+
+    <div class="triangle-card">
+
+        <div class="triangle-heading">
+            Pyramid 1
+        </div>
+
+        <svg
+            id="triangle1"
+            class="triangle-svg"
+            viewBox="0 0 400 340">
+        </svg>
+
+        <div
+            id="triangleInfo1"
+            class="info-box">
+        </div>
+
+    </div>
+
+
+    <!-- TRIANGLE 2 -->
+
+    <div class="triangle-card">
+
+        <div class="triangle-heading blue">
+            Pyramid 2
+        </div>
+
+        <svg
+            id="triangle2"
+            class="triangle-svg"
+            viewBox="0 0 400 340">
+        </svg>
+
+        <div
+            id="triangleInfo2"
+            class="info-box">
+        </div>
+
+    </div>
+
+
+    <!-- TRIANGLE 3 -->
+
+    <div class="triangle-card">
+
+        <div class="triangle-heading green">
+            Pyramid 3
+        </div>
+
+        <svg
+            id="triangle3"
+            class="triangle-svg"
+            viewBox="0 0 400 340">
+        </svg>
+
+        <div
+            id="triangleInfo3"
+            class="info-box">
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     RULES
+     ===================================================== -->
+
+<div class="details-card">
+
+    <h2>
+        💡 Calculation Rules
+    </h2>
+
+
+    <div class="details-grid">
+
+
+        <div class="detail-box">
+
+            <strong>
+                🔤 Name Pyramid
+            </strong>
+
+            Every alphabet is converted into
+            its Chaldean value. Adjacent values
+            are added and reduced to a single
+            digit. This continues until two
+            numbers remain.
+
+            <br><br>
+
+            The final two numbers are joined
+            without further reduction.
+
+        </div>
+
+
+        <div class="detail-box">
+
+            <strong>
+                📅 DOB Pyramid
+            </strong>
+
+            The DOB is ALWAYS arranged as:
+
+            <br><br>
+
+            <strong>DDMMYYYY</strong>
+
+            <br><br>
+
+            Adjacent digits are added and
+            reduced to one digit at every level
+            until two numbers remain.
+
+        </div>
+
+
+        <div class="detail-box">
+
+            <strong>
+                🔺 Three Original Triangles
+            </strong>
+
+            Top = Mulank
+
+            <br>
+
+            Bottom Left = Bhagyank
+
+            <br>
+
+            Bottom Right:
+
+            <br>
+
+            1st / 7th / Last alphabet
+            Chaldean value.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     CHALDEAN REFERENCE
+     ===================================================== -->
+
+<div class="reference-card">
+
+    <h2>
+        📖 Chaldean Numerology Reference
+    </h2>
+
+
+    <table class="reference-table">
+
+        <thead>
+
+            <tr>
+                <th>Number</th>
+                <th>Alphabets</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+                <td>1</td>
+                <td>A, I, J, Q, Y</td>
+            </tr>
+
+            <tr>
+                <td>2</td>
+                <td>B, K, R</td>
+            </tr>
+
+            <tr>
+                <td>3</td>
+                <td>C, G, L, S</td>
+            </tr>
+
+            <tr>
+                <td>4</td>
+                <td>D, M, T</td>
+            </tr>
+
+            <tr>
+                <td>5</td>
+                <td>E, H, N, X</td>
+            </tr>
+
+            <tr>
+                <td>6</td>
+                <td>U, V, W</td>
+            </tr>
+
+            <tr>
+                <td>7</td>
+                <td>O, Z</td>
+            </tr>
+
+            <tr>
+                <td>8</td>
+                <td>F, P</td>
+            </tr>
+
+            <tr>
+                <td>9</td>
+                <td>—</td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<div class="footer">
+
+    Pyramid Numbers Calculator • Chaldean Numerology
+
+</div>
+
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CHALDEAN MAPPING
+   ========================================================= */
+
+const chaldeanMap = {
+
+    A: 1,
+    I: 1,
+    J: 1,
+    Q: 1,
+    Y: 1,
+
+    B: 2,
+    K: 2,
+    R: 2,
+
+    C: 3,
+    G: 3,
+    L: 3,
+    S: 3,
+
+    D: 4,
+    M: 4,
+    T: 4,
+
+    E: 5,
+    H: 5,
+    N: 5,
+    X: 5,
+
+    U: 6,
+    V: 6,
+    W: 6,
+
+    O: 7,
+    Z: 7,
+
+    F: 8,
+    P: 8
+
+};
+
+
+/* =========================================================
+   CLEAN NAME
+   ========================================================= */
+
+function cleanName(name) {
+
+    return name
+        .toUpperCase()
+        .replace(/[^A-Z]/g, "");
+
+}
+
+
+/* =========================================================
+   REDUCE TO SINGLE DIGIT
+   ========================================================= */
+
+function reduceNumber(number) {
+
+    while (number > 9) {
+
+        number =
+            String(number)
+                .split("")
+                .reduce(
+                    (sum, digit) =>
+                        sum + Number(digit),
+                    0
+                );
+
+    }
+
+    return number;
+
+}
+
+
+/* =========================================================
+   GET NAME CHALDEAN VALUES
+   ========================================================= */
+
+function getNameValues(name) {
+
+    const clean =
+        cleanName(name);
+
+    const values = [];
+
+    for (
+        let i = 0;
+        i < clean.length;
+        i++
+    ) {
+
+        const value =
+            chaldeanMap[clean[i]];
+
+        if (value !== undefined) {
+
+            values.push(value);
+
+        }
+
+    }
+
+    return {
+        clean: clean,
+        values: values
+    };
+
+}
+
+
+/* =========================================================
+   BUILD PYRAMID
+   ========================================================= */
+
+function buildPyramid(firstRow) {
+
+    const rows = [];
+
+    let current =
+        [...firstRow];
+
+    rows.push([...current]);
+
+
+    while (current.length > 2) {
+
+        const next = [];
+
+        for (
+            let i = 0;
+            i < current.length - 1;
+            i++
+        ) {
+
+            const sum =
+                current[i] +
+                current[i + 1];
+
+            const reduced =
+                reduceNumber(sum);
+
+            next.push(reduced);
+
+        }
+
+        current = next;
+
+        rows.push([...current]);
+
+    }
+
+
+    let pyramidNumber = "—";
+
+
+    if (current.length === 2) {
+
+        pyramidNumber =
+            String(current[0]) +
+            String(current[1]);
+
+    }
+
+    else if (current.length === 1) {
+
+        pyramidNumber =
+            String(current[0]);
+
+    }
+
+
+    return {
+        rows: rows,
+        pyramidNumber: pyramidNumber
+    };
+
+}
+
+
+/* =========================================================
+   DISPLAY PYRAMID
+   ========================================================= */
+
+function renderPyramidRows(
+    containerId,
+    rows
+) {
+
+    const container =
+        document.getElementById(
+            containerId
+        );
+
+    container.innerHTML = "";
+
+
+    rows.forEach(
+        (row, index) => {
+
+            const rowDiv =
+                document.createElement(
+                    "div"
+                );
+
+            rowDiv.className =
+                "pyramid-row";
+
+
+            row.forEach(
+                number => {
+
+                    const cell =
+                        document.createElement(
+                            "div"
+                        );
+
+                    cell.className =
+                        "pyramid-cell";
+
+                    cell.textContent =
+                        number;
+
+                    rowDiv.appendChild(
+                        cell
+                    );
+
+                }
+            );
+
+
+            container.appendChild(
+                rowDiv
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   NAME PYRAMID
+   ========================================================= */
+
+function calculateNamePyramid(name) {
+
+    const result =
+        getNameValues(name);
+
+
+    if (
+        result.values.length === 0
+    ) {
+
+        document.getElementById(
+            "namePyramidResult"
+        ).textContent = "—";
+
+        document.getElementById(
+            "namePyramidDisplay"
+        ).innerHTML = "";
+
+        document.getElementById(
+            "namePyramidFormula"
+        ).innerHTML = "";
+
+        return null;
+
+    }
+
+
+    const pyramid =
+        buildPyramid(
+            result.values
+        );
+
+
+    document.getElementById(
+        "namePyramidResult"
+    ).textContent =
+        pyramid.pyramidNumber;
+
+
+    renderPyramidRows(
+        "namePyramidDisplay",
+        pyramid.rows
+    );
+
+
+    document.getElementById(
+        "namePyramidFormula"
+    ).innerHTML =
+
+        "<strong>" +
+        result.clean +
+        "</strong> → Chaldean Values → " +
+
+        "Adjacent Addition → Single Digit Reduction → " +
+
+        "<strong>Final: " +
+        pyramid.pyramidNumber +
+        "</strong>";
+
+
+    return {
+        clean: result.clean,
+        values: result.values,
+        pyramid: pyramid
+    };
+
+}
+
+
+/* =========================================================
+   IMPORTANT:
+   GET DOB DIGITS IN DDMMYYYY ORDER
+   ========================================================= */
+
+function getDOBDigits(dateString) {
+
+    if (!dateString) {
+        return [];
+    }
+
+
+    /*
+       Browser date input stores:
+
+       YYYY-MM-DD
+
+       Example:
+
+       1988-07-25
+
+       But our Pyramid calculation MUST use:
+
+       DDMMYYYY
+
+       Therefore:
+
+       25.07.1988
+
+       becomes:
+
+       25071988
+    */
+
+
+    const parts =
+        dateString.split("-");
+
+
+    if (parts.length !== 3) {
+        return [];
+    }
+
+
+    const year =
+        parts[0];
+
+    const month =
+        parts[1];
+
+    const day =
+        parts[2];
+
+
+    const ddmmyyyy =
+        day +
+        month +
+        year;
+
+
+    return ddmmyyyy
+        .split("")
+        .map(Number);
+
+}
+
+
+/* =========================================================
+   GET FORMATTED DOB
+   ========================================================= */
+
+function getFormattedDOB(dateString) {
+
+    if (!dateString) {
+        return "";
+    }
+
+
+    const parts =
+        dateString.split("-");
+
+
+    if (parts.length !== 3) {
+        return "";
+    }
+
+
+    return (
+        parts[2] +
+        "." +
+        parts[1] +
+        "." +
+        parts[0]
+    );
+
+}
+
+
+/* =========================================================
+   DOB PYRAMID
+   ========================================================= */
+
+function calculateDOBPyramid(dateString) {
+
+    if (!dateString) {
+
+        document.getElementById(
+            "dobPyramidResult"
+        ).textContent = "—";
+
+        document.getElementById(
+            "dobPyramidDisplay"
+        ).innerHTML = "";
+
+        document.getElementById(
+            "dobPyramidFormula"
+        ).innerHTML = "";
+
+        return null;
+
+    }
+
+
+    /*
+       IMPORTANT:
+
+       This now starts from DDMMYYYY.
+    */
+
+    const digits =
+        getDOBDigits(dateString);
+
+
+    const pyramid =
+        buildPyramid(digits);
+
+
+    document.getElementById(
+        "dobPyramidResult"
+    ).textContent =
+        pyramid.pyramidNumber;
+
+
+    renderPyramidRows(
+        "dobPyramidDisplay",
+        pyramid.rows
+    );
+
+
+    const formattedDate =
+        getFormattedDOB(
+            dateString
+        );
+
+
+    document.getElementById(
+        "dobPyramidFormula"
+    ).innerHTML =
+
+        "<strong>" +
+        formattedDate +
+        "</strong> → DDMMYYYY → " +
+
+        "Adjacent Addition → Single Digit Reduction → " +
+
+        "<strong>Final: " +
+        pyramid.pyramidNumber +
+        "</strong>";
+
+
+    return {
+        digits: digits,
+        pyramid: pyramid
+    };
+
+}
+
+
+/* =========================================================
+   MULANK
+   ========================================================= */
+
+function calculateMulank(dateString) {
+
+    if (!dateString) {
+        return null;
+    }
+
+
+    const parts =
+        dateString.split("-");
+
+
+    const day =
+        Number(parts[2]);
+
+
+    return reduceNumber(day);
+
+}
+
+
+/* =========================================================
+   BHAGYANK
+   ========================================================= */
+
+function calculateBhagyank(dateString) {
+
+    if (!dateString) {
+        return null;
+    }
+
+
+    /*
+       Bhagyank is calculated from
+       the complete DOB.
+
+       The sum is mathematically
+       independent of digit order.
+    */
+
+    const digits =
+        getDOBDigits(dateString);
+
+
+    const total =
+        digits.reduce(
+            (sum, digit) =>
+                sum + digit,
+            0
+        );
+
+
+    return reduceNumber(total);
+
+}
+
+
+/* =========================================================
+   SVG HELPER
+   ========================================================= */
+
+function createSVGElement(
+    tag,
+    attributes
+) {
+
+    const element =
+        document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            tag
+        );
+
+
+    for (
+        const key in attributes
+    ) {
+
+        element.setAttribute(
+            key,
+            attributes[key]
+        );
+
+    }
+
+
+    return element;
+
+}
+
+
+/* =========================================================
+   DRAW ORIGINAL TRIANGLE
+   ========================================================= */
+
+function drawTriangle(
+    svgId,
+    topNumber,
+    leftNumber,
+    rightNumber,
+    rightLabel
+) {
+
+    const svg =
+        document.getElementById(
+            svgId
+        );
+
+    svg.innerHTML = "";
+
+
+    /* TRIANGLE COORDINATES */
+
+    const topX = 200;
+    const topY = 48;
+
+    const leftX = 82;
+    const leftY = 245;
+
+    const rightX = 318;
+    const rightY = 245;
+
+
+    /* TRIANGLE */
+
+    const polygon =
+        createSVGElement(
+            "polygon",
+            {
+                points:
+                    `${topX},${topY} ` +
+                    `${leftX},${leftY} ` +
+                    `${rightX},${rightY}`,
+
+                class:
+                    "triangle-outline"
+            }
+        );
+
+    svg.appendChild(
+        polygon
+    );
+
+
+    /* NUMBER CIRCLES */
+
+    const positions = [
+
+        {
+            x: topX,
+            y: topY,
+            number: topNumber
+        },
+
+        {
+            x: leftX,
+            y: leftY,
+            number: leftNumber
+        },
+
+        {
+            x: rightX,
+            y: rightY,
+            number: rightNumber
+        }
+
+    ];
+
+
+    positions.forEach(
+        position => {
+
+            const circle =
+                createSVGElement(
+                    "circle",
+                    {
+                        cx: position.x,
+                        cy: position.y,
+                        r: 26,
+                        class:
+                            "triangle-circle"
+                    }
+                );
+
+            svg.appendChild(
+                circle
+            );
+
+
+            const text =
+                createSVGElement(
+                    "text",
+                    {
+                        x: position.x,
+                        y: position.y,
+                        class:
+                            "triangle-number"
+                    }
+                );
+
+            text.textContent =
+                position.number;
+
+            svg.appendChild(
+                text
+            );
+
+        }
+    );
+
+
+    /* TOP LABEL */
+
+    const topLabel =
+        createSVGElement(
+            "text",
+            {
+                x: 200,
+                y: 16,
+                class:
+                    "triangle-label"
+            }
+        );
+
+    topLabel.textContent =
+        "MULANK";
+
+    svg.appendChild(
+        topLabel
+    );
+
+
+    /* LEFT LABEL */
+
+    const leftLabel =
+        createSVGElement(
+            "text",
+            {
+                x: 82,
+                y: 284,
+                class:
+                    "triangle-label"
+            }
+        );
+
+    leftLabel.textContent =
+        "BHAGYANK";
+
+    svg.appendChild(
+        leftLabel
+    );
+
+
+    /* RIGHT LABEL */
+
+    const rightLabelElement =
+        createSVGElement(
+            "text",
+            {
+                x: 318,
+                y: 284,
+                class:
+                    "triangle-label"
+            }
+        );
+
+    rightLabelElement.textContent =
+        rightLabel;
+
+    svg.appendChild(
+        rightLabelElement
+    );
+
+
+    /* BOTTOM EXPLANATION */
+
+    const bottomText =
+        createSVGElement(
+            "text",
+            {
+                x: 200,
+                y: 316,
+                class:
+                    "triangle-value-label"
+            }
+        );
+
+    bottomText.textContent =
+        "Chaldean Value";
+
+    svg.appendChild(
+        bottomText
+    );
+
+}
+
+
+/* =========================================================
+   MAIN CALCULATION
+   ========================================================= */
+
+function calculateAll() {
+
+    const rawName =
+        document.getElementById(
+            "nameInput"
+        ).value;
+
+    const dob =
+        document.getElementById(
+            "dobInput"
+        ).value;
+
+
+    const clean =
+        cleanName(rawName);
+
+
+    if (!clean) {
+
+        alert(
+            "Please enter a name."
+        );
+
+        return;
+
+    }
+
+
+    if (!dob) {
+
+        alert(
+            "Please enter the date of birth."
+        );
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       NAME PYRAMID
+       ===================================================== */
+
+    calculateNamePyramid(
+        rawName
+    );
+
+
+    /* =====================================================
+       DOB PYRAMID
+       ===================================================== */
+
+    calculateDOBPyramid(
+        dob
+    );
+
+
+    /* =====================================================
+       MULANK & BHAGYANK
+       ===================================================== */
+
+    const mulank =
+        calculateMulank(dob);
+
+    const bhagyank =
+        calculateBhagyank(dob);
+
+
+    /* =====================================================
+       NAME LETTERS
+       ===================================================== */
+
+    const letters =
+        clean.split("");
+
+
+    const values =
+        letters.map(
+            letter =>
+                chaldeanMap[letter]
+        );
+
+
+    /* =====================================================
+       FIRST ALPHABET
+       ===================================================== */
+
+    const firstLetter =
+        letters[0];
+
+    const firstValue =
+        values[0];
+
+
+    /* =====================================================
+       SEVENTH ALPHABET
+       ===================================================== */
+
+    let seventhLetter =
+        null;
+
+    let seventhValue =
+        null;
+
+
+    if (letters.length >= 7) {
+
+        seventhLetter =
+            letters[6];
+
+        seventhValue =
+            values[6];
+
+    }
+
+
+    /* =====================================================
+       LAST ALPHABET
+       ===================================================== */
+
+    const lastLetter =
+        letters[
+            letters.length - 1
+        ];
+
+    const lastValue =
+        values[
+            values.length - 1
+        ];
+
+
+    /* =====================================================
+       TRIANGLE 1
+       ===================================================== */
+
+    drawTriangle(
+        "triangle1",
+
+        mulank,
+
+        bhagyank,
+
+        firstValue,
+
+        "1st: " +
+        firstLetter
+    );
+
+
+    document.getElementById(
+        "triangleInfo1"
+    ).innerHTML =
+
+        "<strong>Triangle 1</strong><br>" +
+
+        "Top: Mulank = " +
+        mulank +
+
+        "<br>Bottom Left: Bhagyank = " +
+        bhagyank +
+
+        "<br>Bottom Right: " +
+        firstLetter +
+        " = " +
+        firstValue;
+
+
+    /* =====================================================
+       TRIANGLE 2
+       ===================================================== */
+
+    if (
+        seventhLetter !== null
+    ) {
+
+        drawTriangle(
+            "triangle2",
+
+            mulank,
+
+            bhagyank,
+
+            seventhValue,
+
+            "7th: " +
+            seventhLetter
+        );
+
+
+        document.getElementById(
+            "triangleInfo2"
+        ).innerHTML =
+
+            "<strong>Triangle 2</strong><br>" +
+
+            "Top: Mulank = " +
+            mulank +
+
+            "<br>Bottom Left: Bhagyank = " +
+            bhagyank +
+
+            "<br>Bottom Right: " +
+            seventhLetter +
+            " = " +
+            seventhValue;
+
+    }
+
+    else {
+
+        drawTriangle(
+            "triangle2",
+
+            mulank,
+
+            bhagyank,
+
+            "—",
+
+            "7th Alphabet"
+        );
+
+
+        document.getElementById(
+            "triangleInfo2"
+        ).innerHTML =
+
+            "<strong>Triangle 2</strong><br>" +
+
+            "The name contains fewer than 7 alphabets.";
+
+    }
+
+
+    /* =====================================================
+       TRIANGLE 3
+       ===================================================== */
+
+    drawTriangle(
+        "triangle3",
+
+        mulank,
+
+        bhagyank,
+
+        lastValue,
+
+        "Last: " +
+        lastLetter
+    );
+
+
+    document.getElementById(
+        "triangleInfo3"
+    ).innerHTML =
+
+        "<strong>Triangle 3</strong><br>" +
+
+        "Top: Mulank = " +
+        mulank +
+
+        "<br>Bottom Left: Bhagyank = " +
+        bhagyank +
+
+        "<br>Bottom Right: " +
+        lastLetter +
+        " = " +
+        lastValue;
+
+}
+
+
+/* =========================================================
+   CLEAR
+   ========================================================= */
+
+function clearAll() {
+
+    document.getElementById(
+        "nameInput"
+    ).value = "";
+
+    document.getElementById(
+        "dobInput"
+    ).value = "";
+
+
+    document.getElementById(
+        "namePyramidResult"
+    ).textContent = "—";
+
+    document.getElementById(
+        "dobPyramidResult"
+    ).textContent = "—";
+
+
+    document.getElementById(
+        "namePyramidDisplay"
+    ).innerHTML = "";
+
+    document.getElementById(
+        "dobPyramidDisplay"
+    ).innerHTML = "";
+
+
+    document.getElementById(
+        "namePyramidFormula"
+    ).innerHTML = "";
+
+    document.getElementById(
+        "dobPyramidFormula"
+    ).innerHTML = "";
+
+
+    document.getElementById(
+        "triangle1"
+    ).innerHTML = "";
+
+    document.getElementById(
+        "triangle2"
+    ).innerHTML = "";
+
+    document.getElementById(
+        "triangle3"
+    ).innerHTML = "";
+
+
+    document.getElementById(
+        "triangleInfo1"
+    ).innerHTML = "";
+
+    document.getElementById(
+        "triangleInfo2"
+    ).innerHTML = "";
+
+    document.getElementById(
+        "triangleInfo3"
+    ).innerHTML = "";
+
+}
+
+
+/* =========================================================
+   LIVE NAME CALCULATION
+   ========================================================= */
+
+document.getElementById(
+    "nameInput"
+).addEventListener(
+    "input",
+    function() {
+
+        if (
+            this.value.trim() !== "" &&
+            document.getElementById(
+                "dobInput"
+            ).value !== ""
+        ) {
+
+            calculateAll();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   LIVE DOB CALCULATION
+   ========================================================= */
+
+document.getElementById(
+    "dobInput"
+).addEventListener(
+    "change",
+    function() {
+
+        if (
+            this.value !== "" &&
+            document.getElementById(
+                "nameInput"
+            ).value.trim() !== ""
+        ) {
+
+            calculateAll();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

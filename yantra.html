@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Name & DOB Energiser</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 25px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f0ff, #eef8f7);
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* =========================
+   INPUT AREA
+========================= */
+
+.input-area {
+    background: rgba(255,255,255,0.95);
+    padding: 20px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(70,50,100,0.10);
+    margin-bottom: 25px;
+}
+
+.inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.input-box label {
+    display: block;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 7px;
+    color: #574274;
+}
+
+.input-box input {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    border-radius: 10px;
+    border: 1px solid #d7cde2;
+    background: #fcfbff;
+    font-size: 16px;
+    outline: none;
+}
+
+.input-box input:focus {
+    border-color: #8065a8;
+    box-shadow: 0 0 0 3px rgba(128,101,168,0.12);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+.clear-btn {
+    background: #e5deec;
+    color: #493e55;
+}
+
+.print-btn {
+    background: #76609a;
+    color: white;
+}
+
+/* =========================
+   MATRICES
+========================= */
+
+.matrix-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.matrix-card {
+    background: rgba(255,255,255,0.97);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 8px 28px rgba(65,50,95,0.11);
+    border: 1px solid #e5deed;
+}
+
+.matrix-card h2 {
+    text-align: center;
+    margin: 0 0 15px;
+    font-size: 22px;
+    color: #513c70;
+}
+
+.matrix-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.matrix {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.matrix td {
+    height: 75px;
+    border: 2px solid #aaa4b2;
+    background: white;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 22px;
+    font-weight: 700;
+    color: #333;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 850px) {
+
+    .matrix-container {
+        grid-template-columns: 1fr;
+    }
+
+    .matrix-card {
+        max-width: 700px;
+        width: 100%;
+        margin: auto;
+    }
+}
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 12px;
+    }
+
+    .inputs {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .matrix-card {
+        padding: 14px;
+    }
+
+    .matrix-card h2 {
+        font-size: 19px;
+    }
+
+    .matrix td {
+        height: 58px;
+        font-size: 18px;
+        min-width: 48px;
+    }
+}
+
+/* =========================
+   PRINT
+========================= */
+
+@media print {
+
+    body {
+        padding: 0;
+        background: white;
+    }
+
+    .input-area {
+        display: none;
+    }
+
+    .matrix-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .matrix-card {
+        box-shadow: none;
+        border: 1px solid #999;
+    }
+
+    .matrix td {
+        background: white !important;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- INPUTS -->
+
+    <div class="input-area">
+
+        <div class="inputs">
+
+            <div class="input-box">
+
+                <label for="fullName">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="fullName"
+                    placeholder="Enter Full Name"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="input-box">
+
+                <label for="dob">
+                    Date of Birth
+                </label>
+
+                <input
+                    type="date"
+                    id="dob"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="buttons">
+
+            <button
+                class="clear-btn"
+                onclick="clearAll()">
+                Clear
+            </button>
+
+            <button
+                class="print-btn"
+                onclick="window.print()">
+                Print
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- MATRICES -->
+
+   <!-- =========================
+     MATRICES
+========================= -->
+
+<div class="matrix-container">
+
+    <!-- =========================
+         DATE OF BIRTH ENERGISER — LEFT
+    ========================== -->
+
+    <div class="matrix-card">
+
+        <h2>Date of Birth Energiser</h2>
+
+        <div class="matrix-wrapper">
+
+            <table
+                class="matrix"
+                id="dobMatrix">
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         NAME NUMBER ENERGISER — RIGHT
+    ========================== -->
+
+    <div class="matrix-card">
+
+        <h2>Name Number Energiser</h2>
+
+        <div class="matrix-wrapper">
+
+            <table
+                class="matrix"
+                id="nameMatrix">
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CHALDEAN VALUES
+========================================================= */
+
+const chaldeanValues = {
+
+    A:1,
+    I:1,
+    J:1,
+    Q:1,
+    Y:1,
+
+    B:2,
+    K:2,
+    R:2,
+
+    C:3,
+    G:3,
+    L:3,
+    S:3,
+
+    D:4,
+    M:4,
+    T:4,
+
+    E:5,
+    H:5,
+    N:5,
+    X:5,
+
+    U:6,
+    V:6,
+    W:6,
+
+    O:7,
+    Z:7,
+
+    F:8,
+    P:8
+
+};
+
+
+/* =========================================================
+   CHALDEAN NAME NUMBER
+========================================================= */
+
+function calculateChaldeanNameNumber(name) {
+
+    const letters =
+        name
+        .toUpperCase()
+        .replace(/[^A-Z]/g, "");
+
+    if (!letters) {
+        return null;
+    }
+
+    let total = 0;
+
+    for (const letter of letters) {
+
+        if (chaldeanValues[letter]) {
+            total += chaldeanValues[letter];
+        }
+
+    }
+
+    return total;
+}
+
+
+/* =========================================================
+   NAME ENERGISER 4 × 4
+========================================================= */
+
+function create4x4NameEnergiser(N) {
+
+    return [
+
+        [11, 8, N - 21, 2],
+
+        [N - 20, 1, 12, 7],
+
+        [4, N - 19, 6, 9],
+
+        [5, 10, 3, N - 18]
+
+    ];
+
+}
+
+
+/* =========================================================
+   NAME ENERGISER 5 × 5
+========================================================= */
+
+function create5x5NameEnergiser(matrix4, N) {
+
+    const matrix5 =
+        matrix4.map(row => [...row]);
+
+    const rowTotals =
+        matrix4.map(row =>
+            row.reduce(
+                (sum, value) => sum + value,
+                0
+            )
+        );
+
+    const columnTotals = [];
+
+    for (let col = 0; col < 4; col++) {
+
+        let total = 0;
+
+        for (let row = 0; row < 4; row++) {
+
+            total += matrix4[row][col];
+
+        }
+
+        columnTotals.push(total);
+
+    }
+
+
+    /* Fifth column */
+
+    for (let row = 0; row < 4; row++) {
+
+        matrix5[row].push(
+            rowTotals[row]
+        );
+
+    }
+
+
+    /*
+       Fifth row.
+       R5C5 = common value.
+       NOT grand total.
+    */
+
+    matrix5.push([
+
+        columnTotals[0],
+        columnTotals[1],
+        columnTotals[2],
+        columnTotals[3],
+        N
+
+    ]);
+
+    return matrix5;
+
+}
+
+
+/* =========================================================
+   DOB COMPONENTS
+========================================================= */
+
+function getDOBComponents(dateString) {
+
+    if (!dateString) {
+        return null;
+    }
+
+    const parts =
+        dateString.split("-");
+
+    if (parts.length !== 3) {
+        return null;
+    }
+
+    const year = parts[0];
+
+    const month =
+        Number(parts[1]);
+
+    const day =
+        Number(parts[2]);
+
+    const firstTwoYear =
+        Number(year.substring(0,2));
+
+    const lastTwoYear =
+        Number(year.substring(2,4));
+
+    return {
+
+        day,
+        month,
+        firstTwoYear,
+        lastTwoYear
+
+    };
+
+}
+
+
+/* =========================================================
+   DOB ENERGISER 4 × 4
+========================================================= */
+
+function create4x4DOBEnergiser(A, B, C, D) {
+
+    return [
+
+        [A, B, C, D],
+
+        [D + 1, C - 1, B - 3, A + 3],
+
+        [B - 2, A + 2, D + 2, C - 2],
+
+        [C + 1, D - 1, A + 1, B - 1]
+
+    ];
+
+}
+
+
+/* =========================================================
+   DOB ENERGISER 5 × 5
+========================================================= */
+
+function create5x5DOBEnergiser(matrix4) {
+
+    const matrix5 =
+        matrix4.map(row => [...row]);
+
+
+    const rowTotals =
+        matrix4.map(row =>
+            row.reduce(
+                (sum, value) => sum + value,
+                0
+            )
+        );
+
+
+    const columnTotals = [];
+
+
+    for (let col = 0; col < 4; col++) {
+
+        let total = 0;
+
+        for (let row = 0; row < 4; row++) {
+
+            total += matrix4[row][col];
+
+        }
+
+        columnTotals.push(total);
+
+    }
+
+
+    /* Fifth column */
+
+    for (let row = 0; row < 4; row++) {
+
+        matrix5[row].push(
+            rowTotals[row]
+        );
+
+    }
+
+
+    /*
+       Fifth row.
+       R5C5 = common value of
+       R5 and C5.
+       NOT grand total.
+    */
+
+    matrix5.push([
+
+        columnTotals[0],
+        columnTotals[1],
+        columnTotals[2],
+        columnTotals[3],
+
+        rowTotals[0]
+
+    ]);
+
+
+    return matrix5;
+
+}
+
+
+/* =========================================================
+   DISPLAY MATRIX
+========================================================= */
+
+function displayMatrix(tableId, matrix) {
+
+    const table =
+        document.getElementById(tableId);
+
+    table.innerHTML = "";
+
+
+    matrix.forEach(row => {
+
+        const tr =
+            document.createElement("tr");
+
+
+        row.forEach(value => {
+
+            const td =
+                document.createElement("td");
+
+            td.textContent = value;
+
+            tr.appendChild(td);
+
+        });
+
+
+        table.appendChild(tr);
+
+    });
+
+}
+
+
+/* =========================================================
+   CALCULATE NAME
+========================================================= */
+
+function calculateName() {
+
+    const name =
+        document.getElementById("fullName")
+        .value
+        .trim();
+
+    if (!name) {
+
+        document.getElementById("nameMatrix")
+            .innerHTML = "";
+
+        return;
+
+    }
+
+
+    const N =
+        calculateChaldeanNameNumber(name);
+
+
+    if (N === null) {
+        return;
+    }
+
+
+    const matrix4 =
+        create4x4NameEnergiser(N);
+
+
+    const matrix5 =
+        create5x5NameEnergiser(
+            matrix4,
+            N
+        );
+
+
+    displayMatrix(
+        "nameMatrix",
+        matrix5
+    );
+
+}
+
+
+/* =========================================================
+   CALCULATE DOB
+========================================================= */
+
+function calculateDOB() {
+
+    const dob =
+        document.getElementById("dob")
+        .value;
+
+
+    if (!dob) {
+
+        document.getElementById("dobMatrix")
+            .innerHTML = "";
+
+        return;
+
+    }
+
+
+    const components =
+        getDOBComponents(dob);
+
+
+    if (!components) {
+        return;
+    }
+
+
+    const A =
+        components.day;
+
+    const B =
+        components.month;
+
+    const C =
+        components.firstTwoYear;
+
+    const D =
+        components.lastTwoYear;
+
+
+    const matrix4 =
+        create4x4DOBEnergiser(
+            A,
+            B,
+            C,
+            D
+        );
+
+
+    const matrix5 =
+        create5x5DOBEnergiser(
+            matrix4
+        );
+
+
+    displayMatrix(
+        "dobMatrix",
+        matrix5
+    );
+
+}
+
+
+/* =========================================================
+   CALCULATE BOTH
+========================================================= */
+
+function calculateAll() {
+
+    calculateName();
+
+    calculateDOB();
+
+}
+
+
+/* =========================================================
+   CLEAR
+========================================================= */
+
+function clearAll() {
+
+    document.getElementById("fullName")
+        .value = "";
+
+    document.getElementById("dob")
+        .value = "";
+
+    document.getElementById("nameMatrix")
+        .innerHTML = "";
+
+    document.getElementById("dobMatrix")
+        .innerHTML = "";
+
+}
+
+
+/* =========================================================
+   LIVE CALCULATION
+========================================================= */
+
+document.getElementById("fullName")
+    .addEventListener(
+        "input",
+        calculateName
+    );
+
+
+document.getElementById("dob")
+    .addEventListener(
+        "change",
+        calculateDOB
+    );
+
+</script>
+
+</body>
+</html>

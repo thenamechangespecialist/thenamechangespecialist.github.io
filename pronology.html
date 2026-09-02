@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Name Change Specialist — Name Numerology Calculator</title>
+<style>
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #f3f8f3, #fff8df);
+    min-height: 100vh;
+    padding: 30px 15px;
+    color: #222;
+}
+.container { max-width: 1100px; margin: auto; }
+.header { text-align: center; margin-bottom: 25px; }
+.header h1 {
+    margin: 0;
+    font-size: 34px;
+    color: #166534;
+}
+.header p { color: #8a6a00; font-size: 17px; font-weight: bold; }
+.input-box, .card {
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.08);
+}
+.input-box { padding: 25px; margin-bottom: 25px; }
+label { display: block; font-size: 18px; font-weight: bold; margin-bottom: 10px; color:#166534; }
+input {
+    width: 100%; padding: 16px; font-size: 22px;
+    border: 2px solid #d9c878; border-radius: 12px; outline: none;
+}
+input:focus { border-color: #8a6a00; }
+.results { display:grid; grid-template-columns:repeat(2,1fr); gap:25px; }
+.card { padding:25px; border-top:6px solid #d4af37; }
+.card h2 { margin-top:0; text-align:center; font-size:25px; }
+.chaldean h2 { color:#9b6500; }
+.pythagorean h2 { color:#1769aa; }
+.name-display { text-align:center; font-size:22px; font-weight:bold; margin:15px 0 25px; min-height:28px; }
+.summary { text-align:center; }
+.total { font-size:24px; margin-bottom:16px; }
+.compound { font-size:18px; color:#8a6a00; font-weight:bold; margin-bottom:12px; }
+.final-label { font-size:16px; color:#666; margin-bottom:8px; }
+.final-number {
+    display:inline-flex; width:70px; height:70px; border-radius:50%;
+    align-items:center; justify-content:center; font-size:30px;
+    font-weight:bold; background:#166534; color:white;
+}
+.formula { margin-top:15px; font-size:15px; color:#777; }
+.interpretation {
+    margin-top:22px; padding:18px; border-radius:14px;
+    background:linear-gradient(135deg,#f6fff7,#fffbed);
+    border:1px solid #e1cf7a; text-align:left;
+}
+.interpretation h3 { margin:0 0 12px; color:#8a6a00; font-size:19px; }
+.interpretation ul { margin:0; padding-left:20px; }
+.interpretation li { margin:7px 0; line-height:1.45; }
+.clear-btn {
+    display:block; margin:25px auto 0; padding:12px 28px;
+    border:none; border-radius:10px; background:#166534;
+    color:white; cursor:pointer; font-size:16px;
+}
+.clear-btn:hover { opacity:.85; }
+.note { text-align:center; margin-top:22px; font-size:13px; color:#666; }
+@media (max-width:700px) {
+    .results { grid-template-columns:1fr; }
+    .header h1 { font-size:27px; }
+}
+
+.sound-analysis {
+    margin-top: 22px;
+    padding: 18px;
+    border-radius: 14px;
+    background: linear-gradient(135deg,#f6fff7,#fffbed);
+    border: 1px solid #e1cf7a;
+    text-align: left;
+}
+.sound-analysis h3 {
+    margin: 0 0 12px;
+    color: #8a6a00;
+    font-size: 19px;
+}
+.sound-item {
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 10px;
+    line-height: 1.45;
+}
+.sound-good { background: #e9f7ec; border-left: 5px solid #166534; }
+.sound-bad { background: #fff0f0; border-left: 5px solid #b91c1c; }
+.sound-neutral { background: #f4f4f4; border-left: 5px solid #888; }
+.sound-label { font-weight: bold; }
+.sound-good .sound-label { color:#166534; }
+.sound-bad .sound-label { color:#b91c1c; }
+.sound-note { font-size:13px; color:#666; margin-top:10px; }
+
+
+.sound-analysis {
+    margin-top: 22px;
+    padding: 18px;
+    border-radius: 14px;
+    background: linear-gradient(135deg,#f6fff7,#fffbed);
+    border: 1px solid #e1cf7a;
+    text-align: left;
+}
+.sound-analysis h3 {
+    margin: 0 0 14px;
+    color:#8a6a00;
+    font-size:19px;
+}
+.sound-item {
+    padding:14px;
+    margin:10px 0;
+    border-radius:10px;
+    line-height:1.5;
+}
+.sound-good {
+    background:#e9f7ec;
+    border:2px solid #166534;
+}
+.sound-bad {
+    background:#fff0f0;
+    border:2px solid #b91c1c;
+}
+.sound-neutral {
+    background:#f4f4f4;
+    border:1px solid #aaa;
+}
+.sound-match {
+    font-size:20px;
+    font-weight:800;
+}
+.sound-good .sound-match { color:#166534; }
+.sound-bad .sound-match { color:#b91c1c; }
+.matched-sound {
+    display:inline-block;
+    padding:3px 9px;
+    border-radius:7px;
+    background:#fff;
+    border:2px solid currentColor;
+}
+.sound-interpretation {
+    margin-top:6px;
+    font-size:15px;
+}
+.name-good-highlight {
+    color:#166534;
+    background:#dcfce7;
+    border:2px solid #166534;
+    border-radius:6px;
+    padding:2px 5px;
+}
+.name-bad-highlight {
+    color:#b91c1c;
+    background:#fee2e2;
+    border:2px solid #b91c1c;
+    border-radius:6px;
+    padding:2px 5px;
+}
+
+
+.name-medical-highlight { color:#7a5200; background:#fff1b8; border:2px solid #b8860b; border-radius:6px; padding:2px 5px; }
+.sound-medical { border-color:#b8860b; color:#7a5200; }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>✨ The Name Change Specialist</h1>
+        <p>Name Numerology Calculator — Chaldean &amp; Pythagorean</p>
+    </div>
+
+    <div class="input-box">
+        <label for="nameInput">Enter Name</label>
+        <input type="text" id="nameInput" placeholder="Type your name here..." autocomplete="off">
+        <button class="clear-btn" onclick="clearName()">Clear</button>
+    </div>
+
+    <div class="results">
+        <div class="card chaldean">
+            <h2>🔶 Chaldean Numerology</h2>
+            <div class="name-display" id="chaldeanName">—</div>
+            <div class="summary">
+                <div class="total">Total: <strong id="chaldeanTotal">0</strong></div>
+                <div class="compound" id="chaldeanCompound">Compound Number: —</div>
+                <div class="final-label">Final Number</div>
+                <div class="final-number" id="chaldeanFinal">0</div>
+                <div class="formula" id="chaldeanFormula">—</div>
+                <div class="interpretation">
+                    <h3 id="chaldeanTitle">Compound Number Interpretation</h3>
+                    <ul id="chaldeanInterpretation"><li>Start typing your name...</li></ul>
+                </div>
+                <div class="sound-analysis">
+                    <h3>🔊 Pronology — Good &amp; Bad Sounds</h3>
+                    <div id="soundResults">
+                        <div class="sound-item sound-neutral">Start typing your name to check the sounds in the name...</div>
+                    </div>
+                    <div class="sound-note">Good and bad sounds are highlighted from the entered spelling.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card pythagorean">
+            <h2>🔷 Pythagorean Numerology</h2>
+            <div class="name-display" id="pythagoreanName">—</div>
+            <div class="summary">
+                <div class="total">Total: <strong id="pythagoreanTotal">0</strong></div>
+                <div class="compound" id="pythagoreanCompound">Compound Number: —</div>
+                <div class="final-label">Final Number</div>
+                <div class="final-number" id="pythagoreanFinal">0</div>
+                <div class="formula" id="pythagoreanFormula">—</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="note">
+        Compound-number interpretations are displayed for Chaldean Numerology only.
+    </div>
+</div>
+
+<script>
+const chaldean = {
+    A:1,B:2,C:3,D:4,E:5,F:8,G:3,H:5,I:1,J:1,K:2,L:3,M:4,
+    N:5,O:7,P:8,Q:1,R:2,S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7
+};
+
+const pythagorean = {
+    A:1,B:2,C:3,D:4,E:5,F:6,G:7,H:8,I:9,
+    J:1,K:2,L:3,M:4,N:5,O:6,P:7,Q:8,R:9,
+    S:1,T:2,U:3,V:4,W:5,X:6,Y:7,Z:8
+};
+
+/* Source-derived compound-number interpretations: 1–108 */
+const interpretations = {
+        1: [
+            "but it is not",
+            "advisable to use this number."
+        ],
+        2: [
+            "Lack of self confidence",
+            "Fear and anxiety",
+            "Good imagination",
+            "Wasted life and missed opportunities",
+            "Really care name, still not helpful though"
+        ],
+        3: [
+            "Spiritual and strong intelligence",
+            "Honest and optimistic",
+            "Good in academics",
+            "Creativity and abundance",
+            "Self made person",
+            "Overall good name except no. 6 ones"
+        ],
+        4: [
+            "and"
+        ],
+        5: [
+            "Name and fame",
+            "Multitalented",
+            "Mindset of getting pleasure and comfort",
+            "Divine grace and knack of getting money"
+        ],
+        6: [
+            "people"
+        ],
+        7: [
+            "This is like onion. There is too much layers",
+            "You are like onion, comprised of multiple layers",
+            "Amazing mental capacities. You are like of knowledge",
+            "Your personal life may not be good",
+            "Always searching for deeper meaning",
+            "You are smart, learned, intelligent yet struggling to get deserving success",
+            "Better to avoid this name for happy, Overall life family issue",
+            "Frequent change in life, No family pleasure, person with their own goals in life",
+            "Mass support for public life, Superb counsellors, efforts will not produce",
+            "the desired results"
+        ],
+        8: [
+            "Complete influence of Saturn hence struggle",
+            "Dangers and accidents",
+            "Turn towards spirituality to bring harmony and meaning to life",
+            "Not at all good for Prominent 1’s and 4’s"
+        ],
+        9: [
+            "person"
+        ],
+        10: [
+            "No shortage of wealth, Fluctuations",
+            "Ex: Shahid Afridi- Jersey No.10",
+            "Fluctuations, Its pleasure to be with these people",
+            "Better no than standalone 1",
+            "Attentions – Never ever shout on low class, maintain honesty"
+        ],
+        11: [
+            "Liable to be let down by friend and relatives",
+            "Honest",
+            "Faith or not faith in God decides the destiny?",
+            "Be careful in money matters",
+            "Danger with water, careful with accidents",
+            "In many jobs / business"
+        ],
+        12: [
+            "Wonder-stuck with oratory skills, Honest",
+            "Sharing difficulty of others by shouldering their burdens",
+            "Working for welfare",
+            "Tend towards social causes",
+            "Initial trouble later prosperous",
+            "Good number for NGO’s",
+            "Don’t use for"
+        ],
+        13: [
+            "Mis-Luck",
+            "Never ever go for extra marital affair",
+            "Life with struggles",
+            "Men of this number have bitter experiences and face a lot",
+            "of difficulties because of women",
+            "Though these people manage to come up in life materially, they would still lead sad lives, full of struggles"
+        ],
+        14: [
+            "Successful in many trades and meet lot of people",
+            "Friends, Colorful life, parties, Travel",
+            "Not easy to handle and won’t settle easily",
+            "If you are in business, take your product at which no.?",
+            "Problems and disappointments by T factor",
+            "Marriage matters-Be very careful or ready to repent"
+        ],
+        15: [
+            "Presentable, Neat and clean",
+            "Gift of the gab and Personal Magnetism",
+            "More than one source of income",
+            "Determination to succeed",
+            "Fame and wealth",
+            "Theme of the life: Relationship",
+            "No 3s should avoid"
+        ],
+        16: [
+            "Good beginning but poor end",
+            "It shows a fall from power, grace, office, position",
+            "Unexpected shock or catastrophe",
+            "Good number for Creativity / Research",
+            "This number severely impacts those with a prominent"
+        ],
+        17: [
+            "Leader",
+            "Honest",
+            "Take person to great heights",
+            "Strong willpower, creativity",
+            "Initiator",
+            "Ego",
+            "Willpower",
+            "Ambition"
+        ],
+        18: [
+            "Number of extremes",
+            "Though some 18s are extremely successful(same is seen in",
+            "1 and 8 combination)",
+            "Their success will be seen as hollow",
+            "Procrastination / delay in all matters",
+            "Selfishness"
+        ],
+        19: [
+            "The number indicates the RISING SUN",
+            "Successful completion of any endeavor",
+            "Position, status, happiness, success and wealth will be on a continuous rise.",
+            "They get good life partners",
+            "Profession – shine well in politics, admin work, army, social work"
+        ],
+        20: [
+            "Artist, Creative, Emotional, Peace-lover Profession – Medicine",
+            "Caution – Anger and self interest should be managed Avoid giving this no’s for"
+        ],
+        21: [
+            "Self centeredness-Own happiness and matters profitable to them",
+            "With growing age you grow in both wealth and wisdom",
+            "You are cunning, you are planner and achiever",
+            "You go beyond the limit to achieve your goals"
+        ],
+        22: [
+            "They don’t want to listen too many suggestions",
+            "Self destructions - You loose out your things because of your own ways of working",
+            "Humiliations and Vyasan",
+            "Evil forces",
+            "They are good administrators",
+            "Positive – Multidimensional and multitalented",
+            "Dominant 8, 9 ( Health issue)"
+        ],
+        23: [
+            "Luck number",
+            "Getting success in what they aspire for",
+            "Earn good reputation over the period of time",
+            "Royalty associated",
+            "Superior support",
+            "Downside?",
+            "Profession – Politics, Business, Transport and commission work"
+        ],
+        24: [
+            "Partner from higher background / status",
+            "Man gets rich / dignified / famous wife and vice versa as",
+            "well",
+            "Business expansion",
+            "It’s quite good to have them as a friend",
+            "Profession – Media, Politics, Social work, Defense / Police / Military"
+        ],
+        25: [
+            "Your social life will have glamour effect and personal life will have dullness",
+            "Lose your hard earned money",
+            "Trials and Tribulations",
+            "Earn international fame and reputations"
+        ],
+        26: [
+            "Losses due to partnership and friends",
+            "Be cautious in investment matters",
+            "Business and professions are adversely affected due to indirect enemies",
+            "False promises"
+        ],
+        27: [
+            "Equally good as 24",
+            "Authority, power and command",
+            "Don’t be submissive",
+            "Your spouse will get wealth due to you",
+            "They work for welfare of others and social service",
+            "Profession – Army, Healing, Occult science"
+        ],
+        28: [
+            "They may have to start their life again and again",
+            "Struggles, challenges, court cases, bad luck, failures",
+            "Hard earned money may be lost unexpectedly",
+            "Earning wealth and loosing it",
+            "Though these numbers have power of"
+        ],
+        29: [
+            "Trouble due to opposite sex, marital bliss",
+            "When they find one recessive, they try to bully",
+            "Involvement in police complaints",
+            "Strong willpower, creativity",
+            "Remedy- Don’t try to bull anyone"
+        ],
+        30: [
+            "understands and helps others easily",
+            "They don’t make compromise for the fame, ego"
+        ],
+        31: [
+            "You are non-conventional",
+            "You are business lover",
+            "You love freedom of speech and act",
+            "They always love to be independent and fly like free birds",
+            "They don’t want to listen others",
+            "Some of them give up family life",
+            "Spirituality, Yoga, Occult sciences"
+        ],
+        32: [
+            "This is a magical name, Unique ideas and technique",
+            "Ability to discover new techniques and implement these ideas",
+            "They have good intelligence and have an impressive appearance",
+            "Good speaking skills",
+            "They will attain positions in life and will be youthful in appearance even in old age",
+            "By attraction they get popular support",
+            "Their words became true, so don’t tell about anyone wrong",
+            "They are treasure of knowledge",
+            "They like roman watches mostly, because those attracts more",
+            "Little bit ups and downs in life",
+            "It is advisable that they shouldn’t listen to more people",
+            "They attract variety of people"
+        ],
+        33: [
+            "Ashta Laxmi",
+            "Astrology, Medicine and Spiritual, Wisdom",
+            "They get all kinds of wealth like gold, money, house, vehicle and such",
+            "They get money in many ways and means",
+            "Prosperity will always be on rise",
+            "Life will be full of luxury, everlasting wealth",
+            "They are good in education, well travelled, gifted talkers",
+            "Good vehicle"
+        ],
+        34: [
+            "It is very easy for 34 no. people to earn money, quite easily money will come but some strange habits give them issue",
+            "Confusion, specially related to home activities",
+            "They get addicted in sexual and materialistic things"
+        ],
+        35: [
+            "Issues due to friends and associates",
+            "They will adopt immoral ways in order to earn money",
+            "Trials and tribulations, Litigations",
+            "This name number brings all danger and losses like bad reputation",
+            "Health issue – nervous or stomach related",
+            "It is found that the center of the house (Brahmsthan) of these people disturbed"
+        ],
+        36: [
+            "If they will stay in home town they will struggle, if they will go away from home town then succeed – Choice of them",
+            "They have to go away from home town to get success",
+            "Profession – Good number for Sports and Admin jobs"
+        ],
+        37: [
+            "Get benefit from opposite sex",
+            "It brings success in love",
+            "Enjoy high and dignified position in the society",
+            "Even if they struggle in starting, they will make up in the end",
+            "They have an attractive appearance",
+            "Wealth is constantly rise",
+            "Unexpected success, they are known for their looks and attractions",
+            "These persons may have to live far from their father",
+            "At right expectation if the person get good position in life, shouldn’t be very ambitious or egoistic otherwise the power of this number won’t work"
+        ],
+        38: [
+            "Good number for public life",
+            "They get support of big shots",
+            "They may have to suffer because of unexpected dangers that jumps on them suddenly or because of indirect enemies",
+            "Accident chance in later stage of life",
+            "They grow with a good rate and they earn wealth and fame Even if a very humble being, they may get injured, blood related issue, end of life is troublesome"
+        ],
+        39: [
+            "Name and fame",
+            "They work for other’s welfare",
+            "Hardworking",
+            "Good contacts in abroad or they get clients from abroad",
+            "They have the longing for money in 3 series (make sure",
+            "you earn right ways, Good success in later part of life)"
+        ],
+        40: [
+            "This number give good amount of wealth (sudden flow of money)",
+            "Good confidence and intelligence",
+            "Later part of life they will lose all their money and in neglecting",
+            "life becomes fruitless and in vein"
+        ],
+        41: [
+            "Success in al endeavors",
+            "Power to govern",
+            "Triumph over competition",
+            "Good number for international fame",
+            "Leader respected by masses",
+            "If you are in small organization, everyone know by their name"
+        ],
+        42: [
+            "Good number to fulfill endeavor",
+            "Do good in politics, Social wealth, arts, mass media, public life",
+            "Good number to cure any illness",
+            "Good physique and looks, charismatic",
+            "Power to subdue others",
+            "Special Tip?"
+        ],
+        43: [
+            "Dual, Fickle mind, and confusions",
+            "Speaking and writing, imagination",
+            "Trial, Tribulations and Revolutionary changes",
+            "Frequent changes in profession",
+            "Family life is not quite peaceful / shaky"
+        ],
+        44: [
+            "Shoulder family burden",
+            "Honest",
+            "This number indicates that they will have to spend some time in prison",
+            "End is drastic and not so happy",
+            "Physical illness and mental affliction"
+        ],
+        45: [
+            "They get good name, fame and position",
+            "They keep their cards near to their chest",
+            "Good number to protect from illness",
+            "It indicates a strong body and a strong willpower",
+            "Happy life and good amount of wealth",
+            "Brilliant at running large organizations"
+        ],
+        46: [
+            "Symbol of success, luck, wealth, knowledge and international fame",
+            "Even if you are born in small family, with time your success stories will be talk of town",
+            "Divine support",
+            "They generally get good life partner and blessed by good children",
+            "Will reach to the topmost position of whatever profession"
+        ],
+        47: [
+            "Ability to think out of the box",
+            "Sudden richness, sudden growth, even ordinary person",
+            "can become rich",
+            "Great at solving typical issues",
+            "Concerned about their own progress and will not rest until",
+            "its completed",
+            "Good in money related things"
+        ],
+        48: [
+            "Welfare of others.",
+            "They will do a lot of work for public welfare",
+            "Will engage in public service but have to face stiff opposition",
+            "Over extending, feeling burdened and struggling, trying to do much by shouldering all the work",
+            "Taking up task beyond capability",
+            "Earning money and wealth but loosing it, fate is not that good"
+        ],
+        49: [
+            "Sudden money, immovable",
+            "Celebration, freedom, rejoicing over success, Eventful life",
+            "Travelling, Sudden fortunes and prosperity",
+            "Even accident will happen suddenly",
+            "Gives good imagination"
+        ],
+        50: [
+            "Orator ship, Intelligence, Imagination",
+            "Excel in education, Good in analysis",
+            "They earn through writing and speaking skills",
+            "Multilingual",
+            "Gets straight to the point, don’t beat around bush"
+        ],
+        51: [
+            "Sudden prosperity, money from unexpected source",
+            "Even person is ordinary he will become great",
+            "Dynamic",
+            "They keep on working, forgetting rest, food and sleep",
+            "Like wealth, position and fame, power and self confidence, magnetic body",
+            "Wide circle of friends and relatives"
+        ],
+        52: [
+            "Loving, tender hearted, intuitive, psychology",
+            "Indicates great fame and popularity",
+            "Their speech is full of life, they are source of inspiration to others",
+            "They become internationally renowned",
+            "Revolutionary qualities",
+            "A gifted counselor and a caring friend"
+        ],
+        53: [
+            "They are disappointed in partnership ventures",
+            "They become famous when they take up social service",
+            "They master esoteric arts like magic, yoga, mastery of arts",
+            "and controlling the spirits",
+            "They posses extraordinary",
+            "It represents courage and determination to succeed no",
+            "matter what opposition or obstacle lies ahead",
+            "They achieve success after hard work"
+        ],
+        54: [
+            "Less freedom and more control of others",
+            "Struggle in beginning and merry in the end is theme of the life",
+            "High fluctuations in life, good orator ship skills",
+            "They may begin their lives with prestige, reputations and prosperity",
+            "Becoming too wisely and holding lot of things so stomach issues can be seen as well, Accumulate the wealth",
+            "Tip: Stay away from greed and proud, impulsive decision and adamantness"
+        ],
+        55: [
+            "Partnership ventures are not suitable to them",
+            "Independent business is suitable",
+            "They are great in counselling people",
+            "They have a broad knowledge spread over many fields will bring victory over enemies",
+            "Scholars",
+            "People under this number will astonish others by their knowledge and win them over will power and intuitive knowledge"
+        ],
+        56: [
+            "This number is full of happenings to bring fortune and fame",
+            "Frequent changes in life",
+            "Mental conflict in them",
+            "Stay away from temptation and unrealistic projects"
+        ],
+        57: [
+            "Person running into race so well and in the end loosing it with quite a margin,",
+            "Don’t do capital related work",
+            "They have to be deliberate in making any decision whatsoever",
+            "Profession: Cinema theatres, printing presses, coal and iron mining, painting, making of furniture and sports goods and organizing contests will earn them good income",
+            "Hiring out vehicles like buses, lorries and cars will also be rewarding",
+            "Banking",
+            "Their minds will go astray in bad ways"
+        ],
+        58: [
+            "Outstanding popularity and power to captivate",
+            "Mass appeal and High status",
+            "Dryness in life",
+            "Sexual desire"
+        ],
+        59: [
+            "Research mind and high speed thinking",
+            "Professionals",
+            "Travelling and sports",
+            "Spontaneous",
+            "Special talent of writing",
+            "Disease - Nervous"
+        ],
+        60: [
+            "Peaceful home and a loving wife",
+            "Good in tark vitark, logical arguments",
+            "Good family life, good fortunate number",
+            "They entertain others",
+            "They have artistic talents"
+        ],
+        61: [
+            "Don’t stick on to any place whatever be their business or profession",
+            "It is good for them if they live a sedate life",
+            "They enjoy great name and fame",
+            "Their mind constantly wavers",
+            "Life is full of ups and downs"
+        ],
+        62: [
+            "These people can charm everyone easily",
+            "Generally it will give great fame, victories and a comfortable life",
+            "They don’t maintain good relationship with relatives",
+            "They are given to greed",
+            "They are tempted by anything that is attractive"
+        ],
+        63: [
+            "Trouble attractor",
+            "Their mind is never stable",
+            "Sleep during day",
+            "Stay away from unethical habits"
+        ],
+        64: [
+            "Unparalleled intelligence",
+            "They perform what cannot be performed by others and thus become very famous",
+            "They get high positions in the government",
+            "They have the privilege of being obliged by many"
+        ],
+        65: [
+            "It will earn the help of wealthy and powerful patrons",
+            "Good number for marital life",
+            "This is a great interest in spirituality",
+            "They enjoy the support and trust of the great",
+            "They have a happy and contented life",
+            "Thank You"
+        ],
+        66: [
+            "Spontaneous and eloquent skills",
+            "They should not be addicted to comfort zone they are getting",
+            "Abundant happiness, satisfaction",
+            "Good money by middle age",
+            "You are multitalented and all your talents are skills of mind",
+            "They are interested in enjoying all the pleasures in that they enjoy the friendship of the great and the support of the ruling. They are orators.",
+            "Great things just happen! Brilliant speakers, house proud, well turned out.",
+            "This number denotes dynamism and oratorical skills, perfection in the fine arts, patronage from the government authorities and also a comfortable life ."
+        ],
+        67: [
+            "Intelligent, They are famous persons",
+            "They have a mass appeal",
+            "Popular support and the support become power for them",
+            "This number brings great popularity to those in the field of cinema and other arts",
+            "They are good in scripting, acting, direction and lyrics",
+            "This is a number potent enough to give all fame to artists",
+            "Men should control their passion and lust for women",
+            "Love, affection and grace make these people endearing",
+            "They can never achieve anything if they are selfish"
+        ],
+        68: [
+            "They make profit in business and occupation related to iron,",
+            "machinery, vehicles, commission, real estate",
+            "You are always moving from one option to another",
+            "It is a fortunate number for those with a prominent 5, 8 or 9 in their birth date",
+            "He is like a performer, who keeps all the balls in continuous",
+            "motion",
+            "Caution: Stay away from greed"
+        ],
+        69: [
+            "Name number indicates success in any endeavor",
+            "They enjoy the status of a king of the society",
+            "They accumulate a large wealth",
+            "They don’t expect anyone to help them",
+            "They are their own help and succeed with their own labour",
+            "They have a majestic appearance",
+            "They overtake others and retain their position safely by their own efforts",
+            "They are known to spend money lavishly for their self satisfaction",
+            "There is a certain royalty about their speech and actions",
+            "A brilliant name for all, except for those with a prominent 3 in the birth",
+            "date. Royal Bank of Scotland & Danzel Washington are both"
+        ],
+        70: [
+            "Misfortune plagues the 70 for the first two-thirds of life",
+            "After 43 years they come across good progress and fame in life",
+            "While they have struggle and fall prey to addiction, as they grow old, they",
+            "become affluent and famous",
+            "7 is Ketu and associated with 0, it gives the entire benefits of Ketu.",
+            "They become renewed philosophers, they are interested in spiritualism",
+            "They are respected by foreigners",
+            "They have nobility of character and discipline",
+            "They are knowledgeable even while young",
+            "They words are prophetic, they become wise",
+            "The fame is always growing"
+        ],
+        71: [
+            "This number is synonymous with the intelligent person. They are men of intelligent thoughts. They shape the thoughts of the world of thoughts. They resolve the problems of many. They take up mission related to places or worship like renovation of temples. The beginning of life is full of struggle. As they proceed in life, they get one success after the other. They acquire wealth by many means. They take up charitable and benevolent acts wholeheartedly. They have the luck of making money by writing and speaking. They become famous as artistes. They get high positions and fame. There is great danger from indirect enemies. It indicates extraordinary wisdom. They are the light of wisdom. They are impatient and prone to anger. There is a certain speed and haste about their actions. They take up great endeavors and fail. They can be easily cheated."
+        ],
+        72: [
+            "Quite a good number in 9 series",
+            "Good Name number for material success",
+            "This number has great potential and administrative ability. They progress in life with their own efforts.",
+            "They accumulate property like house, vehicle and lands. They get wealth by many means. They accumulate all varieties of grain and gems. Business related to money brings them great wealth. Export and Import business also makes them rich. They have to be realistic and adjustable. That will make them very rich persons. They have the indications of exercising authority over many. This number endows one with money, position, fame and all. It gives a long and happy life."
+        ],
+        73: [
+            ":",
+            "This number gives the life of a lord. It brings fame, position and riches. They stand to be benefit from the government and those in high positions. They plan in confidence and achieve success without the knowledge of others.",
+            "They are full of property like land, house and vehicle. They get money from many sources. When they remain devoted to God and honest, they come to enjoy all kinds of pleasures in life.",
+            "If they have a perfect character, they succeed in anything with the grace of God."
+        ],
+        74: [
+            ":",
+            "How ever, much they get, they always run short of money . They have the objective of reforming the society. They have staunch faith in religion. They keep on facing difficulties. They are adept in propaganda. Only the life of a sanyasi brings happiness to them. Their sufferings are unending.",
+            "They have problem with their stomach. They are interested in arts and literature. Their mind is not stable at all. This number makes life futile and therefore not beneficial."
+        ],
+        75: [
+            ":",
+            "They are creative writers. They are always surrounded by friends wherever they go. They have great fame. They write many books.",
+            "They become suddenly rich and famous. They earn with their writing and speech. They are by nature helpful to others. They have a great many good friends. They excel in music and acting."
+        ],
+        76: [
+            "indicates great status and wealth. But suddenly they lose everything. They become famous. When they lose all that they had, they accumulate more than what they had lost.",
+            "They take up new endeavors and succeed. Their powers of divine grace keeps on increasing. They earn money through spiritual means. Half of their life time is spent idly in eating, sleeping and indulging. They come to have wealth by means that remain a mystery to others. Their life is full of ups and downs throughout."
+        ],
+        77: [
+            ":",
+            "This number lodges many an esoteric philosophy. They are tenacious and progress with their own efforts. They have a very good reputation. They are famous. They go by the principles of justice and fairness. They do not look for any help from anyone but keep working towards their ideals themselves.",
+            "They make considerable progress in life. They have a life of high status. They take up frequent travel to other places. They visit foreign countries. When they develop devotion to God and spiritual thoughts, they become very famous. They get good positions by taking up social work. They live with a mental discipline. They live a life of fame and popularity."
+        ],
+        78: [
+            "have powers of divine aspects and the most virtuous. They live a life of justice. They have a very fertile imagination. Their speech is attractive. They excel in acting, creative writing, dance and music. They have a great liking for social work. They earn money with their intelligence. They very easily master magic, incantation and other esoteric arts. They are appreciated by many. The government honors them. Their words become true. Enjoying the grace of God, they become pious.",
+            "They are the treasure of arts. They get monetary help from various sources.",
+            "Those who become quite mature in wisdom happen to lose all their wealth.",
+            "When they are a little cautious, they can avoid it."
+        ],
+        79: [
+            "indicates struggle at the early part of life and popularity in the later part. They achieve great progress in business and occupation only to fall to great depths. This number indicates the tendency to pursue spiritual life and the worship of God. There is a large group of people in waiting to listen to their words. They have the ability to guide others. They have a mass appeal.",
+            "Their faith in anything is firm.",
+            "Though they stand to be lucky in many ways, their family life is full of quarrels. They excel in studies and reasoning. They have strong will power. They remain greatly spiritualistic."
+        ],
+        80: [
+            ":",
+            "This name number indicates expertise in philosophy. They have mysterious powers in plenty. Their esoteric tricks succeed. They accomplish rare feats and become famous. They are constantly working out one revolution or the other. They succeed in competitions. They accomplish the impossible feats and become famous. Their method of worship of God is unique. They are knowledgeable in scriptures and science. Even in the midst of fearsome life, they live comfortably. They face dangers that pass. They live according to situations. This number incites extremism. This number brings a lot of changes in life. It is beneficial to a certain extent."
+        ],
+        81: [
+            ":",
+            "This number gives a lot of interest in spiritualism. They become teachers and counselors to many. There is a certain power about their speech. They progress in life staidly and enjoy luck in stages. They are very just persons. If they are not cautious, they may incur loss of property and disappointment.",
+            "They are very much interested in progressing in life. They keep on planning for their betterment. They are always surrounded by people. They become teachers, scholars and public speakers."
+        ],
+        82: [
+            ":",
+            "This number has the power of domination. It makes even an ordinary person a great accomplisher. It has the fortune of a king. It gives one the power to rule. It brings great fame. one the ruler of a fertile nation. There is a grate attraction in the looks and speech of the person. It brings luxurious vehicles. They can master magical powers. The number has the power of dominance over land. It brings romantic affairs.",
+            "They become great by virtue of their sense of duty and hard work. They meet challenges and become successful. They get the highest offices in the country. They enjoy the possession of gold, land and all. They are verily princes. They get the wealth of land and gold. They acquire esoteric knowledge like magic, yoga, meditation and all such powers. They have the ability to rule over people.",
+            "They work nobly and become great. There is an attraction in their eyes. They are dignified and dutiful. They earn a very good reputation."
+        ],
+        83: [
+            ":",
+            "This number gives the majesty of royalty. It brings venerable greatness. It gives a royal life. They enjoy sensuous pleasures. They are excellent in winning over the enemies. They are always the winning. They win easily. They succeed in anything easily. They stand to get unexpected large profits in their business.",
+            "They get high status, fame and dignity. They help many persons. Great positions come seeking them. They have lasting and large wealth. The enjoy constant fame. They are venerated as the Messiahs and divine beings. They live a happy life."
+        ],
+        84: [
+            ":",
+            "They are very much interested in spiritualism. They are very fastidious. They accomplish rare missions. Youth is full of struggle. They feel anxiety every now and then. They stand to gain because of visits abroad.",
+            "They attract unnecessary enmity frequently. Their achievements are not commensurate with their efforts. They should follow the path of devotion to avoid sufferings in life. That brings peace to their heart."
+        ],
+        85: [
+            "They are masters in performing and creative arts. They become famous doctors of medicine. They have the power to dispel the distress of others. They work their way to greatness. They win over the evil. They have great faith in devoting to God.",
+            "Theyenjoy scenes of natural beauty and historical places. They become venerable masters. Struggling through youth, they attain happiness after adolescence. They accumulate a lot of name and fame in medicine, defense, religion and spiritualism."
+        ],
+        86: [
+            ":",
+            "This number brings benefits from friends. They enjoy the support of the government and influential persons. They work hard to greatness and progress. They accumulate a large wealth.",
+            "Their life is comfortable. They are dignified and virtuous. They get the help of many persons. The later part of life is better than the earlier part. They get money from women. They become famous after a lot of struggle."
+        ],
+        87: [
+            "."
+        ],
+        88: [
+            ":",
+            "Those whose name number is 88 become very good in spiritualism. They are liberal minded. They are wise persons. They are afraid of committing a sin.",
+            "They are prophetic. They have pure love for all. They take up social service wholeheartedly. They practice nonviolence, truth, love in life and succeed. They get great fame and reputation."
+        ],
+        89: [
+            "They are brisk and skillful persons. There is a certain energy about their speech and actions. They are likely to face danger from electricity, sharp weapons or instruments and fire. They look at anything from a different perspective from that of others. They get all forms of wealth. They possess farms and cattle wealth.",
+            "They accumulate artistic products. They accumulate gems and gold. There is a beauty, charm and magic of attractiveness about their face. They entice people towards them. Men are liked by women and women by men. Their attractive beauty is quite a pleasant surprise. They want to become farmers. They have a long life. They have more of immovable property than the other way. They live with their powers of attraction undiminished."
+        ],
+        90: [
+            "This number gives perennial property like the perennial river. They keep on giving others endlessly. They get great fame. Since they have the fullest auspicious influence of Mars, they become successful in politics. They are very fastidious about personal affairs. They become leaders of movements. They are industrious and brisk.",
+            "They are good in scriptural knowledge. They reach their objectives easily and quickly. They take up frequent travels abroad and other places. They love lands. They have the ability to assess and evaluate lands."
+        ],
+        91: [
+            "This number enhances self-confidence. It increases divine grace and wealth. They take up foreign travel ls beyond the seas. They take up pilgrimages.",
+            "They stand to gain in export and import business. They are full of will power. They are constantly on travel. They are travelers by nature. They have a firm mind.",
+            "They achieve success with the practice of esoteric arts like magic, meditation and yoga. They live independently. They have a comfort able life. They make money in business associated with shipping, lorry, airplane."
+        ],
+        92: [
+            "This number gives a lot of money. It also brings all form of wealth like gold, land and gems. They acquire lands and farms of considerable quantity. They become masters of esoteric arts. They exploit esoteric knowledge to advantage. They know astral travel. They know to shift from one body to another. They know yoga and Pranayam.",
+            "They are knowledgeable in alchemy. They live an in dependent life. They never subject themselves to anyone's authority. Their family life has problems. They do not enjoy very good health. They have the luck of crossing the seas. During the later part of life, they lose interest in worldly affairs."
+        ],
+        93: [
+            ":",
+            "This number bestows great intellectual Powers. They accomplish very difficult tasks that are also novel. They are knowledgeable in all matters of the world. They have the reputation of the knowledgeable person.",
+            "They are successful creative writers. They enjoy all pleasures they desire. They are in different business and occupations. They gain fame, dignity and wealth beyond the ordinary level. They excel in cinema, TV and drama. They are full of imagination. They achieve feats in literature, music and philosophy."
+        ],
+        94: [
+            "This number brings great fame and dignity. They become venerated through the world. They work out grand plans for the sake of the betterment of the human kind. Happiness and sufferings alternate in their life.",
+            "They dedicate themselves to public welfare. They live with",
+            "great ideals. Their principles are adapted by many."
+        ],
+        95: [
+            "Those with 95 as name number are persons of dignity duty and discipline. They accomplish new records. It brings them great fame. They are very efficient persons. They take up any endeavor with courage and succeed. They are always brisk.",
+            "They may have to take up frequent travel to other places and foreign lands. They sell fancy articles and imported articles and make money. They succeed in dealing with fashionable goods. They gain a lot of advertisement for themselves."
+        ],
+        96: [
+            ":",
+            "This number indicates the grace of the Goddess of Learning, Saraswati. They are experts in all department of knowledge. They get all kinds of wealth. They are successful person who complete any job successfully. All their plan s succeed. The men have the ability to attract women, the men. They have an irresistible appeal for the opposite successful person who complete any job successfully. All their plans succeed.",
+            "The men have the ability to attract women and the women, the men. They have an irresistible appeal for the opposite sex. They are good in several forms of creative writing. This number incites lust. They have to be a little sedate in love affairs. They attract the attention of anyone with their skills in the aesthetic and the artistic. They enjoy popular luck."
+        ],
+        97: [
+            "This number gives proficiency in the scriptures and fine arts. It also gives eminence in a spiritual career. They will be successful in all their efforts and will be prosperous with astounding achievements to their credit."
+        ],
+        98: [
+            "indicates living for others. They cannot earn anything for themselves. Their knowledge, wisdom and talents are all to the advantage of others. They have a great social sense. They become teachers.",
+            "They have a continuous string of sufferings in life. Both physical and mental sickness affects them. They have two families. Sex becomes perverted. They can find solutions to their problems with the grace of God. They are lords of the arts. Own business does not pay them. They have to live dependent on others."
+        ],
+        99: [
+            "This number indicates goods and bad, benefit and ill luck alternatively. Unnecessary travel, confusion, two mindedness are indicated. Their mind thinks of the evil all the time. There are successive in life and at the same time, there is a lot of opposition.",
+            "They are very well educated. They enjoy all pleasures of life. They are courageous and daring. Since they have two minds, they are likely to have more than one wife. They file cases against others. They have the tendency to avenge others. They are attacked by indirect enemies. They have to be cautious."
+        ],
+        100: [
+            "This number indicates success in all endeavors. Property in the form of land, gold and money accumulates. They always have a lot of money at their disposal. They are friendly and affectionate towards friends and relatives. They do not get good opportunities in life.",
+            "Great enterprises do not give them success. They lack worldly",
+            "experience. No remarkable incidents happen in life.",
+            "They get money from small time business. They are known for patience. They live a life without much of a change and live comfortably."
+        ],
+        101: [
+            ":",
+            "This number gives luck after tireless labor. They are tenacious persons. They take up great business with the support of the government. Their business slows down very often. There is not much of a profit. The can succeed only with the help of the other numbers. This number misleads.",
+            "They get benefits from those in high positions in the government. They get less income. It is good for them to take up business that does not require capital input. They are courageous and daring. They have spiritual leanings. Since it is 1 followed by 0 followed by 1, there are no dramatic changes in life."
+        ],
+        102: [
+            "Life is like descending into a pit and trying to come out and up. Youth is spent in luck and happiness. The middle and last parts of life are full of problems. The ultimate stage in life indicates confusion and mental disturbance. They do not get any significant success in life. They may have to lose hard earned wealth. They get involved in unconnected issues and spoil their reputation. They are adamant by birth.",
+            "Friends are a source of danger to them. They shall not take up a business that involves capital input."
+        ],
+        103: [
+            "(Non Veg food, Digital Marketing, Youtube):",
+            "This number affords a life of all pleasures and comforts. They live the most prosperous life. They modernize the traditional business and achieve great success. They grow in affluence stage by stage. They achieve greatly in creative writing. They face opposition of course. They have a sharp intelligence. They live a life of lasting fame and lasting wealth. They live the most affluent life. The final stages in life are very remarkable."
+        ],
+        104: [
+            ":",
+            "They do not get results commensurate with their efforts. The beginning of life is affluent and dignified. But after middle age, they lose all the wealth they have accumulated. They always like to be surrounded by people. They complete very difficult tasks. But only name and fame stays back.",
+            "They are very heroic. They have wealth like house, vehicles and enjoy the services of servants. They have a lot of affinity for nature. They get awards and rewards in appreciation of their achievements."
+        ],
+        105: [
+            "indicates humanism. They get influence, wealth and fame. They live a life of extravagance. They achieve great success in business and occupation. They accumulate wealth. They get great fame.",
+            "They beget good children. Many lucky incidents happen in their life. They being advance step by step and reach great heights. They live a peaceful life. Their life is full of happy situations."
+        ],
+        106: [
+            ":",
+            "Those whose name number is 106 struggles while young and strive very hard during youth. They achieve great success only in the later part of their life. They come to enjoy all pleasure in life only late in life. They have strong sexual desires. This number has the power to induce sexual desires to a very great extent. Those with this name number should be careful with women if they are men and women should be careful with men. Otherwise, they indulge in illicit affairs and bring shame upon themselves. There frequent spells of confusion in the mind. They always have some complaint or the other about their health. Their greed leads them to great suffering."
+        ],
+        107: [
+            "This number brings difficulties in family life. Husband and wife do not see face to face. Sexual relationship does not last for long. Money is there and wealth is also there. But there is no satisfaction.",
+            "They many suffer sleep walking and such ailments. They have double mind. They do not get a compatible partner in life and feel frustrated. They are famous and popular in the world. They get great offices. Family life alone is the trouble to them. It is Sanyas within family life. They have lasting influence and fame."
+        ],
+        108: [
+            "This number indicates spiritual powers. Great positions seek them. They are guardians to the wealth of others. They have the wisdom to know happenings in advance. They have foresight. The mind feels ashamed to think of evil actions. If they indulge in any evil act, they die suddenly.",
+            "They are able to calculate the opportune time and achieve success. They are heroic. Thus they become famous throughout the world. They are leaders. They are good friends to many and guides to still many. The society always venerates them.",
+            "Thank You"
+        ]
+    };
+
+function reduceNumber(number) {
+    while (number > 9) {
+        number = number.toString().split("").reduce((sum,digit) => sum + Number(digit), 0);
+    }
+    return number;
+}
+
+
+const goodSounds = ["BA", "VIN", "UP", "ON", "DAY", "JAYA", "RS", "KAN", "KHAN", "HAN", "CAN", "AR", "RA", "RS", "KAR", "GAR", "CAT", "KAT", "CHEE", "CHIN", "CEL", "DAR", "DRA", "FATH", "FETH", "HIN", "HIM", "HA", "IN", "JA", "JH", "JAI", "JOY", "JAKI", "OK", "KA", "KI", "LAC", "LAK", "LAM", "LION", "LV", "LK", "MAS", "MANI", "ME", "MET", "MY", "MV", "MIT", "NJ", "NC", "OO", "PM", "QE", "RAY", "RNAI", "RAT", "RATH", "RS", "SAL", "TAL", "TOL", "VN", "VEIL", "WAY"];
+const badSounds = ["NO","SH","OO","AH","VI","KVR","VC","SC","SK","VAR","WAR","WARI","KUMAR","VR","MAL","IL","ILL","NO","NA","NI","KL","DI","DY","LAL","LAN","AB","EE","ER","ES","MAR","LO","END","KK","SU","BAD", "WAR", "END", "LO SU", "DI NIL", "IL", "POOR", "ER", "MALA","MAN", "SAD", "MAD", "AIR", "RAM", "SUE", "AIAH", "DASS", "ALL", "AH", "APE", "BACH", "BY", "DIE", "DOWN", "DU", "DY", "EET", "IFR", "GO", "G", "HAND", "HAT", "HET", "HES", "HER", "HOT", "ILL", "KL", "KILL", "KS", "HIP", "MAR", "KITE", "CITE", "KICK", "KK", "VK", "LOS", "LEE", "LO", "LEEK", "LEAK", "LIIK", "LASS", "MAT", "MELT", "SIK", "MOOD", "NA", "NE", "NO", "NO NIL", "NLR", "PAY", "PUT", "PIT", "PT", "PC", "RAN", "RAP", "RP", "ROP", "RAO", "ROD", "SK", "SO", "SAT", "SES", "CHES", "SWAM", "SLO", "SK", "VK", "VC", "THA", "TI", "TIE", "UI", "VC", "VEN", "WARI", "WAR", "WHY", "WIO",];
+
+const medicalSounds = {
+    "SH":"sick or silent",
+    "OO":"downfall, double zero",
+    "AH":"ache suffering physical or mentally, loss of money",
+    "VI":"weak suffering from body ailments low immunity",
+    "KVR":"weak suffering from body ailments low immunity",
+    "VC":"weak suffering from body ailments low immunity",
+    "SC":"sick or weak physical or mentally",
+    "SK":"sick or weak physical or mentally",
+    "VAR":"stubbornness struggles in life",
+    "KUMAR":"courage boldness to fight problems",
+    "VR":"fights quarrels, struggles, disagreements, short temper, tendency to hurt others",
+    "WAR":"fights quarrels, struggles, disagreements, short temper, tendency to hurt others",
+    "WARI":"fights quarrels, struggles, disagreements, short temper, tendency to hurt others",    
+    "MAL":"male, manly quality",
+    "IL":"physically weak wavering mind",
+    "ILL":"physically weak wavering mind",
+    "NO":"same as multiple 5",
+    "NA":"same as multiple 5",
+    "NI":"same as multiple 5",
+    "KL":"kill no peace at home",
+    "DI":"die in an unfortunate accident",
+    "DY":"die in an unfortunate accident",
+    "LAL":"gradually weak cannot come to forefront",
+    "LAN":"getting lean or becoming weak",
+    "AB":"ever active physical strength to face hardships",
+    "EE":"nerves, teeth or stomach problem, anxiety issues",
+    "ER":"health issues",
+    "ES":"health issues",
+    "MAR":"gets angry often face many problems",
+    "LO":"low obstacles failures",
+    "END":"failures incomplete work (struggling life)",
+    "KK":"fault finding / low immunity",
+    "SU":"litigation obstacles; spouse can also get problems"
+};
+
+
+/* SOUND PATTERNS ARE NOT PYTHAGOREAN: they are spelling/sound patterns only. */
+function findSounds(name) {
+    const upper = name.toUpperCase();
+    const patterns = [
+        ...Object.keys(medicalSounds).map(sound => ({sound, type:"medical"})),
+        ...goodSounds.map(sound => ({sound, type:"good"})),
+        ...badSounds.map(sound => ({sound, type:"bad"}))
+    ].sort((a,b) => b.sound.length - a.sound.length);
+
+    const found = [];
+    for (const item of patterns) {
+        let from = 0;
+        while (from < upper.length) {
+            const index = upper.indexOf(item.sound, from);
+            if (index === -1) break;
+            found.push({sound:item.sound,type:item.type,index,end:index+item.sound.length});
+            from = index + 1;
+        }
+    }
+
+    found.sort((a,b) => a.index-b.index || b.sound.length-a.sound.length);
+    const selected=[];
+    for (const item of found) {
+        if (!selected.some(x => item.index < x.end && x.index < item.end)) selected.push(item);
+    }
+    return selected.sort((a,b)=>a.index-b.index);
+}
+
+function escapeHtml(text) {
+    return text.replace(/[&<>"']/g, ch => ({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+    }[ch]));
+}
+
+function highlightSoundsInName(name) {
+    if (!name.trim()) return "—";
+
+    const sounds = findSounds(name);
+    if (!sounds.length) return escapeHtml(name);
+
+    let result = "";
+    let cursor = 0;
+
+    for (const item of sounds) {
+        const start = item.index;
+        const end = item.index + item.sound.length;
+
+        if (start < cursor) continue;
+
+        result += escapeHtml(name.slice(cursor, start));
+
+        const className = item.type === "good" ? "name-good-highlight" : item.type === "medical" ? "name-medical-highlight" : "name-bad-highlight";
+
+        result += `<span class="${className}">${escapeHtml(name.slice(start, end))}</span>`;
+
+        cursor = end;
+    }
+
+    result += escapeHtml(name.slice(cursor));
+    return result;
+}
+
+function renderSounds(name) {
+    const box = document.getElementById("soundResults");
+    if (!box) return;
+    if (!name.trim()) {
+        box.innerHTML = '<div class="sound-item sound-neutral">Start typing your name to check the sounds...</div>';
+        return;
+    }
+    const sounds = findSounds(name);
+    if (!sounds.length) {
+        box.innerHTML = '<div class="sound-item sound-neutral"><strong>No listed sound pattern found.</strong></div>';
+        return;
+    }
+    box.innerHTML = sounds.map(item => {
+        if (item.type === "medical") {
+            return `<div class="sound-item sound-medical"><div class="sound-match">⚕ MEDICAL SOUND: <span class="matched-sound">${escapeHtml(item.sound)}</span></div><div class="sound-interpretation"><strong>Interpretation:</strong> ${escapeHtml(medicalSounds[item.sound])}</div></div>`;
+        }
+        if (item.type === "good") {
+            return `<div class="sound-item sound-good"><div class="sound-match">✓ GOOD SOUND: <span class="matched-sound">${escapeHtml(item.sound)}</span></div><div class="sound-interpretation"><strong>Interpretation:</strong> Good sound</div></div>`;
+        }
+        return `<div class="sound-item sound-bad"><div class="sound-match">✗ BAD SOUND: <span class="matched-sound">${escapeHtml(item.sound)}</span></div><div class="sound-interpretation"><strong>Interpretation:</strong> Bad sound</div></div>`;
+    }).join("");
+}
+
+function calculateName(name, system) {
+    let total = 0;
+    for (const char of name.toUpperCase()) {
+        if (system[char]) total += system[char];
+    }
+    return { total, final: total > 0 ? reduceNumber(total) : 0 };
+}
+
+function showInterpretation(listId, titleId, compound) {
+    const list = document.getElementById(listId);
+    const title = document.getElementById(titleId);
+    list.innerHTML = "";
+
+    if (!compound) {
+        list.innerHTML = "<li>Start typing your name...</li>";
+        title.textContent = "Compound Number Interpretation";
+        return;
+    }
+
+    title.textContent = "Compound Number " + compound + " — Interpretation";
+
+    const lines = interpretations[compound] || [
+        "No interpretation text was extracted for this number from the uploaded reference files."
+    ];
+
+    lines.forEach(text => {
+        const li = document.createElement("li");
+        li.textContent = text;
+        list.appendChild(li);
+    });
+}
+
+function updateCard(prefix, name, result) {
+    document.getElementById(prefix + "Name").innerHTML =
+        prefix === "chaldean"
+            ? highlightSoundsInName(name)
+            : escapeHtml(name || "—");
+
+    document.getElementById(prefix + "Total").textContent =
+        result.total;
+
+    document.getElementById(prefix + "Compound").textContent =
+        result.total
+            ? "Compound Number: " + result.total
+            : "Compound Number: —";
+
+    document.getElementById(prefix + "Final").textContent =
+        result.final;
+
+    document.getElementById(prefix + "Formula").textContent =
+        result.total
+            ? result.total + " → " + result.final
+            : "—";
+
+    // ONLY Chaldean gets the compound-number interpretation
+    // and the Pronology good/bad sound pattern analysis.
+    if (prefix === "chaldean") {
+        showInterpretation(
+            "chaldeanInterpretation",
+            "chaldeanTitle",
+            result.total >= 1 && result.total <= 108
+                ? result.total
+                : 0
+        );
+
+        renderSounds(name);
+    }
+    // IMPORTANT:
+    // There is intentionally NO sound matching here for Pythagorean.
+}
+
+document.getElementById("nameInput").addEventListener("input", function() {
+    const name = this.value;
+
+    // CHALDEAN:
+    // Sound-pattern analysis is based ONLY on the typed spelling.
+    // It does NOT use Chaldean or Pythagorean numerical values.
+    updateCard(
+        "chaldean",
+        name,
+        calculateName(name, chaldean)
+    );
+
+    // PYTHAGOREAN:
+    // Calculate numbers only. NEVER call renderSounds() here.
+    updateCard(
+        "pythagorean",
+        name,
+        calculateName(name, pythagorean)
+    );
+});
+
+function clearName() {
+    const input = document.getElementById("nameInput");
+    input.value = "";
+    input.dispatchEvent(new Event("input"));
+    input.focus();
+}
+</script>
+</body>
+</html>

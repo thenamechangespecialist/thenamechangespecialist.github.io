@@ -1,0 +1,2128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Name & Date of Birth Numerology Calculator</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 30px 15px;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #e8ecf3);
+    min-height: 100vh;
+    color: #222;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* ================= HEADER ================= */
+
+.header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 34px;
+}
+
+.header p {
+    color: #666;
+    font-size: 16px;
+}
+
+
+/* ================= INPUT ================= */
+
+.input-box {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+label {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+input {
+    width: 100%;
+    padding: 16px;
+    font-size: 21px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #9b6500;
+}
+
+.clear-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 10px;
+    background: #222;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+
+/* ================= DOB RESULTS ================= */
+
+.dob-results {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+    text-align: center;
+    font-size: 19px;
+    margin-top: 0;
+}
+
+.number {
+    text-align: center;
+    font-size: 34px;
+    font-weight: bold;
+    color: #9b6500;
+}
+
+.description {
+    text-align: center;
+    color: #777;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+
+/* ================= NAME RESULTS ================= */
+
+.name-results {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.name-card {
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.name-card h2 {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 0;
+}
+
+.name-number {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: #1769aa;
+}
+
+.name-description {
+    text-align: center;
+    color: #777;
+    font-size: 12px;
+    margin-top: 7px;
+}
+
+
+/* ================= PYRAMID ================= */
+
+.pyramid-card {
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+    overflow-x: auto;
+}
+
+.pyramid-card h2 {
+    text-align: center;
+    color: #9b6500;
+}
+
+.pyramid {
+    min-width: 650px;
+    text-align: center;
+    margin-top: 25px;
+}
+
+.pyramid-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin: 8px 0;
+}
+
+.pyramid-cell {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.letter {
+    color: #9b6500;
+}
+
+.value {
+    background: #f2f2f2;
+    border-radius: 8px;
+}
+
+.arrow {
+    text-align: center;
+    font-size: 21px;
+}
+
+.final-pn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 25px;
+    border-radius: 10px;
+    background: #9b6500;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+
+/* ================= RAJYOG ================= */
+
+.rajyog-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.rajyog {
+    padding: 25px;
+    border-radius: 18px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.golden {
+    background: #fff1a8;
+    border: 3px solid #d4a900;
+    color: #765700;
+}
+
+.silver {
+    background: #eeeeee;
+    border: 3px solid #999;
+    color: #555;
+}
+
+.hidden {
+    display: none;
+}
+
+
+/* ================= RULES ================= */
+
+.rules {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.rules h2 {
+    text-align: center;
+    color: #9b6500;
+}
+
+.rules li {
+    margin-bottom: 9px;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width: 1000px) {
+
+    .name-results {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
+
+@media(max-width: 800px) {
+
+    .dob-results {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .rajyog-container {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media(max-width: 600px) {
+
+    .input-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dob-results,
+    .name-results {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+<!-- ================= HEADER ================= -->
+
+<div class="header">
+
+<h1>
+✨ Name & Date of Birth Numerology Calculator
+</h1>
+
+<p>
+Chaldean Numerology • Pyramid Number • Rajyog
+</p>
+
+</div>
+
+
+<!-- ================= INPUT ================= -->
+
+<div class="input-box">
+
+<div class="input-grid">
+
+<div>
+
+<label for="nameInput">
+Enter Full Name
+</label>
+
+<input
+    type="text"
+    id="nameInput"
+    placeholder="Enter your full name..."
+    autocomplete="off"
+>
+
+</div>
+
+
+<div>
+
+<label for="dobInput">
+Date of Birth
+</label>
+
+<input
+    type="date"
+    id="dobInput"
+>
+
+</div>
+
+</div>
+
+
+<button
+    class="clear-btn"
+    id="clearBtn"
+>
+Clear
+</button>
+
+</div>
+
+
+<!-- ================= DOB RESULTS ================= -->
+
+<div class="dob-results">
+
+
+<div class="card">
+
+<h2>
+Birth Number / Mulank
+</h2>
+
+<div
+    class="number"
+    id="birthNumber"
+>
+00
+</div>
+
+<div class="description">
+Original Birth Day Number
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Destiny Number
+</h2>
+
+<div
+    class="number"
+    id="destinyNumber"
+>
+00
+</div>
+
+<div class="description">
+Unreduced DOB Total
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Zodiac Number
+</h2>
+
+<div
+    class="number"
+    id="zodiacNumber"
+>
+00
+</div>
+
+<div
+    class="description"
+    id="zodiacName"
+>
+—
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Back Seater Number
+</h2>
+
+<div
+    class="number"
+    id="backSeaterNumber"
+>
+00
+</div>
+
+<div class="description">
+Last Two Digits of Birth Year
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= NAME RESULTS ================= -->
+
+<div class="name-results">
+
+
+<div class="name-card">
+
+<h2>
+FN — First Name
+</h2>
+
+<div
+    class="name-number"
+    id="firstNameNumber"
+>
+00
+</div>
+
+<div class="name-description">
+Chaldean First Name Total
+</div>
+
+</div>
+
+
+<div class="name-card">
+
+<h2>
+NN — Full Name
+</h2>
+
+<div
+    class="name-number"
+    id="fullNameNumber"
+>
+00
+</div>
+
+<div class="name-description">
+Chaldean Full Name Total
+</div>
+
+</div>
+
+
+<div class="name-card">
+
+<h2>
+PN — Pyramid Number
+</h2>
+
+<div
+    class="name-number"
+    id="pyramidNumber"
+>
+00
+</div>
+
+<div class="name-description">
+Final Pyramid Number
+</div>
+
+</div>
+
+
+<div class="name-card">
+
+<h2>
+IN — Vowel Total
+</h2>
+
+<div
+    class="name-number"
+    id="vowelNumber"
+>
+00
+</div>
+
+<div class="name-description">
+Total Chaldean Value of Vowels
+</div>
+
+</div>
+
+
+<div class="name-card">
+
+<h2>
+EN — Consonant Total
+</h2>
+
+<div
+    class="name-number"
+    id="consonantNumber"
+>
+00
+</div>
+
+<div class="name-description">
+Total Chaldean Value of Consonants
+</div>
+
+</div>
+
+
+<div class="name-card">
+
+<h2>
+HN — Habit Number
+</h2>
+
+<div
+    class="name-number"
+    id="habitNumber"
+>
+00
+</div>
+
+<div class="name-description">
+Total Alphabets in Full Name
+</div>
+
+</div>
+
+
+</div>
+
+
+<!-- ================= PYRAMID ================= -->
+
+<div class="pyramid-card">
+
+<h2>
+🔺 Chaldean Name Pyramid
+</h2>
+
+<div
+    class="pyramid"
+    id="pyramid"
+>
+Start typing your name...
+</div>
+
+</div>
+
+
+<!-- ================= RAJYOG ================= -->
+
+<div class="rajyog-container">
+
+<div
+    id="goldenRajyog"
+    class="rajyog golden hidden"
+>
+🏆 GOLDEN RAJYOG
+</div>
+
+
+<div
+    id="silverRajyog"
+    class="rajyog silver hidden"
+>
+🥈 SILVER RAJYOG
+</div>
+
+</div>
+
+
+<!-- ================= RULES ================= -->
+
+<div class="rules">
+
+<h2>
+📜 Calculator Logic
+</h2>
+
+<ul>
+
+<li>
+<strong>FN</strong> = Chaldean total of First Name.
+</li>
+
+<li>
+<strong>NN</strong> = Chaldean total of Full Name.
+</li>
+
+<li>
+<strong>PN</strong> = Final Pyramid Number.
+</li>
+
+<li>
+<strong>IN</strong> = Total Chaldean numerical value of all vowels in Full Name.
+</li>
+
+<li>
+<strong>EN</strong> = Total Chaldean numerical value of all consonants in Full Name.
+</li>
+
+<li>
+<strong>HN</strong> = Total number of alphabets in Full Name.
+</li>
+
+<li>
+<strong>IN, EN and HN are NOT reduced.</strong>
+</li>
+
+<li>
+<strong>BN is NOT reduced.</strong>
+If the birth day is 22, BN remains 22.
+</li>
+
+<li>
+<strong>DN is NOT reduced.</strong>
+The complete DOB digit total is retained.
+</li>
+
+<li>
+All numbers are displayed in two-digit format.
+For example, 7 is displayed as 07.
+</li>
+
+<li>
+Intermediate Pyramid calculations are reduced to a single digit.
+</li>
+
+<li>
+The final Pyramid Number is NOT reduced.
+</li>
+
+<li>
+<strong>Golden Rajyog:</strong>
+BN = FN = NN = PN = IN = EN = HN
+OR
+DN = FN = NN = PN = IN = EN = HN.
+</li>
+
+<li>
+<strong>Silver Rajyog:</strong>
+FN = NN = PN = IN = EN = HN.
+</li>
+
+<li>
+If both conditions are satisfied, both
+<strong>Golden Rajyog</strong> and
+<strong>Silver Rajyog</strong> will be displayed.
+</li>
+
+</ul>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+
+/* =========================================================
+   CHALDEAN VALUES
+========================================================= */
+
+const chaldean = {
+
+    A: 1,
+    B: 2,
+    C: 3,
+    D: 4,
+    E: 5,
+    F: 8,
+    G: 3,
+    H: 5,
+    I: 1,
+    J: 1,
+    K: 2,
+    L: 3,
+    M: 4,
+    N: 5,
+    O: 7,
+    P: 8,
+    Q: 1,
+    R: 2,
+    S: 3,
+    T: 4,
+    U: 6,
+    V: 6,
+    W: 6,
+    X: 5,
+    Y: 1,
+    Z: 7
+
+};
+
+
+/* =========================================================
+   VOWELS
+========================================================= */
+
+const vowels = "AEIOU";
+
+
+/* =========================================================
+   TWO DIGIT DISPLAY
+========================================================= */
+
+function displayNumber(number) {
+
+    if (
+        number === null ||
+        number === undefined ||
+        number === ""
+    ) {
+        return "00";
+    }
+
+    return String(number).padStart(2, "0");
+
+}
+
+
+/* =========================================================
+   REDUCE NUMBER
+   Used ONLY for intermediate pyramid calculations.
+========================================================= */
+
+function reduceNumber(number) {
+
+    while (number > 9) {
+
+        number =
+            String(number)
+            .split("")
+            .reduce(
+                (sum, digit) =>
+                    sum + Number(digit),
+                0
+            );
+
+    }
+
+    return number;
+
+}
+
+
+/* =========================================================
+   NAME TOTAL
+========================================================= */
+
+function calculateName(name) {
+
+    let total = 0;
+
+    for (
+        const letter of name.toUpperCase()
+    ) {
+
+        if (
+            Object.prototype.hasOwnProperty.call(
+                chaldean,
+                letter
+            )
+        ) {
+
+            total += chaldean[letter];
+
+        }
+
+    }
+
+    return total;
+
+}
+
+
+/* =========================================================
+   FIRST NAME
+========================================================= */
+
+function getFirstName(name) {
+
+    const parts =
+        name
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+
+    return parts.length
+        ? parts[0]
+        : "";
+
+}
+
+
+/* =========================================================
+   IN — TOTAL VALUE OF VOWELS
+========================================================= */
+
+function calculateIN(name) {
+
+    let total = 0;
+
+    for (
+        const letter of name.toUpperCase()
+    ) {
+
+        if (
+            vowels.includes(letter) &&
+            Object.prototype.hasOwnProperty.call(
+                chaldean,
+                letter
+            )
+        ) {
+
+            total += chaldean[letter];
+
+        }
+
+    }
+
+    return total;
+
+}
+
+
+/* =========================================================
+   EN — TOTAL VALUE OF CONSONANTS
+========================================================= */
+
+function calculateEN(name) {
+
+    let total = 0;
+
+    for (
+        const letter of name.toUpperCase()
+    ) {
+
+        if (
+            Object.prototype.hasOwnProperty.call(
+                chaldean,
+                letter
+            ) &&
+            !vowels.includes(letter)
+        ) {
+
+            total += chaldean[letter];
+
+        }
+
+    }
+
+    return total;
+
+}
+
+
+/* =========================================================
+   HN — HABIT NUMBER
+========================================================= */
+
+function calculateHN(name) {
+
+    return [
+        ...name
+    ]
+    .filter(
+        letter =>
+            /[A-Za-z]/.test(letter)
+    )
+    .length;
+
+}
+
+
+/* =========================================================
+   PYRAMID CALCULATION
+========================================================= */
+
+function calculatePyramid(name) {
+
+    const letters =
+        [
+            ...name.toUpperCase()
+        ]
+        .filter(
+            letter =>
+                Object.prototype.hasOwnProperty.call(
+                    chaldean,
+                    letter
+                )
+        );
+
+
+    if (
+        letters.length === 0
+    ) {
+
+        return {
+            letters: [],
+            rows: [],
+            final: 0
+        };
+
+    }
+
+
+    let current =
+        letters.map(
+            letter =>
+                chaldean[letter]
+        );
+
+
+    const rows = [
+        current
+    ];
+
+
+    /*
+       Continue until TWO numbers remain.
+    */
+
+    while (
+        current.length > 2
+    ) {
+
+        const next = [];
+
+
+        for (
+            let i = 0;
+            i < current.length - 1;
+            i++
+        ) {
+
+            const sum =
+                current[i] +
+                current[i + 1];
+
+
+            /*
+               INTERMEDIATE RESULTS
+               ARE REDUCED.
+            */
+
+            next.push(
+                reduceNumber(sum)
+            );
+
+        }
+
+
+        rows.push(next);
+
+        current = next;
+
+    }
+
+
+    /*
+       FINAL STEP
+
+       DO NOT REDUCE.
+
+       The two remaining numbers
+       are joined.
+
+       Example:
+
+       2 and 8
+
+       PN = 28
+
+       NOT 10
+       NOT 1
+    */
+
+    let finalNumber;
+
+
+    if (
+        current.length === 2
+    ) {
+
+        finalNumber =
+            String(current[0]) +
+            String(current[1]);
+
+    }
+
+    else {
+
+        finalNumber =
+            String(current[0]);
+
+    }
+
+
+    return {
+
+        letters,
+        rows,
+        final: finalNumber
+
+    };
+
+}
+
+
+/* =========================================================
+   DISPLAY PYRAMID
+========================================================= */
+
+function displayPyramid(name) {
+
+    const pyramid =
+        document.getElementById(
+            "pyramid"
+        );
+
+
+    if (
+        !name.trim()
+    ) {
+
+        pyramid.innerHTML =
+            "Start typing your name...";
+
+        return;
+
+    }
+
+
+    const result =
+        calculatePyramid(name);
+
+
+    if (
+        !result.letters.length
+    ) {
+
+        pyramid.innerHTML =
+            "Please enter alphabetic letters.";
+
+        return;
+
+    }
+
+
+    let html = "";
+
+
+    /*
+       LETTER ROW
+    */
+
+    html +=
+        '<div class="pyramid-row">';
+
+
+    result.letters.forEach(
+        letter => {
+
+            html +=
+                '<div class="pyramid-cell letter">' +
+                letter +
+                '</div>';
+
+        }
+    );
+
+
+    html +=
+        '</div>';
+
+
+    /*
+       FIRST NUMERICAL ROW
+    */
+
+    html +=
+        '<div class="pyramid-row">';
+
+
+    result.rows[0].forEach(
+        value => {
+
+            html +=
+                '<div class="pyramid-cell value">' +
+                value +
+                '</div>';
+
+        }
+    );
+
+
+    html +=
+        '</div>';
+
+
+    /*
+       REMAINING PYRAMID ROWS
+    */
+
+    for (
+        let i = 1;
+        i < result.rows.length;
+        i++
+    ) {
+
+        html +=
+            '<div class="arrow">↓</div>';
+
+
+        html +=
+            '<div class="pyramid-row">';
+
+
+        result.rows[i].forEach(
+            value => {
+
+                html +=
+                    '<div class="pyramid-cell value">' +
+                    value +
+                    '</div>';
+
+            }
+        );
+
+
+        html +=
+            '</div>';
+
+    }
+
+
+    /*
+       FINAL PN
+    */
+
+    html +=
+        '<div class="arrow">↓</div>';
+
+
+    html +=
+        '<div class="final-pn">' +
+
+        'Pyramid Number (PN): ' +
+
+        displayNumber(
+            result.final
+        ) +
+
+        '</div>';
+
+
+    pyramid.innerHTML =
+        html;
+
+
+    document
+        .getElementById(
+            "pyramidNumber"
+        )
+        .textContent =
+        displayNumber(
+            result.final
+        );
+
+}
+
+
+/* =========================================================
+   ZODIAC
+========================================================= */
+
+function getZodiac(day, month) {
+
+    let sign;
+
+
+    if (
+        (month === 1 && day >= 20) ||
+        (month === 2 && day <= 18)
+    ) {
+
+        sign = "Aquarius";
+
+    }
+
+    else if (
+        (month === 2 && day >= 19) ||
+        (month === 3 && day <= 20)
+    ) {
+
+        sign = "Pisces";
+
+    }
+
+    else if (
+        (month === 3 && day >= 21) ||
+        (month === 4 && day <= 19)
+    ) {
+
+        sign = "Aries";
+
+    }
+
+    else if (
+        (month === 4 && day >= 20) ||
+        (month === 5 && day <= 20)
+    ) {
+
+        sign = "Taurus";
+
+    }
+
+    else if (
+        (month === 5 && day >= 21) ||
+        (month === 6 && day <= 20)
+    ) {
+
+        sign = "Gemini";
+
+    }
+
+    else if (
+        (month === 6 && day >= 21) ||
+        (month === 7 && day <= 22)
+    ) {
+
+        sign = "Cancer";
+
+    }
+
+    else if (
+        (month === 7 && day >= 23) ||
+        (month === 8 && day <= 22)
+    ) {
+
+        sign = "Leo";
+
+    }
+
+    else if (
+        (month === 8 && day >= 23) ||
+        (month === 9 && day <= 22)
+    ) {
+
+        sign = "Virgo";
+
+    }
+
+    else if (
+        (month === 9 && day >= 23) ||
+        (month === 10 && day <= 22)
+    ) {
+
+        sign = "Libra";
+
+    }
+
+    else if (
+        (month === 10 && day >= 23) ||
+        (month === 11 && day <= 21)
+    ) {
+
+        sign = "Scorpio";
+
+    }
+
+    else if (
+        (month === 11 && day >= 22) ||
+        (month === 12 && day <= 21)
+    ) {
+
+        sign = "Sagittarius";
+
+    }
+
+    else {
+
+        sign = "Capricorn";
+
+    }
+
+
+    const zodiacNumbers = {
+
+        Aries: 9,
+        Taurus: 6,
+        Gemini: 5,
+        Cancer: 2,
+        Leo: 1,
+        Virgo: 5,
+        Libra: 6,
+        Scorpio: 9,
+        Sagittarius: 3,
+        Capricorn: 8,
+        Aquarius: 8,
+        Pisces: 3
+
+    };
+
+
+    return {
+
+        sign: sign,
+
+        number:
+            zodiacNumbers[sign]
+
+    };
+
+}
+
+
+/* =========================================================
+   DATE OF BIRTH CALCULATION
+========================================================= */
+
+function calculateDOB(dateString) {
+
+    if (!dateString) {
+
+        return {
+
+            birth: 0,
+            destiny: 0,
+            zodiac: 0,
+            zodiacName: "—",
+            backSeater: 0
+
+        };
+
+    }
+
+
+    const parts =
+        dateString.split("-");
+
+
+    const year =
+        Number(parts[0]);
+
+    const month =
+        Number(parts[1]);
+
+    const day =
+        Number(parts[2]);
+
+
+    /*
+       ==============================================
+       BIRTH NUMBER / MULANK
+
+       DO NOT REDUCE.
+
+       22 remains 22.
+       29 remains 29.
+
+       The original birth day is retained.
+       ==============================================
+    */
+
+    const birth =
+        day;
+
+
+    /*
+       ==============================================
+       DESTINY NUMBER
+
+       IMPORTANT:
+
+       DO NOT REDUCE.
+
+       Add every digit of the complete
+       date of birth and retain the total.
+
+       Example:
+
+       14.12.2000
+
+       1+4+1+2+2+0+0+0 = 10
+
+       DN = 10
+
+       NOT 1.
+       ==============================================
+    */
+
+    const digits =
+        String(day).padStart(2, "0") +
+        String(month).padStart(2, "0") +
+        String(year);
+
+
+    const destiny =
+        digits
+        .split("")
+        .reduce(
+            (sum, digit) =>
+                sum + Number(digit),
+            0
+        );
+
+
+    /*
+       ==============================================
+       ZODIAC
+       ==============================================
+    */
+
+    const zodiac =
+        getZodiac(
+            day,
+            month
+        );
+
+
+    /*
+       ==============================================
+       BACK SEATER
+       Last two digits of birth year
+       ==============================================
+    */
+
+    const backSeater =
+        year % 100;
+
+
+    return {
+
+        birth:
+            birth,
+
+        destiny:
+            destiny,
+
+        zodiac:
+            zodiac.number,
+
+        zodiacName:
+            zodiac.sign,
+
+        backSeater:
+            backSeater
+
+    };
+
+}
+
+
+/* =========================================================
+   RAJYOG CHECK
+========================================================= */
+
+function checkRajyog(
+    fn,
+    nn,
+    pn,
+    inNumber,
+    en,
+    hn,
+    bn,
+    dn
+) {
+
+    /*
+    =========================================================
+    GOLDEN RAJYOG
+
+    Golden Rajyog occurs when:
+
+    BN matches ANY ONE of:
+    FN, NN, IN, EN, PN, HN
+
+    OR
+
+    DN matches ANY ONE of:
+    FN, NN, IN, EN, PN, HN
+
+    NO reduction is performed.
+    =========================================================
+    */
+
+    const BN = displayNumber(bn);
+    const DN = displayNumber(dn);
+
+    const FN = displayNumber(fn);
+    const NN = displayNumber(nn);
+    const PN = displayNumber(pn);
+    const IN = displayNumber(inNumber);
+    const EN = displayNumber(en);
+    const HN = displayNumber(hn);
+
+
+    /*
+    =========================================================
+    CHECK BN MATCHES
+    =========================================================
+    */
+
+    const birthMatches =
+        BN === FN ||
+        BN === NN ||
+        BN === IN ||
+        BN === EN ||
+        BN === PN ||
+        BN === HN;
+
+
+    /*
+    =========================================================
+    CHECK DN MATCHES
+    =========================================================
+    */
+
+    const destinyMatches =
+        DN === FN ||
+        DN === NN ||
+        DN === IN ||
+        DN === EN ||
+        DN === PN ||
+        DN === HN;
+
+
+    /*
+    =========================================================
+    GOLDEN RAJYOG
+    =========================================================
+    */
+
+    const golden =
+        birthMatches ||
+        destinyMatches;
+
+
+    /*
+    =========================================================
+    SILVER RAJYOG
+
+    If ANY TWO OR MORE of:
+
+    FN, NN, IN, EN, PN, HN
+
+    match each other, Silver Rajyog occurs.
+
+    =========================================================
+    */
+
+    const silverNumbers = [
+        FN,
+        NN,
+        IN,
+        EN,
+        PN,
+        HN
+    ];
+
+
+    const frequency = {};
+
+
+    silverNumbers.forEach(number => {
+
+        frequency[number] =
+            (frequency[number] || 0) + 1;
+
+    });
+
+
+    const silver =
+        Object.values(frequency)
+        .some(count => count >= 2);
+
+
+    /*
+    =========================================================
+    GET DISPLAY BOXES
+    =========================================================
+    */
+
+    const goldenBox =
+        document.getElementById(
+            "goldenRajyog"
+        );
+
+    const silverBox =
+        document.getElementById(
+            "silverRajyog"
+        );
+
+
+    goldenBox.classList.add("hidden");
+    silverBox.classList.add("hidden");
+
+
+    /*
+    =========================================================
+    GOLDEN RAJYOG DISPLAY
+    =========================================================
+    */
+
+    /*
+=========================================================
+GOLDEN RAJYOG
+Display format:
+
+BN = FN = 22 — GOLDEN RAJYOG
+DN = PN = 22 — GOLDEN RAJYOG
+
+Each matching pair is shown separately.
+=========================================================
+*/
+
+/*
+=========================================================
+GOLDEN RAJYOG
+Display format:
+
+BN = FN = 22 — GOLDEN RAJYOG
+DN = PN = 22 — GOLDEN RAJYOG
+
+Each matching pair is shown separately.
+=========================================================
+*/
+
+if (golden) {
+
+    let matches = [];
+
+
+    // BN matches
+
+    if (BN === FN) {
+        matches.push(
+            `GOLDEN RAJYOG - BN = FN = ${BN} `
+        );
+    }
+
+    if (BN === NN) {
+        matches.push(
+            `GOLDEN RAJYOG - BN = NN = ${BN} `
+        );
+    }
+
+    if (BN === IN) {
+        matches.push(
+            `GOLDEN RAJYOG - BN = IN = ${BN} `
+        );
+    }
+
+    if (BN === EN) {
+        matches.push(
+            `GOLDEN RAJYOG - BN = EN = ${BN} `
+        );
+    }
+
+    if (BN === PN) {
+        matches.push(
+            `GOLDEN RAJYOG- BN = PN = ${BN} `
+        );
+    }
+
+    if (BN === HN) {
+        matches.push(
+            ` GOLDEN RAJYOG - BN = HN = ${BN} `
+        );
+    }
+
+
+    // DN matches
+
+    if (DN === FN) {
+        matches.push(
+            ` GOLDEN RAJYOG - DN = FN = ${DN} `
+        );
+    }
+
+    if (DN === NN) {
+        matches.push(
+            ` GOLDEN RAJYOG - DN = NN = ${DN} `
+        );
+    }
+
+    if (DN === IN) {
+        matches.push(
+            `GOLDEN RAJYOG - DN = IN = ${DN} `
+        );
+    }
+
+    if (DN === EN) {
+        matches.push(
+            `GOLDEN RAJYOG DN = EN = ${DN} `
+        );
+    }
+
+    if (DN === PN) {
+        matches.push(
+            `GOLDEN RAJYOG - DN = PN = ${DN} `
+        );
+    }
+
+    if (DN === HN) {
+        matches.push(
+            `GOLDEN RAJYOG - DN = HN = ${DN} `
+        );
+    }
+
+
+    // Display
+
+    goldenBox.innerHTML =
+        matches.join("<br><br>");
+
+    goldenBox.classList.remove(
+        "hidden"
+    );
+
+}
+
+    /*
+    =========================================================
+    SILVER RAJYOG DISPLAY
+    =========================================================
+    */
+
+    if (silver) {
+
+        let matchedGroups = [];
+
+
+        Object.keys(frequency)
+        .forEach(number => {
+
+            if (
+                frequency[number] >= 2
+            ) {
+
+                const matched = [];
+
+
+                if (FN === number)
+                    matched.push("FN");
+
+                if (NN === number)
+                    matched.push("NN");
+
+                if (IN === number)
+                    matched.push("IN");
+
+                if (EN === number)
+                    matched.push("EN");
+
+                if (PN === number)
+                    matched.push("PN");
+
+                if (HN === number)
+                    matched.push("HN");
+
+
+                if (matched.length >= 2) {
+
+                    matchedGroups.push(
+                        matched.join(" = ") +
+                        " = " +
+                        number
+                    );
+
+                }
+
+            }
+
+        });
+
+
+        silverBox.innerHTML =
+            "🥈 SILVER RAJYOG" +
+            "<br>" +
+            "<small>" +
+            matchedGroups.join("<br>") +
+            "</small>";
+
+
+        silverBox.classList.remove(
+            "hidden"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   UPDATE CALCULATOR
+========================================================= */
+
+function updateCalculator() {
+
+    const name =
+        document.getElementById("nameInput").value.trim();
+
+    const dob =
+        document.getElementById("dobInput").value.trim();
+
+
+    /* =====================================================
+       IMPORTANT:
+       IF BOTH NAME AND DOB ARE EMPTY,
+       CLEAR ALL RAJYOG RESULTS AND STOP CALCULATION.
+       ===================================================== */
+
+    const goldenBox =
+        document.getElementById("goldenRajyog");
+
+    const silverBox =
+        document.getElementById("silverRajyog");
+
+
+    if (!name && !dob) {
+
+        goldenBox.innerHTML = "";
+        silverBox.innerHTML = "";
+
+        goldenBox.classList.add("hidden");
+        silverBox.classList.add("hidden");
+
+        return;
+    }
+
+
+    /* =====================================================
+       FIRST NAME
+       ===================================================== */
+
+    const firstName =
+        getFirstName(name);
+
+    const fn =
+        calculateName(firstName);
+
+
+    /* =====================================================
+       FULL NAME
+       ===================================================== */
+
+    const nn =
+        calculateName(name);
+
+
+    /* =====================================================
+       IN — TOTAL VALUE OF VOWELS
+       ===================================================== */
+
+    const inNumber =
+        calculateIN(name);
+
+
+    /* =====================================================
+       EN — TOTAL VALUE OF CONSONANTS
+       ===================================================== */
+
+    const en =
+        calculateEN(name);
+
+
+    /* =====================================================
+       HN — TOTAL NUMBER OF ALPHABETS
+       ===================================================== */
+
+    const hn =
+        calculateHN(name);
+
+
+    /* =====================================================
+       PYRAMID NUMBER
+       ===================================================== */
+
+    const pyramid =
+        calculatePyramid(name);
+
+    const pn =
+        pyramid.final;
+
+
+    /* =====================================================
+       DATE OF BIRTH
+       ===================================================== */
+
+    const dobResult =
+        calculateDOB(dob);
+
+
+    /* =====================================================
+       DISPLAY NAME NUMBERS
+       ===================================================== */
+
+    document.getElementById("firstNameNumber")
+        .textContent = displayNumber(fn);
+
+    document.getElementById("fullNameNumber")
+        .textContent = displayNumber(nn);
+
+    document.getElementById("pyramidNumber")
+        .textContent = displayNumber(pn);
+
+    document.getElementById("vowelNumber")
+        .textContent = displayNumber(inNumber);
+
+    document.getElementById("consonantNumber")
+        .textContent = displayNumber(en);
+
+    document.getElementById("habitNumber")
+        .textContent = displayNumber(hn);
+
+
+    /* =====================================================
+       DISPLAY DOB NUMBERS
+       ===================================================== */
+
+    document.getElementById("birthNumber")
+        .textContent =
+        displayNumber(dobResult.birth);
+
+    document.getElementById("destinyNumber")
+        .textContent =
+        displayNumber(dobResult.destiny);
+
+    document.getElementById("zodiacNumber")
+        .textContent =
+        displayNumber(dobResult.zodiac);
+
+    document.getElementById("zodiacName")
+        .textContent =
+        dobResult.zodiacName;
+
+    document.getElementById("backSeaterNumber")
+        .textContent =
+        displayNumber(dobResult.backSeater);
+
+
+    /* =====================================================
+       DISPLAY PYRAMID
+       ===================================================== */
+
+    displayPyramid(name);
+
+
+    /* =====================================================
+       CHECK RAJYOG
+       ===================================================== */
+
+    checkRajyog(
+        fn,
+        nn,
+        pn,
+        inNumber,
+        en,
+        hn,
+        dobResult.birth,
+        dobResult.destiny
+    );
+}
+
+
+/* =========================================================
+   LIVE NAME CALCULATION
+========================================================= */
+
+document
+    .getElementById(
+        "nameInput"
+    )
+    .addEventListener(
+        "input",
+        updateCalculator
+    );
+
+
+/* =========================================================
+   LIVE DOB CALCULATION
+========================================================= */
+
+document
+    .getElementById(
+        "dobInput"
+    )
+    .addEventListener(
+        "input",
+        updateCalculator
+    );
+
+
+/* =========================================================
+   CLEAR
+========================================================= */
+
+document
+    .getElementById(
+        "clearBtn"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            document
+                .getElementById(
+                    "nameInput"
+                )
+                .value = "";
+
+
+            document
+                .getElementById(
+                    "dobInput"
+                )
+                .value = "";
+
+
+            updateCalculator();
+
+
+            document
+                .getElementById(
+                    "nameInput"
+                )
+                .focus();
+
+        }
+    );
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+updateCalculator();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mobile Number Numerology Calculator</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #f4f7f6, #e7f0ec);
+        color: #222;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: auto;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .header h1 {
+        color: #176b4d;
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+
+    .header p {
+        color: #555;
+    }
+
+    .calculator {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+        margin-bottom: 25px;
+    }
+
+    .input-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    input {
+        padding: 15px;
+        font-size: 20px;
+        border: 2px solid #176b4d;
+        border-radius: 8px;
+        width: 300px;
+        text-align: center;
+    }
+
+    button {
+        padding: 15px 25px;
+        font-size: 17px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        background: #176b4d;
+        color: white;
+        font-weight: bold;
+    }
+
+    button:hover {
+        background: #0d4d36;
+    }
+
+    #error {
+        color: #c62828;
+        text-align: center;
+        margin-top: 15px;
+        font-weight: bold;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .result-section {
+        background: white;
+        margin-bottom: 20px;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    .result-section h2 {
+        color: #176b4d;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 10px;
+    }
+
+    .number-box {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .stat {
+        flex: 1;
+        min-width: 180px;
+        background: #f4f7f6;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .stat h3 {
+        font-size: 15px;
+        color: #555;
+        margin-bottom: 10px;
+    }
+
+    .stat .value {
+        font-size: 32px;
+        font-weight: bold;
+        color: #176b4d;
+    }
+
+    .combo-card {
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 12px;
+        border-left: 6px solid;
+    }
+
+    .good {
+        background: #e8f5e9;
+        border-color: #2e7d32;
+    }
+
+    .neutral {
+        background: #fff8e1;
+        border-color: #f9a825;
+    }
+
+    .negative {
+        background: #ffebee;
+        border-color: #c62828;
+    }
+
+    .repeat {
+        background: #f3e5f5;
+        border-color: #7b1fa2;
+    }
+
+    .combo-title {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 20px;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .tag-good {
+        background: #2e7d32;
+    }
+
+    .tag-neutral {
+        background: #f9a825;
+    }
+
+    .tag-negative {
+        background: #c62828;
+    }
+
+    .tag-repeat {
+        background: #7b1fa2;
+    }
+
+    .summary {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .summary-box {
+        flex: 1;
+        min-width: 150px;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+        font-weight: bold;
+    }
+
+    .summary-good {
+        background: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .summary-neutral {
+        background: #fff8e1;
+        color: #8a6500;
+    }
+
+    .summary-negative {
+        background: #ffebee;
+        color: #c62828;
+    }
+
+    .summary-repeat {
+        background: #f3e5f5;
+        color: #7b1fa2;
+    }
+
+    .warning {
+        background: #fff3cd;
+        padding: 15px;
+        border-left: 5px solid #f9a825;
+        margin-top: 15px;
+        border-radius: 8px;
+    }
+
+    .preference-card {
+        background: #eef7f2;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    .preference-card strong {
+        color: #176b4d;
+        font-size: 20px;
+    }
+
+    @media(max-width:600px) {
+
+        .header h1 {
+            font-size: 25px;
+        }
+
+        input {
+            width: 100%;
+        }
+
+        button {
+            width: 100%;
+        }
+
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>📱 Mobile Number Numerology Calculator</h1>
+        <p>Analyse your mobile number based on combination numerology</p>
+    </div>
+
+    <div class="calculator">
+
+        <div class="input-group">
+           <input 
+    type="text" 
+    id="mobileNumber" 
+    placeholder="Enter Mobile Number"
+    maxlength="10"
+    inputmode="numeric"
+    oninput="analyzeNumber()"
+>
+
+            <button onclick="analyzeNumber()">
+                Analyse Number
+            </button>
+        </div>
+
+        <div id="error"></div>
+
+    </div>
+
+
+    <div id="results" class="hidden">
+
+        <!-- CORE ANALYSIS -->
+
+        <div class="result-section">
+
+            <h2>🔢 Mobile Number Analysis</h2>
+
+            <div class="number-box">
+
+                <div class="stat">
+                    <h3>Mobile Number</h3>
+                    <div class="value" id="displayNumber"></div>
+                </div>
+
+                <div class="stat">
+                    <h3>Total Sum</h3>
+                    <div class="value" id="totalSum"></div>
+                </div>
+
+                <div class="stat">
+                    <h3>Root Number</h3>
+                    <div class="value" id="rootNumber"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- COMBINATION SUMMARY -->
+
+        <div class="result-section">
+
+            <h2>📊 Combination Summary</h2>
+
+            <div class="summary">
+
+                <div class="summary-box summary-good">
+                    <div>Good Combos</div>
+                    <h2 id="goodCount">0</h2>
+                </div>
+
+                <div class="summary-box summary-neutral">
+                    <div>Neutral Combos</div>
+                    <h2 id="neutralCount">0</h2>
+                </div>
+
+                <div class="summary-box summary-negative">
+                    <div>Negative Combos</div>
+                    <h2 id="negativeCount">0</h2>
+                </div>
+
+                <div class="summary-box summary-repeat">
+                    <div>Repeated Combos</div>
+                    <h2 id="repeatCount">0</h2>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL PREFERENCE -->
+
+        <div class="result-section">
+
+            <h2>⭐ Mobile Number Total Preference</h2>
+
+            <div id="totalPreference"></div>
+
+        </div>
+
+
+        <!-- COMBINATION RESULTS -->
+
+        <div class="result-section">
+
+            <h2>🔍 Combination-by-Combination Analysis</h2>
+
+            <div id="combinationResults"></div>
+
+        </div>
+
+
+        <!-- WARNINGS -->
+
+        <div class="result-section">
+
+            <h2>⚠️ Number Pattern Warnings</h2>
+
+            <div id="warnings"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   MASTER / REPEATED COMBINATIONS
+===================================================== */
+
+const repeatedCombos = {
+
+    "11": "Emotional, ego, attitude, communication and speaking fast.",
+
+    "22": "Mood swings, depression, too emotional, BP problems. If the name starts with B, K or R, emotional issues may be stronger.",
+
+    "33": "Hungry for knowledge and may be less grounded.",
+
+    "44": "Delay, struggle and headache-related concerns.",
+
+    "55": "Lazy or lethargic tendencies. Communication and money flow can increase.",
+
+    "66": "Luxury lover and travelling tendencies.",
+
+    "77": "Mood swings, internal disturbances, spirituality, overthinking and anxiety.",
+
+    "88": "Delays, disturbances and obstacles.",
+
+    "99": "Anger, debt-related tendencies and traditionally associated health concerns."
+
+};
+
+
+/* =====================================================
+   GOOD COMBINATIONS
+===================================================== */
+
+const goodCombos = {
+
+    "12": "Attractive face, saving nature and helpful life partner.",
+
+    "13": "Good advisor, good education, respect and popularity.",
+
+    "31": "Professional nature, respected and special within one's circle.",
+
+    "15": "Associated with father's popularity and recognition.",
+
+    "51": "Associated with father's popularity and recognition.",
+
+    "25": "Healing tendencies, occult or medical interests and success through air travel. Traditionally advised to be careful in finance.",
+
+    "52": "Healing tendencies, occult or medical interests and success through air travel. Traditionally advised to be careful in finance.",
+
+    "29": "May have a decent amount of money. Can develop ego. If DOB is 29, relationship issues may arise.",
+
+    "92": "May have a decent amount of money. Can develop ego. If DOB is 29, relationship issues may arise.",
+
+    "37": "Complete personality and the ability to benefit from knowledge.",
+
+    "73": "Complete personality and the ability to benefit from knowledge.",
+
+    "38": "Real estate, counselling, peacemaking or mediation abilities.",
+
+    "83": "Real estate, counselling, peacemaking or mediation abilities.",
+
+    "47": "Honest, brilliant and gives importance to integrity. Rahu-Ketu combination.",
+
+    "74": "Honest, brilliant and gives importance to integrity. Rahu-Ketu combination.",
+
+    "57": "Good speaker, writer and expressive person. People may seek advice from them.",
+
+    "75": "Good speaker, writer and expressive person. People may seek advice from them.",
+
+    "69": "Good management skills, planning ability and involvement with the opposite sex.",
+
+    "96": "Good management skills, planning ability and involvement with the opposite sex.",
+
+    "78": "Healing abilities, idealistic nature and ability to solve problems independently.",
+
+    "87": "Healing abilities, idealistic nature and ability to solve problems independently."
+
+};
+
+
+/* =====================================================
+   NEUTRAL COMBINATIONS
+===================================================== */
+
+const neutralCombos = {
+
+    "17": "Money-related work may continue. Possibility of government connections, MNC facilities or work-from-home opportunities. Traditionally associated with relationship concerns in specific DOB patterns.",
+
+    "71": "Money-related work may continue. Possibility of government connections, MNC facilities or work-from-home opportunities. Traditionally associated with relationship concerns in specific DOB patterns.",
+
+    "19": "Ambitious, professional, influential and freedom-loving.",
+
+    "91": "Ambitious, professional, influential and freedom-loving.",
+
+    "21": "Attractive personality but possible unnecessary expenditure.",
+
+    "24": "Patience is required to achieve goals. Active planning and continuous thinking.",
+
+    "42": "Patience is required to achieve goals. Active planning and continuous thinking.",
+
+    "35": "Success away from home, good economic condition but possible liquid-money concerns.",
+
+    "53": "Success away from home, good economic condition but possible liquid-money concerns.",
+
+    "36": "Principle-oriented person with knowledge, but possible difficulty in studies or presentation.",
+
+    "63": "Principle-oriented person with knowledge, but possible difficulty in studies or presentation.",
+
+    "39": "Likes to show off and may have duality in nature.",
+
+    "93": "Likes to show off and may have duality in nature.",
+
+    "49": "Risk-taking nature and possible attraction towards uniform-related professions.",
+
+    "94": "Risk-taking nature and possible attraction towards uniform-related professions.",
+
+    "56": "May hesitate to ask for their own money. Business-oriented mindset.",
+
+    "65": "May hesitate to ask for their own money. Business-oriented mindset.",
+
+    "58": "Money may get stuck. Calculative mindset and possible finance-related work.",
+
+    "85": "Money may get stuck. Calculative mindset and possible finance-related work.",
+
+    "59": "Speech may negatively affect relationships. Interest in science or commerce.",
+
+    "95": "Speech may negatively affect relationships. Interest in science or commerce.",
+
+    "79": "Traditionally associated with success after separation from father.",
+
+    "97": "Traditionally associated with success after separation from father."
+
+};
+
+
+/* =====================================================
+   NEGATIVE COMBINATIONS
+===================================================== */
+
+const negativeCombos = {
+
+    "14": "Traditionally associated with loans, liabilities, legal concerns and struggles.",
+
+    "41": "Traditionally associated with loans, liabilities, legal concerns and struggles.",
+
+    "16": "Traditionally considered a highly challenging combination for relationships, marriage and income.",
+
+    "61": "Traditionally considered a highly challenging combination for relationships, marriage and income.",
+
+    "18": "Traditionally considered a very challenging combination involving relationships, family and career instability.",
+
+    "81": "Traditionally considered a very challenging combination involving relationships, family and career instability.",
+
+    "23": "May have many opponents, although they may not be able to cause significant harm.",
+
+    "32": "May have many opponents, although they may not be able to cause significant harm.",
+
+    "26": "Traditionally associated with barriers in studies and relationship-related challenges.",
+
+    "62": "Traditionally associated with barriers in studies and relationship-related challenges.",
+
+    "27": "Good intuition but traditionally associated with joint or urinary concerns.",
+
+    "72": "Good intuition but traditionally associated with joint or urinary concerns.",
+
+    "28": "May have money but traditionally associated with excessive expenditure and relationship disturbances.",
+
+    "82": "May have money but traditionally associated with excessive expenditure and relationship disturbances.",
+
+    "34": "Traditionally associated with physical and family health-related concerns.",
+
+    "43": "Traditionally associated with physical and family health-related concerns.",
+
+    "45": "Traditionally associated with medical and legal concerns and restrictions.",
+
+    "54": "Traditionally associated with medical and legal concerns and restrictions.",
+
+    "46": "Traditionally associated with extra relationships and relationship complications.",
+
+    "64": "Traditionally associated with extra relationships and relationship complications.",
+
+    "48": "Traditionally considered a highly challenging combination with health-related concerns.",
+
+    "84": "Traditionally considered a highly challenging combination with health-related concerns.",
+
+    "67": "Traditionally associated with love marriage and possible disturbances in married life.",
+
+    "76": "Traditionally associated with love marriage and possible disturbances in married life.",
+
+    "68": "Traditionally associated with eye or organ-related health concerns.",
+
+    "86": "Traditionally associated with eye or organ-related health concerns.",
+
+    "89": "Argumentative and principle-oriented nature. Traditionally associated with chronic concerns later in life.",
+
+    "98": "Argumentative and principle-oriented nature. Traditionally associated with chronic concerns later in life."
+
+};
+
+
+/* =====================================================
+   TOTAL NUMBER PREFERENCES
+===================================================== */
+
+const totalPreferences = {
+
+    1: {
+        preference: "46 > 64 > 37 > 55",
+        description: "Associated with authority, career, politics and professional ambitions. Your sheet also lists possible career, government, respect and health challenges."
+    },
+
+    3: {
+        preference: "66 > 39 > 30",
+        description: "Associated with knowledge, prosperity, teaching, luck and health."
+    },
+
+    5: {
+        preference: "41 > 32 > 50 > 59",
+        description: "Associated with overall balance, education, profession, business, communication and money flow."
+    },
+
+    6: {
+        preference: "42 > 24 > 33 > 60",
+        description: "42 is preferred for marriage and luxury. 33 is associated with foreign travel, relationships and increasing money flow."
+    }
+
+};
+
+
+/* =====================================================
+   CALCULATE ROOT NUMBER
+===================================================== */
+
+function getRootNumber(number) {
+
+    let sum = number
+        .split("")
+        .reduce((total, digit) => total + parseInt(digit), 0);
+
+    let originalSum = sum;
+
+    while (sum > 9) {
+
+        sum = sum
+            .toString()
+            .split("")
+            .reduce((total, digit) => total + parseInt(digit), 0);
+
+    }
+
+    return {
+        total: originalSum,
+        root: sum
+    };
+
+}
+
+
+/* =====================================================
+   CREATE COMBINATION CARD
+===================================================== */
+
+function createComboCard(combo, type, description) {
+
+    let className = "";
+    let tagClass = "";
+    let tagText = "";
+
+    if (type === "Good") {
+        className = "good";
+        tagClass = "tag-good";
+        tagText = "GOOD COMBINATION";
+    }
+
+    if (type === "Neutral") {
+        className = "neutral";
+        tagClass = "tag-neutral";
+        tagText = "NEUTRAL COMBINATION";
+    }
+
+    if (type === "Negative") {
+        className = "negative";
+        tagClass = "tag-negative";
+        tagText = "MALEFIC / NEGATIVE";
+    }
+
+    if (type === "Repeated") {
+        className = "repeat";
+        tagClass = "tag-repeat";
+        tagText = "REPEATED COMBINATION";
+    }
+
+    return `
+        <div class="combo-card ${className}">
+
+            <div class="combo-title">
+                ${combo}
+            </div>
+
+            <div class="tag ${tagClass}">
+                ${tagText}
+            </div>
+
+            <p>
+                ${description}
+            </p>
+
+        </div>
+    `;
+
+}
+
+
+/* =====================================================
+   MAIN ANALYSIS
+===================================================== */
+
+function analyzeNumber() {
+
+    let mobile = document
+        .getElementById("mobileNumber")
+        .value
+        .replace(/\D/g, "");
+
+    let error = document.getElementById("error");
+
+    error.innerHTML = "";
+
+    if (mobile.length < 8) {
+
+        error.innerHTML =
+        "Please enter a valid mobile number with at least 8 digits.";
+
+        document
+            .getElementById("results")
+            .classList
+            .add("hidden");
+
+        return;
+    }
+
+
+    /* DISPLAY BASIC DETAILS */
+
+    document
+        .getElementById("displayNumber")
+        .innerHTML = mobile;
+
+    let calculation = getRootNumber(mobile);
+
+    document
+        .getElementById("totalSum")
+        .innerHTML = calculation.total;
+
+    document
+        .getElementById("rootNumber")
+        .innerHTML = calculation.root;
+
+
+    /* COUNTERS */
+
+    let goodCount = 0;
+    let neutralCount = 0;
+    let negativeCount = 0;
+    let repeatCount = 0;
+
+    let resultsHTML = "";
+
+
+    /* ANALYSE ADJACENT COMBINATIONS */
+
+    for (let i = 0; i < mobile.length - 1; i += 2) {
+
+    let combo = mobile.substring(i, i + 2);
+
+        if (repeatedCombos[combo]) {
+
+            repeatCount++;
+
+            resultsHTML += createComboCard(
+                combo,
+                "Repeated",
+                repeatedCombos[combo]
+            );
+
+        }
+
+        else if (goodCombos[combo]) {
+
+            goodCount++;
+
+            resultsHTML += createComboCard(
+                combo,
+                "Good",
+                goodCombos[combo]
+            );
+
+        }
+
+        else if (neutralCombos[combo]) {
+
+            neutralCount++;
+
+            resultsHTML += createComboCard(
+                combo,
+                "Neutral",
+                neutralCombos[combo]
+            );
+
+        }
+
+        else if (negativeCombos[combo]) {
+
+            negativeCount++;
+
+            resultsHTML += createComboCard(
+                combo,
+                "Negative",
+                negativeCombos[combo]
+            );
+
+        }
+
+    }
+
+
+    /* IF NO COMBINATION FOUND */
+
+    if (resultsHTML === "") {
+
+        resultsHTML = `
+            <div class="warning">
+                No specific combination
+                was found in this mobile number.
+            </div>
+        `;
+
+    }
+
+
+    document
+        .getElementById("combinationResults")
+        .innerHTML = resultsHTML;
+
+
+    /* UPDATE COUNTERS */
+
+    document
+        .getElementById("goodCount")
+        .innerHTML = goodCount;
+
+    document
+        .getElementById("neutralCount")
+        .innerHTML = neutralCount;
+
+    document
+        .getElementById("negativeCount")
+        .innerHTML = negativeCount;
+
+    document
+        .getElementById("repeatCount")
+        .innerHTML = repeatCount;
+
+
+    /* TOTAL PREFERENCE */
+
+    let preferenceHTML = "";
+
+    if (totalPreferences[calculation.root]) {
+
+        let data =
+            totalPreferences[calculation.root];
+
+        preferenceHTML = `
+            <div class="preference-card">
+
+                <strong>
+                    Root Number ${calculation.root}
+                </strong>
+
+                <p style="margin-top:10px;">
+                    <b>Preferred Totals:</b>
+                    ${data.preference}
+                </p>
+
+                <p style="margin-top:10px;">
+                    ${data.description}
+                </p>
+
+            </div>
+        `;
+
+    }
+
+    else {
+
+        preferenceHTML = `
+            <div class="warning">
+
+                No specific total preference has been provided
+                in the current master sheet for Root Number
+                ${calculation.root}.
+
+            </div>
+        `;
+
+    }
+
+
+    document
+        .getElementById("totalPreference")
+        .innerHTML = preferenceHTML;
+
+
+    /* CHECK AVOID PATTERNS */
+
+    let avoidPatterns = [
+
+        "00",
+        "000",
+        "0000",
+
+        "99",
+        "999",
+
+        "88",
+        "888",
+
+        "77",
+        "777",
+
+        "666",
+
+        "555",
+
+        "444",
+        "44",
+
+        "333",
+
+        "22",
+        "222",
+
+        "111"
+
+    ];
+
+    let warningsHTML = "";
+
+    avoidPatterns.forEach(pattern => {
+
+        if (mobile.includes(pattern)) {
+
+            warningsHTML += `
+
+                <div class="warning">
+
+                    ⚠️ The pattern <b>${pattern}</b> is present
+                    in this mobile number.
+
+                    According to your master sheet, this pattern
+                    is included in the "Avoid / Don't Select" list.
+
+                </div>
+
+            `;
+
+        }
+
+    });
+
+
+    if (warningsHTML === "") {
+
+        warningsHTML = `
+
+            <div class="preference-card">
+
+                No major repeated pattern from your
+                "Avoid / Don't Select" list was detected.
+
+            </div>
+
+        `;
+
+    }
+
+
+    document
+        .getElementById("warnings")
+        .innerHTML = warningsHTML;
+
+
+    /* SHOW RESULTS */
+
+    document
+        .getElementById("results")
+        .classList
+        .remove("hidden");
+
+
+    /* SCROLL TO RESULTS */
+
+    document
+        .getElementById("results")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* =====================================================
+   ENTER KEY SUPPORT
+===================================================== */
+
+document
+    .getElementById("mobileNumber")
+    .addEventListener("keypress", function(event) {
+
+        if (event.key === "Enter") {
+            analyzeNumber();
+        }
+
+    });
+
+</script>
+
+</body>
+</html>

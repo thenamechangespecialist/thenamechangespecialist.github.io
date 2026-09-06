@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Numerology Calculator</title>
+<title>The Name Change Specialist</title>
 
 <style>
 
@@ -50,7 +50,7 @@ h1 {
 
 .menu {
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(5,1fr);
     gap: 10px;
     margin-bottom: 25px;
 }
@@ -362,6 +362,571 @@ select:focus {
 }
 
 </style>
+<style id="mobile-module-styles">
+
+.mobile-module {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #f4f7f6, #e7f0ec);
+        color: #222;
+        padding: 20px;
+    }
+
+    .mobile-module .container {
+        max-width: 1100px;
+        margin: auto;
+    }
+
+    .mobile-module .header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .mobile-module .header h1 {
+        color: #176b4d;
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+
+    .mobile-module .header p {
+        color: #555;
+    }
+
+    .mobile-module .mobile-input-card {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+        margin-bottom: 25px;
+    }
+
+    .mobile-module .input-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .mobile-module input {
+        padding: 15px;
+        font-size: 20px;
+        border: 2px solid #176b4d;
+        border-radius: 8px;
+        width: 300px;
+        text-align: center;
+    }
+
+    .mobile-module button {
+        padding: 15px 25px;
+        font-size: 17px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        background: #176b4d;
+        color: white;
+        font-weight: bold;
+    }
+
+    .mobile-module button:hover {
+        background: #0d4d36;
+    }
+.mobile-module #error {
+        color: #c62828;
+        text-align: center;
+        margin-top: 15px;
+        font-weight: bold;
+    }
+
+    .mobile-module .hidden {
+        display: none;
+    }
+
+    .mobile-module .result-section {
+        background: white;
+        margin-bottom: 20px;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    .mobile-module .result-section h2 {
+        color: #176b4d;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 10px;
+    }
+
+    .mobile-module .number-box {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .mobile-module .stat {
+        flex: 1;
+        min-width: 180px;
+        background: #f4f7f6;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .mobile-module .stat h3 {
+        font-size: 15px;
+        color: #555;
+        margin-bottom: 10px;
+    }
+
+    .mobile-module .stat .value {
+        font-size: 32px;
+        font-weight: bold;
+        color: #176b4d;
+    }
+
+    .mobile-module .combo-card {
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 12px;
+        border-left: 6px solid;
+    }
+
+    .mobile-module .good {
+        background: #e8f5e9;
+        border-color: #2e7d32;
+    }
+
+    .mobile-module .neutral {
+        background: #fff8e1;
+        border-color: #f9a825;
+    }
+
+    .mobile-module .negative {
+        background: #ffebee;
+        border-color: #c62828;
+    }
+
+    .mobile-module .repeat {
+        background: #f3e5f5;
+        border-color: #7b1fa2;
+    }
+
+    .mobile-module .combo-title {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .mobile-module .tag {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 20px;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .mobile-module .tag-good {
+        background: #2e7d32;
+    }
+
+    .mobile-module .tag-neutral {
+        background: #f9a825;
+    }
+
+    .mobile-module .tag-negative {
+        background: #c62828;
+    }
+
+    .mobile-module .tag-repeat {
+        background: #7b1fa2;
+    }
+
+    .mobile-module .summary {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .mobile-module .summary-box {
+        flex: 1;
+        min-width: 150px;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+        font-weight: bold;
+    }
+
+    .mobile-module .summary-good {
+        background: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .mobile-module .summary-neutral {
+        background: #fff8e1;
+        color: #8a6500;
+    }
+
+    .mobile-module .summary-negative {
+        background: #ffebee;
+        color: #c62828;
+    }
+
+    .mobile-module .summary-repeat {
+        background: #f3e5f5;
+        color: #7b1fa2;
+    }
+
+    .mobile-module .warning {
+        background: #fff3cd;
+        padding: 15px;
+        border-left: 5px solid #f9a825;
+        margin-top: 15px;
+        border-radius: 8px;
+    }
+
+    .mobile-module .preference-card {
+        background: #eef7f2;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    .mobile-module .preference-card strong {
+        color: #176b4d;
+        font-size: 20px;
+    }
+
+    @media(max-width:600px) {
+
+        .mobile-module .header h1 {
+            font-size: 25px;
+        }
+
+        .mobile-module input {
+            width: 100%;
+        }
+
+        .mobile-module button {
+            width: 100%;
+        }
+
+    }
+
+</style>
+
+<style id="unified-mobile-module-theme">
+/* =========================================================
+   UNIFIED THEME — MATCHES THE MOBILE NUMBER MODULE
+   Applies the mobile-module visual language to every tab
+   without changing calculator logic.
+   ========================================================= */
+
+html, body {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #f4f7f6, #e7f0ec);
+    color: #222;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+}
+
+/* Main page heading */
+.container > h1 {
+    color: #176b4d;
+    font-size: 32px;
+    margin: 5px 0 10px;
+    text-align: center;
+}
+
+.subtitle {
+    color: #555;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* Navigation — same green treatment as Mobile Number module */
+.menu {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.menu button {
+    background: #ffffff;
+    border: 2px solid #176b4d;
+    color: #176b4d;
+    padding: 14px 8px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.menu button:hover,
+.menu button.active {
+    background: #176b4d;
+    color: #ffffff;
+}
+
+/* All non-mobile calculators inherit the Mobile Number card structure */
+.calculator:not(.mobile-module) {
+    font-family: Arial, sans-serif;
+}
+
+.calculator:not(.mobile-module) .section-title {
+    color: #176b4d;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 20px;
+}
+
+.calculator:not(.mobile-module) label {
+    color: #176b4d;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Input cards */
+.calculator:not(.mobile-module) > input,
+.calculator:not(.mobile-module) input,
+.calculator:not(.mobile-module) select {
+    background: #ffffff;
+    border: 2px solid #176b4d;
+    border-radius: 8px;
+    color: #222;
+    outline: none;
+}
+
+.calculator:not(.mobile-module) > input {
+    display: block;
+    width: min(100%, 500px);
+    margin: 0 auto;
+    padding: 15px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.calculator:not(.mobile-module) input:focus,
+.calculator:not(.mobile-module) select:focus {
+    border-color: #0d4d36;
+    box-shadow: 0 0 0 3px rgba(23,107,77,.10);
+}
+
+/* Result cards */
+.calculator:not(.mobile-module) .results,
+.calculator:not(.mobile-module) .name-result {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.calculator:not(.mobile-module) .card,
+.calculator:not(.mobile-module) .name-card {
+    background: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 20px 12px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+}
+
+.calculator:not(.mobile-module) .card-title,
+.calculator:not(.mobile-module) .name-card h3 {
+    color: #555;
+    font-size: 15px;
+    margin: 0 0 10px;
+}
+
+.calculator:not(.mobile-module) .card-value,
+.calculator:not(.mobile-module) .name-card .number {
+    color: #176b4d;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.calculator:not(.mobile-module) .kua-under-box {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid #ddd;
+    color: #176b4d;
+    font-size: 12px;
+    line-height: 1.4;
+    font-weight: bold;
+}
+
+/* Grid section */
+.calculator:not(.mobile-module) .grid-title {
+    color: #176b4d;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    margin: 25px 0 15px;
+}
+
+.calculator:not(.mobile-module) .grid {
+    border: 3px solid #176b4d;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+}
+
+.calculator:not(.mobile-module) .cell {
+    background: #ffffff;
+    border-right: 1px solid #176b4d;
+    border-bottom: 1px solid #176b4d;
+}
+
+.calculator:not(.mobile-module) .fixed-number,
+.calculator:not(.mobile-module) .normal-number,
+.calculator:not(.mobile-module) .circled-number {
+    color: #176b4d;
+}
+
+.calculator:not(.mobile-module) .fixed-number {
+    font-size: 12px;
+}
+
+.calculator:not(.mobile-module) .circled-number {
+    border-color: #176b4d;
+}
+
+.calculator:not(.mobile-module) .empty-number {
+    color: #b8cfc5;
+}
+
+/* Information panels, if enabled later */
+.calculator:not(.mobile-module) .info {
+    background: #ffffff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+}
+
+.calculator:not(.mobile-module) .info strong {
+    color: #176b4d;
+}
+
+/* Reset buttons — same visual language as Analyse Number */
+.calculator:not(.mobile-module) .reset {
+    display: block;
+    margin: 25px auto 0;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 8px;
+    background: #176b4d;
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.calculator:not(.mobile-module) .reset:hover {
+    background: #0d4d36;
+}
+
+/* Give each calculator the same white result-card feel */
+#loshu,
+#vedic,
+#name,
+#vehicle {
+    background: transparent;
+}
+
+/* Vehicle/name/date input areas */
+#name > input,
+#vehicle > input,
+#loshu > input,
+#vedic > input {
+    margin-bottom: 5px;
+}
+
+/* Mobile Number module itself remains the reference design,
+   but inherits the same page spacing and navigation around it. */
+.mobile-module {
+    border-radius: 15px;
+}
+
+@media (max-width: 700px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 0;
+    }
+
+    .menu {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .calculator:not(.mobile-module) .results,
+    .calculator:not(.mobile-module) .name-result {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .container > h1 {
+        font-size: 26px;
+    }
+
+    .calculator:not(.mobile-module) .section-title {
+        font-size: 25px;
+    }
+}
+
+@media (max-width: 420px) {
+    .menu {
+        grid-template-columns: 1fr;
+    }
+
+    .calculator:not(.mobile-module) .results,
+    .calculator:not(.mobile-module) .name-result {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<style id="birth-destiny-details-theme">
+.number-details-section{margin-top:24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.number-detail-card{background:#fff;border:1px solid #cfe3d5;border-radius:16px;padding:20px;box-shadow:0 8px 24px rgba(22,101,52,.10);overflow:hidden}
+.number-detail-card .detail-heading{font-size:20px;font-weight:800;color:#166534;margin:0 0 16px;padding-bottom:12px;border-bottom:2px solid #e6f2e9}
+.number-detail-card .detail-group{margin:0 0 14px}
+.number-detail-card .detail-label{display:block;font-size:13px;font-weight:800;color:#166534;margin-bottom:6px;text-transform:uppercase;letter-spacing:.35px}
+.number-detail-card .detail-text{font-size:14px;line-height:1.65;color:#334155;white-space:pre-wrap;word-break:break-word}
+.number-detail-card .detail-note{font-size:12px;color:#64748b;margin-top:12px;font-style:italic}
+@media(max-width:800px){.number-details-section{grid-template-columns:1fr}}
+</style>
+
+<style id="compound-name-details-theme">
+.compound-details-section{margin-top:24px;background:#fff;border:1px solid #cfe3d5;border-radius:16px;padding:22px;box-shadow:0 8px 24px rgba(22,101,52,.10)}
+.compound-details-section h2{margin:0 0 12px;color:#166534;font-size:22px}.compound-pet-name{font-size:18px;font-weight:800;color:#14532d;margin-bottom:10px}.compound-meaning{font-size:15px;line-height:1.7;color:#334155}.compound-note{font-size:12px;color:#64748b;margin-top:14px;font-style:italic}
+</style>
+
+<style id="top-left-logo-theme">
+.top-left-logo{position:fixed;top:18px;left:22px;z-index:1000;display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border:1px solid #b7d9c0;border-radius:14px;background:rgba(255,255,255,.96);box-shadow:0 6px 20px rgba(22,101,52,.12);color:#166534;font-family:Georgia,"Times New Roman",serif;font-size:18px;font-weight:800;letter-spacing:.2px;text-decoration:none}
+.top-left-logo .logo-mark{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#166534;color:#fff;font-family:Arial,sans-serif;font-size:14px;font-weight:900}
+@media(max-width:700px){.top-left-logo{position:static;margin:0 auto 14px;width:max-content;max-width:calc(100% - 20px);font-size:16px}.top-left-logo .logo-mark{width:26px;height:26px}}
+.number-detail-card .detail-text{font-family:Arial,"Helvetica Neue",sans-serif;font-size:15px;line-height:1.8;letter-spacing:.05px;text-align:left;white-space:normal;word-break:normal}
+.number-detail-card .detail-label{font-family:Arial,"Helvetica Neue",sans-serif}
+</style>
 </head>
 
 
@@ -369,10 +934,11 @@ select:focus {
 
 <div class="container">
 
-<h1>Numerology Calculator</h1>
+
+<h1>The Name Change Specialist</h1>
 
 <div class="subtitle">
-Lo Shu • Vedic • Name • Vehicle
+
 </div>
 
 
@@ -384,7 +950,7 @@ Lo Shu • Vedic • Name • Vehicle
 
 <button class="active"
 onclick="openCalculator('loshu',this)">
-Lo Shu Grid Calculator
+LoShu Grid Calculator
 </button>
 
 <button
@@ -394,7 +960,12 @@ Vedic Grid Calculator
 
 <button
 onclick="openCalculator('name',this)">
-Name Number Calculator
+Name & Business Name Numerology
+</button>
+
+<button
+onclick="openCalculator('mobile',this)">
+Mobile Number Calculator
 </button>
 
 <button
@@ -523,7 +1094,9 @@ id="loshuGrid"
 class="grid">
 </div>
 
+<div id="loshuNumberDetails" class="number-details-section" style="display:none;"></div>
 
+<!--
 <div
 id="loshuInfo"
 class="info">
@@ -531,7 +1104,7 @@ class="info">
 Standard Lo Shu Grid:
 4 9 2 / 3 5 7 / 8 1 6
 
-</div>
+</div> -->
 
 
 <button
@@ -624,6 +1197,20 @@ class="card-value">
 
 </div>
 
+<div class="card">
+
+<div class="card-title">
+Name Must Begin With
+</div>
+
+<div
+id="vedicNameStart"
+class="card-value">
+-
+</div>
+
+</div>
+
 </div>
 
 
@@ -637,7 +1224,9 @@ id="vedicGrid"
 class="grid">
 </div>
 
+<div id="vedicNumberDetails" class="number-details-section" style="display:none;"></div>
 
+<!--
 <div
 id="vedicInfo"
 class="info">
@@ -645,7 +1234,7 @@ class="info">
 Standard Vedic Grid:
 3 1 9 / 6 7 5 / 2 8 4
 
-</div>
+</div>-->
 
 
 <button
@@ -665,16 +1254,16 @@ Reset
 <div id="name" class="calculator">
 
 <div class="section-title">
-Name Number Calculator
+Name & Business Name Numerology
 </div>
 
 <label>
-Enter Name
+Enter Name / Business Name
 </label>
 
 <input
 id="nameInput"
-placeholder="Enter Name"
+placeholder="Enter Name or Business Name"
 autocomplete="off">
 
 
@@ -684,7 +1273,7 @@ autocomplete="off">
 <div class="name-card">
 
 <h3>
-Chaldean Value
+Compound Number
 </h3>
 
 <div
@@ -699,7 +1288,7 @@ class="number">
 <div class="name-card">
 
 <h3>
-Chaldean Reduced
+Compound Number Reduced
 </h3>
 
 <div
@@ -714,7 +1303,7 @@ class="number">
 <div class="name-card">
 
 <h3>
-Pythagoras Value
+Pythagoras Compound Number
 </h3>
 
 <div
@@ -729,7 +1318,7 @@ class="number">
 <div class="name-card">
 
 <h3>
-Pythagoras Reduced
+Pythagoras Compound Number Reduced
 </h3>
 
 <div
@@ -742,6 +1331,7 @@ class="number">
 
 </div>
 
+<div id="compoundNameDetails" class="compound-details-section" style="display:none"></div>
 
 <button
 class="reset"
@@ -752,6 +1342,80 @@ Reset
 </div>
 
 
+
+<div id="mobile" class="calculator mobile-module">
+<div class="header">
+<h1>📱 Mobile Number Numerology Calculator</h1>
+<p>Analyse your mobile number based on combination numerology</p>
+</div>
+<div class="mobile-input-card">
+<div class="input-group">
+<input id="mobileNumber" inputmode="numeric" maxlength="10" oninput="analyzeNumber()" placeholder="Enter Mobile Number" type="text"/>
+<button onclick="analyzeNumber()">
+                Analyse Number
+            </button>
+</div>
+<div id="error"></div>
+</div>
+<div class="hidden" id="results">
+<!-- CORE ANALYSIS -->
+<div class="result-section">
+<h2>🔢 Mobile Number Analysis</h2>
+<div class="number-box">
+<div class="stat">
+<h3>Mobile Number</h3>
+<div class="value" id="displayNumber"></div>
+</div>
+<div class="stat">
+<h3>Total Sum</h3>
+<div class="value" id="totalSum"></div>
+</div>
+<div class="stat">
+<h3>Root Number</h3>
+<div class="value" id="rootNumber"></div>
+</div>
+</div>
+</div>
+<!-- COMBINATION SUMMARY -->
+<div class="result-section">
+<h2>📊 Combination Summary</h2>
+<div class="summary">
+<div class="summary-box summary-good">
+<div>Good Combos</div>
+<h2 id="goodCount">0</h2>
+</div>
+<div class="summary-box summary-neutral">
+<div>Neutral Combos</div>
+<h2 id="neutralCount">0</h2>
+</div>
+<div class="summary-box summary-negative">
+<div>Negative Combos</div>
+<h2 id="negativeCount">0</h2>
+</div>
+<div class="summary-box summary-repeat">
+<div>Repeated Combos</div>
+<h2 id="repeatCount">0</h2>
+</div>
+</div>
+</div>
+<!-- TOTAL PREFERENCE -->
+<div class="result-section">
+<h2>⭐ Mobile Number Total Preference</h2>
+<div id="totalPreference"></div>
+</div>
+<!-- COMBINATION RESULTS -->
+<div class="result-section">
+<h2>🔍 Combination-by-Combination Analysis</h2>
+<div id="combinationResults"></div>
+</div>
+<!-- WARNINGS -->
+<div class="result-section">
+<h2>⚠️ Number Pattern Warnings</h2>
+<div id="warnings"></div>
+</div>
+</div>
+
+</div>
 
 <!-- =====================================================
      VEHICLE NUMBER CALCULATOR
@@ -1210,6 +1874,8 @@ function calculateLoshu() {
             loshuPositions
         );
 
+        renderBirthDestinyDetails("loshuNumberDetails", null, null);
+
         return;
 
     }
@@ -1384,6 +2050,8 @@ function calculateLoshu() {
 
     );
 
+    renderBirthDestinyDetails("loshuNumberDetails", birth, destiny);
+
 
     document
     .getElementById("loshuInfo")
@@ -1467,6 +2135,30 @@ const zodiacNumbers = {
     Capricorn: 8,
     Aquarius: 8,
     Pisces: 3
+
+};
+
+/* =====================================================
+   VEDIC ZODIAC - NAME STARTING SOUNDS
+   Traditional name-starting sounds associated with each
+   zodiac sign. These are displayed as guidance alongside
+   the date-based zodiac used by this calculator.
+===================================================== */
+
+const zodiacNameStarts = {
+
+    Aries: "A, E, L, Li, Lu, Le, Lo",
+    Taurus: "E, U, V, O, Va, Vi, Vu, Ve, Vo",
+    Gemini: "Ka, Ki, Ku, Gha, Ke, Ko, Ha",
+    Cancer: "Hi, Hu, He, Ho, Da, Di, Du, De, Do",
+    Leo: "Ma, Mi, Mu, Me, Mo, Ta, Ti, Tu, Te",
+    Virgo: "To, Pa, Pi, Pu, Sha, Na, Tha, Pe, Po",
+    Libra: "Ra, Ri, Ru, Re, Ro, Ta, Ti, Tu, Te",
+    Scorpio: "To, Na, Ni, Nu, Ne, No, Ya, Yi, Yu",
+    Sagittarius: "Ye, Yo, Bha, Bhi, Bhu, Dha, Pha, Be, Bo",
+    Capricorn: "Bho, Ja, Ji, Ju, Je, Jo, Khi, Khu, Khe, Kho, Ga, Gi",
+    Aquarius: "Gu, Ge, Go, Sa, Si, Su, Se, So, Da",
+    Pisces: "Di, Du, Tha, Jha, De, Do, Cha, Chi"
 
 };
 
@@ -1576,6 +2268,28 @@ function calculateVedic() {
             vedicPositions
         );
 
+        document
+        .getElementById("vedicBirth")
+        .textContent = "-";
+
+        document
+        .getElementById("vedicDestiny")
+        .textContent = "-";
+
+        document
+        .getElementById("vedicZodiac")
+        .textContent = "-";
+
+        document
+        .getElementById("vedicBack")
+        .textContent = "-";
+
+        document
+        .getElementById("vedicNameStart")
+        .textContent = "-";
+
+        renderBirthDestinyDetails("vedicNumberDetails", null, null);
+
         return;
 
     }
@@ -1679,6 +2393,11 @@ function calculateVedic() {
     document
     .getElementById("vedicBack")
     .textContent = backSeater;
+
+
+    document
+    .getElementById("vedicNameStart")
+    .textContent = zodiacNameStarts[zodiac];
 
 
     /* =========================
@@ -1793,6 +2512,8 @@ function calculateVedic() {
 
     );
 
+    renderBirthDestinyDetails("vedicNumberDetails", birth, destiny);
+
 
     document
     .getElementById("vedicInfo")
@@ -1866,6 +2587,102 @@ document
 );
 
 
+/* =========================================================
+   BIRTH / DESTINY NUMBER DETAILS
+   Source: "Birth number and Destiny number(1).docx"
+   The text below is integrated from the supplied document.
+========================================================= */
+const birthDestinyDetails = {"1":["Lucky Professions:","They do not like to do the same profession for a long time Change in","profession seeks something new. The power and computer sectors are suitable for them Suitable for fire industries, sun based elastic industries Export and import related","businesses are profitable They excel as promoters, surveyors, photographers and commission agents Gems, jewellery research ( excel mainly in the elastic professions Excellent in the professions of Teachers, Writers, Musical, Science, Librarian. He also excels in the fields of astrologers, architecture and numerologists Political","Leaders, Doctors, Heart, Specialist, TV and the film industry, sectors thrive Electrical, engineering, designers","Health Problems:  Blood related diseases and seizures due to high heat. It can cause","high blood pressure, heart diseases, eye diseases, spinal diseases, brain fever, heart attack, lungs and heart problems.","Lucky Numbers 1 2 3 4 5 7 and 9","Lucky Gems: Ruby","Lucky Days: Sundays and Mondays","Lucky Colours: Yellow, Orange, Pink, Orange, Light Blue, White and Purple"," Unlucky Numbers: 8 and 6","Unlucky Colours: Black","Donations: Wheat, red cloths, red flowers and sandalwood","Direction: East","Metal: Gold"],"2":["Lucky Profession:","Good for journalism ,teaching, literature, music, arts, petroleum, chemicals, watertransport, seafood.Dairy related milk, yoghurt, products are good bargains. Excel as a chemist, dentist and doctors. They excel as writers, poets, actors and musicians. As a politician, they excel in academia, teaching, hospitality, training, care, nursing, consultancy and services. Suitable for radio, television, medicine, medicine, doctors, lab technicians. Teaching, backing, bookkeepers, secretary sectors are well suited. Pearls and gems related businesses thrive. Suitable for science, computer, management fields.Luxury, cosmetics, perfumes, and goods related businesses thrive. Food, eateries, hotels, farm supplies are well suited. Doctors, Electronic Engineers, Liquids, Traveling, Dancing, Teachers, Journalism, Musicians, Poets, Artists, Designers, Constructions, Consultants, Nursing, Creative Art, Bookkeepers, Secretaries, Dairy, Agriculture, Animals, Ice, Ice Cream Parlour, Milk Bakeries, Timber, Coal, Mice, Travel Agents, Import, Export Trade, Acting, All Arts.","Health Problems :Stomach Problems, Uterus, Chest or Breast Related Problems. Nervous System, Kidney Related Problems, Left Eye Problem. Death can because of mouthulcers or watery eyes.","Lucky & Positive Numbers:1,2,3,5,6 and 7","Lucky Gems:Pearl,Moonstone.","Lucky Days: Sundays, Monday,Friday.","Lucky Colours: White, Cream, Green, yellow, Orange, pink, orange and light blue."," Unlucky Numbers:8 and 9.","Unlucky Colours:Black and Red.","Direction : North-West,West."],"3":["Lucky Profession:","Banking, Accounting, Teaching, Writing, Music, Arts, Aesthetics, Architecture, Salesman, NewItems, Toys, Sports Businesses are suitable.Finance Company,Consultancy Services, Advisory Services Banking, Designers, Chartered Accountants, Advertising, Music, Musicians, Art, Artist, Shares, Chits, Cloth Store, Book-Stall, Star Hotel, Coaching Centre, Teaching Services, Educational Institution, Writer, Suitable for designers, salesmen. Administrators, Professors, Judicial Services, Civil Services, Ambassadorship, Philosophy, Religion, Vedas, Police, Navy, Air Force, Doctors, Nurses, Compounders, Insurance, Legal Advisers, Lawyers, Judges, E.O.Of Temples, Ministers, Endowment Services, Spiritual.","Health Problems:(Arthritis, dermatitis, asthma, liver disease, abdominal Diseases)are more likely to occur.Liver Complaints, Stomach, Digestive Organs, Wrist, Back, Hip, Legs, Arthritis, Joint Pains, Gout, Piles, Eczema, Itching, Skin Allergies, Acidity, Gas Trouble, Indigestion, Castration, Jaundice, Paralysis, Paralysis, Hernia, Kidney, Obesity, Fat Related Problems, Lungs and Asthmatic Breathing Problems","Lucky & Positive Numbers:1,2,3,5,7 and 9.","Lucky Gems: Topaz(KanakaPushparagam), Zircon and Amethyst.","Lucky Days: Thursdays, Fridays and Tuesdays.","Lucky Colours: Yellow, Golden, Pink, Orange, Purple, Violet, Sandal, Blue, Purple and Pale Amber.","Unlucky Numbers:6.","Things to donate: Gold, Topaz, Peas, Yellow, Yellow cloths and Yellow flowers.", " Direction : North-East","Metal: Gold"],"4":["Lucky Profession:","Most of them are engineers, scientists and lawyers. Excel in all areas related to new technology. Engineering, Mechanical Works, Electrical Works, Mechanical Engineering Commerce, Building Contractors, Accounting, Teaching, Computer Fields, Designers, Teachers. They excel as educators, architects, storekeepers, farmers, tailors, technicians, hotel management, stock exchange business and forest officers. As scientists, financial entrepreneurs, manufacturers, managers, politicians, lawyers, computer engineering. Cement Factories and Related Works, Railways, Mining, Leather Goods, Pharmaceuticals, Electrical Shop, Transport Service, Automobile, Missionary Gas Agency, Alcoholic and Narcotic Business, Tobacco, Medicinal Chemicals, Physiology, Meta-Physics, Photography.","Health Problems: Skin allergies, Lungs Troubles, TB, Anaemia, Bone Problems, Osteoporosis, Swelling, Back Pain, Headache. Kidney, Bladder Related Problems, Mental Disorders, Deep Depression, Abdominal Diseases, Acidity, Indigestion","Lucky & Positive Numbers:1,4,5 and 6","Lucky Gems:Garnet,Red and Annex,","Lucky Days: Sundays, Mondays ,Fridays.","Lucky Colours: Electric Blue, White, Grey, Light Blue, Yellow, Sandal wood and Mixed Colours","Unlucky Colours: Black and Red","Direction: East."],"5":["Lucky Profession:","Number Person Professions: Number 5 People any work related to public, business, able to perform any job wonderfully. They become involved in activities that involve genius rather than physical exertion. They are Public Relations Officers and Sales Executives. Transportation As managers in tourism companies, as well as in entertainment related professions, sports and sports organizers, they excel in the fields of acting and film industry. Commissions business without investment. Contract professions Paper Business, Newspaper Reporters. Communication Banking Sectors, insurance Mathematics.", "Health issues: They are more likely to suffer from neurological impairment, paralysis and lung diseases. Changes in diet can cause illness. So it is better to be careful about food. Breathing problem, Brain, Nervous breakdown, kidney, tongue, skin, thyroid glands, and throat.","Lucky & Positive Numbers: 1,5,6,8,9.","Lucky Gems: Emeralds.","Lucky Days: Wednesdays, Fridays and Saturdays,","Lucky Colours: Green, Yellow, Blue, White and Pink.","Things to be donated: Sugar, leaf green clothes, 'Alms to the poor, to the orphans"," Direction: North", "Metal: Lead"],"6":["Lucky Professions:","Luxury, warehousing, hotels, clubs, luxury apartments, parks, zoology, mining, sailing, irrigation. Suitable for fashion, acting, photography, At present they excel in the fields of entertainment, film, TV and media. Music, music schools. Writers, Producers, Restaurants, Interior Decoration, Architecture, Engineering, Jewellery, Foreign Currency, Food Inspire, Hotel Production, Social Work, Watch Repairing, Fine Arts, Scents and Perfumes, Flooring Works, Brokerage Business, Catering, Agriculture, Dairy Business, Fancy Shop, Dry Foods, Bakery Stall, Flowers, Beauty Parlour, Paints, Beauty and Luxury Items.","Health issues: Heart Problems, Heart Attack, Throat, Kidney, Breast, Neck, Nose, Lung, Chest, Blood Related Problems and Uterus, Breast Related Problems in Women and urinary tract infections, dental, sciatica, influenza."," Lucky & Positive Numbers: 5, 6 and 9.","Lucky Gems: Opal and Diamonds.","Lucky Days: Tuesdays, Thursdays and Fridays."," Lucky Colours: Emerald, Blue, Light Blue, White, Silver, Golden, Rose and Orange.","Unlucky Numbers: 1 and 6","Direction: South-East.", "Metal: Gold.","Donations: Donating to orphans or providing some assistance for their expenses."],"7":["Lucky Professions:","Ambassadorship, Art, Music, Movie Theaters, Photo Studio, Film Industry, Poets, Writers, Advisors, Philosophers, Counsellors, CID, Detective Services, Secret Services, Driving, Rubber, Archaeology, Medicine, Liquid, Hospitals, Nurses, Doctors, Philosophers, Suitable for the fields of occult science and astrologers.","Health issues: Skin Allergies, Races, Itching, Blisters, Small Pox,Mental Disorders, Irritating, Nature, Sweat Related Problems. Epidemics, Cholera, Diseases Cause by Worms, Poisonous Bites and Kidney related Problems, Abortions, Bad Dreams. Abdominal diseases, gastrouble, diarrhoea, abdominal pain.", "Lucky & Positive Numbers: 1 ,2, 3, 5, 6, 7.","Lucky Gems:Cats Eye(Lehsunia).","Lucky Days: Sundays and Mondays.", "Lucky Colours: White, Silver, Light Yellow, Light Blue, Light Green, Brown and Pale Shades", " Unlucky Numbers: 8,"," Direction: North-West, West.","Donations: Lemon, Mango Powder"],"8":["Lucky Professions:","Chemistry, Physics, Medicine and Mathematics. Experience in Tantric matters as well. Excels in Commerce, Management, CA, LLB, fields. Most of what they read is accounts, management, law, politics. Areas such as real estate, mining, timber, oil, petrol, diesel, mining, agriculture are well suited. Iron, stainless steel, brass, bricks, pots, Cement, Sanitary Work Coal, Timber, Poultry, Chemicals, Fertilizers, Pesticides, Gas Agencies, Printers, Publishers, Engineers, Philosophers, Scientist, Social Works, Public Speakers.","Health issues:They may suffer from neurological diseases,leg problems, varicos eveins and haemorrhoids, and dental diseases. Liver Problems, Bile and Intestinal Problems, Anaemia, Intestinal Inflammation, Stomach Pine, Indigestion, Gastric Complaints, Skin, Bone, Hair Related Problems, Gout, Lucky & Positive Numbers:5,6 and 8.","Lucky Days: Wednesday, Thursdays, Fridays, Saturdays","Gems :Blue Sapphire.","Lucky Colours: Dark Blue,Dark Grey, Black and Purple.","Unlucky Numbers: 1,2 and 9 ","Unlucky Colours: Red.","Direction: West ","Metal: Iron.","Donations: Donations for the elderly and the disabled. Feeding crows and dogs."],"9":["Lucky Profession:","Politicians, doctors, chemist and druggist. Iron and steel businesses thrive. Civil and mechanical fields the film industry, photography, electrical field, doctors, lawyers, legal figures and teachers. Artists, Writers, Actors, Painters, Designers, Lecturers, Religions, Composers, Publishers, Entertainers, Directors, Surgeons, Restaurateurs, Commanders, Tourism, General Leadership, Contract, Missionary and Fire, Electronic Goods, Sports, Metals, Food, Entertainment Business, School and Educational Institutions, Plywood, Hardware, Chemical Items, Gas Agency, Security Guards, Court, Army, Mechanical Engineers, Computer, Sports, Dentist, Ayurvedic.","Health issues: Cardio vascular Diseases, Various Fever, Kidneys, Urinary tract infections may occur. Injuries and fractures can be caused by fire and accidents. Acute Fever, Blood Poison, Operations, Surgeries, Wounds by Fire and Accidents, Cuts, Wounds,Bleeding Injuries, Ulcers.","Lucky & Positive Numbers: 1, 3, 5, 6 and 9.","Lucky Gems: Coral,","Lucky Days: Tuesdays, Wednesdays and Fridays.","Lucky Colours: Red, Dark, Blue, Yellow, Sandal and crimson.","Donation: Blood Donation"]};
+function escapeDetailHtml(value){
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/\"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+function splitDetailLine(line){
+    const rules = [
+        [/^Lucky Profession:?/i,"Lucky Profession"],
+        [/^Lucky Professions:?/i,"Lucky Professions"],
+        [/^Health Problems:?/i,"Health Problems"],
+        [/^HealthProblems for\s*:?/i,"Health Problems"],
+        [/^Healthissues:?/i,"Health Issues"],
+        [/^Lucky&PositiveNumbers:?/i,"Lucky & Positive Numbers"],
+        [/^Lucky Numbers:?/i,"Lucky Numbers"],
+        [/^LuckyGems:?/i,"Lucky Gems"],
+        [/^Gems:?/i,"Gems"],
+        [/^LuckyDays:?/i,"Lucky Days"],
+        [/^LuckyColours:?/i,"Lucky Colours"],
+        [/^UnluckyNumbers:?/i,"Unlucky Numbers"],
+        [/^UnluckyColours:?/i,"Unlucky Colours"],
+        [/^WorshipedDeities:?/i,"Worshiped Deities"],
+        [/^Goddessestobeworshiped:?/i,"Goddesses to be worshiped"],
+        [/^Godstobeworshiped:?/i,"Gods to be worshiped"],
+        [/^Deitiestobeworshiped:?/i,"Deities to be worshiped"],
+        [/^Mantratoberecited:?/i,"Mantra to be recited"],
+        [/^Thingstobedonated:?/i,"Things to be donated"],
+        [/^Donations:?/i,"Donations"],
+        [/^Donation:?/i,"Donation"],
+        [/^Direction:?/i,"Direction"],
+        [/^Metal:?/i,"Metal"]
+    ];
+    for(const [rx,label] of rules){
+        if(rx.test(line)) return {label, text:line.replace(rx,'').trim()};
+    }
+    return {label:"Details", text:line.trim()};
+}
+
+function cleanDetailText(text){
+    let t=String(text||'').replace(/\u00ad/g,' ').replace(/\s+/g,' ').trim();
+    const replacements=[
+      [/watertransport/gi,'water transport'],[/goodbargains/gi,'good bargains'],[/productsaregoodbargains/gi,'products are good bargains'],[/farmsupplies/gi,'farm supplies'],[/IceCreamParlour/gi,'ice cream parlour'],[/MilkBakeries/gi,'milk bakeries'],[/TravelAgents/gi,'travel agents'],[/Import,ExportTrade/gi,'import and export trade'],[/AllArts/gi,'all arts'],
+      [/HealthProblems for/gi,'Health Problems'],[/HealthProblems/gi,'Health Problems'],[/Lucky&PositiveNumbers/gi,'Lucky & Positive Numbers'],[/LuckyGems/gi,'Lucky Gems'],[/LuckyDays/gi,'Lucky Days'],[/LuckyColours/gi,'Lucky Colours'],[/UnluckyNumbers/gi,'Unlucky Numbers'],[/UnluckyColours/gi,'Unlucky Colours'],[/WorshipedDeities/gi,'Worshiped Deities'],[/Worshipeddeities/gi,'Worshiped Deities'],[/Godstobeworshiped/gi,'Gods to be worshiped'],[/Goddessestobeworshiped/gi,'Goddesses to be worshiped'],[/Deitiestobeworshiped/gi,'Deities to be worshiped'],[/Mantratoberecited/gi,'Mantra to be recited'],[/Thingstobedonated/gi,'Things to be donated'],[/Thingstodonate/gi,'Things to donate'],[/Donations/gi,'Donations'],[/Donation/gi,'Donation'],
+      [/North-West\.\s*\(Northwest\)/gi,'North-West (Northwest)'],[/South-East\.\s*\(Southeast\)/gi,'South-East (Southeast)'],[/North-East\.\s*\(Northeast\)NE/gi,'North-East (Northeast)'],
+      [/([a-z])([A-Z])/g,'$1 $2'],[/([A-Za-z])([0-9])/g,'$1 $2'],[/([0-9])([A-Za-z])/g,'$1 $2'],
+      [/\s*,\s*/g,', '],[/\s*\.\s*/g,'. '],[/\s*:\s*/g,': '],[/\s*\;\s*/g,'; '],[/\s{2,}/g,' '],
+      [/\.\s*([a-z])/g,(m,c)=>'. '+c.toUpperCase()],[/\b([a-z])\s+([a-z])\b/g,(m,a,b)=>a+' '+b]
+    ];
+    for(const [rx,repl] of replacements) t=t.replace(rx,repl);
+    t=t.replace(/\b([A-Z]{2,})([A-Z][a-z])/g,'$1 $2');
+    t=t.replace(/\s+([,.])/g,'$1').replace(/,\s*and/g,', and');
+    if(t && !/[.!?]$/.test(t) && !/^[-—]+$/.test(t)) t += '.';
+    return t;
+}
+
+function renderNumberDetailCard(number, role){
+    const lines = birthDestinyDetails[String(number)] || [];
+    if(!lines.length) return "";
+    let groups=[];
+    let current=null;
+    for(const line of lines){
+        const parsed=splitDetailLine(line);
+        if(parsed.label === "Details" && current && current.label === "Lucky Profession"){
+            current.text += " " + parsed.text;
+        } else {
+            if(current) groups.push(current);
+            current=parsed;
+        }
+    }
+    if(current) groups.push(current);
+
+    const body=groups.map(g=>`<div class="detail-group"><span class="detail-label">${escapeDetailHtml(g.label)}</span><div class="detail-text">${escapeDetailHtml(cleanDetailText(g.text))}</div></div>`).join("");
+    return `<section class="number-detail-card"><h3 class="detail-heading">${escapeDetailHtml(role)} ${number} — Details</h3>${body}<div class="detail-note">Details integrated from the supplied Birth Number and Destiny Number document.</div></section>`;
+}
+
+function renderBirthDestinyDetails(targetId,birth,destiny){
+    const target=document.getElementById(targetId);
+    if(!target) return;
+    if(!birth || !destiny || !birthDestinyDetails[String(birth)] || !birthDestinyDetails[String(destiny)]){
+        target.innerHTML="";
+        target.style.display="none";
+        return;
+    }
+    target.innerHTML = renderNumberDetailCard(birth,"Birth Number") + renderNumberDetailCard(destiny,"Destiny Number");
+    target.style.display="grid";
+}
+
 /* =====================================================
    CHALDEAN
 ===================================================== */
@@ -1890,6 +2707,126 @@ const chaldeanValues = {
 
 };
 
+
+const compoundNameDetails = {
+    1: {title: 'The Sun', meaning: 'Independence, original thought, leadership, authority.'},
+    2: {title: 'The Moon', meaning: 'Sensitivity, empathy, diplomacy, cooperation.'},
+    3: {title: 'Jupiter', meaning: 'Wisdom, creative expansion, teaching, optimism.'},
+    4: {title: 'Rahu (Uranus)', meaning: 'Unconventionality, sudden events, deep focus, structural mind.'},
+    5: {title: 'Mercury', meaning: 'Communication, rapid intellect, commercial trade, adaptability.'},
+    6: {title: 'Venus', meaning: 'Art, harmony, domestic responsibilities, magnetic affection.'},
+    7: {title: 'Ketu (Neptune)', meaning: 'Mysticism, isolation, investigative analysis, spiritual seeking.'},
+    8: {title: 'Saturn', meaning: 'Karmic discipline, heavy duties, perseverance, ultimate destiny.'},
+    9: {title: 'Mars', meaning: 'Courage, assertive force, humanitarian defense, intense endings.'},
+    10: {title: 'The Wheel of Fortune', meaning: 'Instant manifestation, cyclical success, honors.'},
+    11: {title: 'The Lion’s Muzzle', meaning: 'High spiritual strength, hidden trials, treachery warning.'},
+    12: {title: 'The Sacrifice', meaning: 'Learning through delays, surrender, intellectual illumination.'},
+    13: {title: 'Transformation / Re-birth', meaning: 'Destruction before sudden elevation or power.'},
+    14: {title: 'Temperance / Fluidity', meaning: 'Creative communication, safety in media, travel fortune.'},
+    15: {title: 'The Magician', meaning: 'High personal magnetism, spellbinding speech, material fortune.'},
+    16: {title: 'The Shattered Tower', meaning: 'Sudden karmic updates, collapse of pride, rebuilding.'},
+    17: {title: 'The Star of the Magi', meaning: 'Divine protection, legacy, rising superior to trials.'},
+    18: {title: 'Spiritual Illusion', meaning: 'Internal conflicts, warning of secret plots or deceptions.'},
+    19: {title: 'The Sun Prince', meaning: 'Absolute victory, clarity, fulfillment after trials.'},
+    20: {title: 'The Awakening', meaning: 'Spiritual calling, critical life reviews, calculated risks.'},
+    21: {title: 'The Crown of the Magi', meaning: 'Global success, high social honors, absolute victory.'},
+    22: {title: 'The Master Builder', meaning: 'Colossal creative power but accompanied by a heavy weight of duty.'},
+    23: {title: 'The Royal Star of the Lion', meaning: 'Incredible protection, effortless success via speech.'},
+    24: {title: 'Love and Art', meaning: 'Financial gain through romantic or creative ventures, luxury.'},
+    25: {title: 'The Deep Researcher', meaning: 'Spiritual gains through careful analytical study.'},
+    26: {title: 'The Conflict', meaning: 'Power struggles, severe warning against poor advice.'},
+    27: {title: 'The Warrior Sage', meaning: 'Intellectual bravery, independent victory, command.'},
+    28: {title: 'The Overthrow', meaning: 'Severe loss when trying to dominate others blindly.'},
+    29: {title: 'The Emotional Trial', meaning: 'Intense sensitivity, relationship trials, karmic test.'},
+    30: {title: 'The Creative Mind', meaning: 'Introspective expression, temporary mental isolation.'},
+    31: {title: 'The Isolated Thinker', meaning: 'Opposition from society, eccentric mindset, delays.'},
+    32: {title: 'Gentle Growth', meaning: 'Peaceful expansion, great connections, steady wealth.'},
+    33: {title: 'The Master Teacher', meaning: 'Profound compassion, high responsibilities, guiding others.'},
+    34: {title: 'The Strain', meaning: 'Internal anxiety, obstacle courses, hidden domestic burdens.'},
+    35: {title: 'The Strategist', meaning: 'Highly diplomatic persuasion, sharp financial sense.'},
+    36: {title: 'The Heavy Burden', meaning: 'Emotional responsibility, family duties, creative labor.'},
+    37: {title: 'The Lucky Mystic', meaning: 'High financial luck, safe relationships, spiritual focus.'},
+    38: {title: 'Material Loss', meaning: 'Financial leakages, friend disputes, warning of betrayal.'},
+    39: {title: 'Warrior Communicator', meaning: 'Assertive writing or speech, strategic planning.'},
+    40: {title: 'The Restriction', meaning: 'Sudden delays, legal red tape, quiet meditation.'},
+    41: {title: 'The Creative Executive', meaning: 'Commercial leadership, fast ideas, travel luck.'},
+    42: {title: 'Cosmic Love', meaning: 'Harmonious marriage, community work, artistic eye.'},
+    43: {title: 'The Battle', meaning: 'Abrupt change, conflicts, need for absolute integrity.'},
+    44: {title: 'Double Foundation', meaning: 'Heavy institutional weight, structural tests, solid gain.'},
+    45: {title: 'The Shield', meaning: 'Victory via legal or protective professions, dynamic focus.'},
+    46: {title: 'The Royal Crown', meaning: 'High institutional power, political success, protection.'},
+    47: {title: 'The Seeker', meaning: 'Deep spiritual investigation, quiet intuition, analytical.'},
+    48: {title: 'Divine Sacrifice', meaning: 'Delayed material success due to serving a higher cause.'},
+    49: {title: 'The Disruptor', meaning: 'Radical reforms, public shifts, clearing outdated grids.'},
+    50: {title: 'The Explorer', meaning: 'Freedom, major market movements, excellent trade skill.'},
+    51: {title: 'The Aggressive Winner', meaning: 'Sudden financial peaks, unexpected professional rise.'},
+    52: {title: 'The Alert Sentinel', meaning: 'Good eventual success but commands extreme situational awareness.'},
+    53: {title: 'The Royal Sage (Echo of 8)', meaning: 'Strategic administration, institutional mastery.'},
+    54: {title: 'Karmic Completion (Echo of 9)', meaning: 'Universal leadership, finishing past debts.'},
+    55: {title: 'The Divine Gateway (Echo of 10)', meaning: 'Rapid shifts, immediate spiritual download.'},
+    56: {title: 'Team Alliance (Echo of 11)', meaning: 'Success through unified efforts, avoiding personal ego.'},
+    57: {title: 'Spiritual Insight (Echo of 12)', meaning: 'Inner communication, deep visionary channel.'},
+    58: {title: 'Financial Loss Warning (Echo of 13)', meaning: 'Severe material warning, needs asset protection.'},
+    59: {title: 'The Aggressive Mind (Echo of 14)', meaning: 'Verbal debates, journalism, intense mental drive.'},
+    60: {title: 'The Comfort Grid (Echo of 15)', meaning: 'Abundance, domestic happiness, ease.'},
+    61: {title: 'New Love Catalyst (Echo of 16)', meaning: 'Shocking relational changes that spark personal growth.'},
+    62: {title: 'Secure Partnerships (Echo of 17)', meaning: 'Trustworthy business alliances, legal balance.'},
+    63: {title: 'Artistic Power House (Echo of 18)', meaning: 'Highly creative output via emotional depth.'},
+    64: {title: 'Sudden Variable (Echo of 19)', meaning: 'Swift, unpredictably lucky transformations.'},
+    65: {title: 'Intellectual Artistry (Echo of 20)', meaning: 'Accomplishments in literature, teaching, or publishing.'},
+    66: {title: 'Double Venus Power (Echo of 21)', meaning: 'Luxurious living, profound charisma, attachment traps.'},
+    67: {title: 'The Mystic Teacher (Echo of 22)', meaning: 'Deep occult authority, humanitarian voice.'},
+    68: {title: 'The Emotional Maze (Echo of 23)', meaning: 'Navigating complex relationship strings.'},
+    69: {title: 'Relational Karma (Echo of 24)', meaning: 'Perfect balancing of masculine and feminine currents.'},
+    70: {title: 'The Spiritual Exam (Echo of 25)', meaning: 'Temporary withdrawal to gain monumental inner truth.'},
+    71: {title: 'Quiet Strategy (Echo of 26)', meaning: 'Unseen operations, chess-master intelligence.'},
+    72: {title: 'Psychic Empath (Echo of 27)', meaning: 'Navigating immense energetic sensitivities.'},
+    73: {title: 'Ancestral Wisdom (Echo of 28)', meaning: 'Traditional educational roles, deep legacy.'},
+    74: {title: 'Structural Discipline (Echo of 29)', meaning: 'Moving through harsh boundary constraints safely.'},
+    75: {title: 'Occult Magnetism (Echo of 30)', meaning: 'Unlocked inner magic, esoteric counseling.'},
+    76: {title: 'Heavy Karmic Duty (Echo of 31)', meaning: 'Clearing older ancestral lineages.'},
+    77: {title: 'The Double Mystic (Echo of 32)', meaning: 'Severe isolation leading to ultimate internal enlightenment.'},
+    78: {title: 'Corporate Struggle (Echo of 33)', meaning: 'Direct clash with old leadership hierarchies.'},
+    79: {title: 'Aggressive Karmic Rebirth (Echo of 34)', meaning: 'Swift dismantling of bad habits.'},
+    80: {title: "Saturn's Heavy Gate (Echo of 35)", meaning: 'Massive long-term career endurance.'},
+    81: {title: 'Commanding Force (Echo of 36)', meaning: 'Gaining real victory after long endurance tests.'},
+    82: {title: 'Emotional Regulator (Echo of 37)', meaning: 'Learning control over external situations.'},
+    83: {title: 'Strategic Orator (Echo of 38)', meaning: 'Persuasion used for large corporate structures.'},
+    84: {title: 'Imperial Debt (Echo of 39)', meaning: 'Working closely within institutional law or service.'},
+    85: {title: 'Steely Focus (Echo of 40)', meaning: 'Razor-sharp analytical engineering intellect.'},
+    86: {title: 'Betrayal Warning (Echo of 41)', meaning: 'Vital need to screen secondary financial partners.'},
+    87: {title: 'The Hidden Ally (Echo of 42)', meaning: 'Divine, invisible protection in moments of need.'},
+    88: {title: 'Double Saturn Cross (Echo of 43)', meaning: 'Demands extreme material and spiritual balance.'},
+    89: {title: 'Destiny Reset (Echo of 44)', meaning: 'Absolute clearing of a lifestyle to forge a path forward.'},
+    90: {title: 'Universal Protector (Echo of 45)', meaning: 'Worldwide reach, high philosophical values.'},
+    91: {title: 'Imperial Crown Octave (Echo of 46)', meaning: 'Massive executive command, political reach.'},
+    92: {title: 'Divine Compass (Echo of 47)', meaning: 'Absolute guidance through intuitive instincts.'},
+    93: {title: 'Grand Design Sacrifice (Echo of 48)', meaning: 'Relinquishing personal desires for a community.'},
+    94: {title: 'Structural Change (Echo of 49)', meaning: 'Creating new models of tech or infrastructure.'},
+    95: {title: 'Planetary Trader (Echo of 50)', meaning: 'Massive international import-export or travel grid.'},
+    96: {title: 'Sovereign Beauty (Echo of 51)', meaning: 'Patron of fine arts, global design dominance.'},
+    97: {title: 'Elite Sentinel (Echo of 52)', meaning: 'Unwavering protection of critical secrets.'},
+    98: {title: 'Global Administrator (Echo of 53)', meaning: 'Managing heavy multinational networks.'},
+    99: {title: 'The Archetypal Warrior (Echo of 54)', meaning: 'Supreme cosmic endings, fierce protection.'},
+    100: {title: 'Total Awakening (Echo of 1)', meaning: 'Absolute integration with source energy, new beginnings.'},
+    101: {title: 'The New Pioneer (Echo of 2)', meaning: 'Harmonizing raw creation with deep diplomatic grace.'},
+    102: {title: 'Universal Expansion (Echo of 3)', meaning: 'Limitless educational flow, spiritual optimism.'},
+    103: {title: 'The Architect (Echo of 4)', meaning: 'Building new evolutionary systems from scratch.'},
+    104: {title: 'Rapid Messenger (Echo of 5)', meaning: 'Mastering instant data transformation across spaces.'},
+    105: {title: 'Harmonic Universe (Echo of 6)', meaning: 'Purest expression of deep love, healing, and luxury.'},
+    106: {title: 'Infinite Mystic (Echo of 7)', meaning: 'Deep oceanic awareness, boundless spiritual secrets.'},
+    107: {title: 'Eternal Pillars (Echo of 8)', meaning: 'Timeless architecture, massive cosmic resilience.'},
+    108: {title: 'The Cosmic Mandala (Echo of 9)', meaning: 'The sacred complete loop of reality; absolute fulfillment.'}
+};
+
+function renderCompoundNameDetails(number){
+    const target=document.getElementById("compoundNameDetails");
+    const detail=compoundNameDetails[number];
+    if(!target) return;
+    if(!detail){ target.innerHTML=""; target.style.display="none"; return; }
+    target.innerHTML=`<h2>Chaldean Compound Name Number ${number}</h2><div class="compound-pet-name">${detail.title}</div><div class="compound-meaning"><strong>Primary Spiritual Meaning:</strong> ${detail.meaning}</div><div class="compound-note">Traditional title and meaning as supplied for this calculator.</div>`;
+    target.style.display="block";
+}
 
 /* =====================================================
    NAME CALCULATOR
@@ -1925,6 +2862,8 @@ function calculateName() {
         document
         .getElementById("pythagorasReduced")
         .textContent = "-";
+
+        renderCompoundNameDetails(null);
 
         return;
 
@@ -1967,6 +2906,8 @@ function calculateName() {
     .getElementById("pythagorasReduced")
     .textContent =
         reduceNumber(pythagoras);
+
+    renderCompoundNameDetails(chaldean);
 
 }
 
@@ -2099,6 +3040,8 @@ function resetLoshu() {
     .innerHTML =
         "Standard Lo Shu Grid: 4 9 2 / 3 5 7 / 8 1 6";
 
+    renderBirthDestinyDetails("loshuNumberDetails", null, null);
+
 
     renderStandardGrid(
         "loshuGrid",
@@ -2144,6 +3087,8 @@ function resetVedic() {
     .innerHTML =
         "Standard Vedic Grid: 3 1 9 / 6 7 5 / 2 8 4";
 
+    renderBirthDestinyDetails("vedicNumberDetails", null, null);
+
 
     renderStandardGrid(
         "vedicGrid",
@@ -2182,6 +3127,8 @@ function resetName() {
     document
     .getElementById("pythagorasReduced")
     .textContent = "-";
+
+    renderCompoundNameDetails(null);
 
 }
 
@@ -2228,6 +3175,631 @@ renderStandardGrid(
     "vedicGrid",
     vedicPositions
 );
+
+
+
+
+
+/* =====================================================
+   MASTER / REPEATED COMBINATIONS
+===================================================== */
+
+const repeatedCombos = {
+
+    "11": "Emotional, ego, attitude, communication and speaking fast.",
+
+    "22": "Mood swings, depression, too emotional, BP problems. If the name starts with B, K or R, emotional issues may be stronger.",
+
+    "33": "Hungry for knowledge and may be less grounded.",
+
+    "44": "Delay, struggle and headache-related concerns.",
+
+    "55": "Lazy or lethargic tendencies. Communication and money flow can increase.",
+
+    "66": "Luxury lover and travelling tendencies.",
+
+    "77": "Mood swings, internal disturbances, spirituality, overthinking and anxiety.",
+
+    "88": "Delays, disturbances and obstacles.",
+
+    "99": "Anger, debt-related tendencies and traditionally associated health concerns."
+
+};
+
+
+/* =====================================================
+   GOOD COMBINATIONS
+===================================================== */
+
+const goodCombos = {
+
+    "12": "Attractive face, saving nature and helpful life partner.",
+
+    "13": "Good advisor, good education, respect and popularity.",
+
+    "31": "Professional nature, respected and special within one's circle.",
+
+    "15": "Associated with father's popularity and recognition.",
+
+    "51": "Associated with father's popularity and recognition.",
+
+    "25": "Healing tendencies, occult or medical interests and success through air travel. Traditionally advised to be careful in finance.",
+
+    "52": "Healing tendencies, occult or medical interests and success through air travel. Traditionally advised to be careful in finance.",
+
+    "29": "May have a decent amount of money. Can develop ego. If DOB is 29, relationship issues may arise.",
+
+    "92": "May have a decent amount of money. Can develop ego. If DOB is 29, relationship issues may arise.",
+
+    "37": "Complete personality and the ability to benefit from knowledge.",
+
+    "73": "Complete personality and the ability to benefit from knowledge.",
+
+    "38": "Real estate, counselling, peacemaking or mediation abilities.",
+
+    "83": "Real estate, counselling, peacemaking or mediation abilities.",
+
+    "47": "Honest, brilliant and gives importance to integrity. Rahu-Ketu combination.",
+
+    "74": "Honest, brilliant and gives importance to integrity. Rahu-Ketu combination.",
+
+    "57": "Good speaker, writer and expressive person. People may seek advice from them.",
+
+    "75": "Good speaker, writer and expressive person. People may seek advice from them.",
+
+    "69": "Good management skills, planning ability and involvement with the opposite sex.",
+
+    "96": "Good management skills, planning ability and involvement with the opposite sex.",
+
+    "78": "Healing abilities, idealistic nature and ability to solve problems independently.",
+
+    "87": "Healing abilities, idealistic nature and ability to solve problems independently."
+
+};
+
+
+/* =====================================================
+   NEUTRAL COMBINATIONS
+===================================================== */
+
+const neutralCombos = {
+
+    "17": "Money-related work may continue. Possibility of government connections, MNC facilities or work-from-home opportunities. Traditionally associated with relationship concerns in specific DOB patterns.",
+
+    "71": "Money-related work may continue. Possibility of government connections, MNC facilities or work-from-home opportunities. Traditionally associated with relationship concerns in specific DOB patterns.",
+
+    "19": "Ambitious, professional, influential and freedom-loving.",
+
+    "91": "Ambitious, professional, influential and freedom-loving.",
+
+    "21": "Attractive personality but possible unnecessary expenditure.",
+
+    "24": "Patience is required to achieve goals. Active planning and continuous thinking.",
+
+    "42": "Patience is required to achieve goals. Active planning and continuous thinking.",
+
+    "35": "Success away from home, good economic condition but possible liquid-money concerns.",
+
+    "53": "Success away from home, good economic condition but possible liquid-money concerns.",
+
+    "36": "Principle-oriented person with knowledge, but possible difficulty in studies or presentation.",
+
+    "63": "Principle-oriented person with knowledge, but possible difficulty in studies or presentation.",
+
+    "39": "Likes to show off and may have duality in nature.",
+
+    "93": "Likes to show off and may have duality in nature.",
+
+    "49": "Risk-taking nature and possible attraction towards uniform-related professions.",
+
+    "94": "Risk-taking nature and possible attraction towards uniform-related professions.",
+
+    "56": "May hesitate to ask for their own money. Business-oriented mindset.",
+
+    "65": "May hesitate to ask for their own money. Business-oriented mindset.",
+
+    "58": "Money may get stuck. Calculative mindset and possible finance-related work.",
+
+    "85": "Money may get stuck. Calculative mindset and possible finance-related work.",
+
+    "59": "Speech may negatively affect relationships. Interest in science or commerce.",
+
+    "95": "Speech may negatively affect relationships. Interest in science or commerce.",
+
+    "79": "Traditionally associated with success after separation from father.",
+
+    "97": "Traditionally associated with success after separation from father."
+
+};
+
+
+/* =====================================================
+   NEGATIVE COMBINATIONS
+===================================================== */
+
+const negativeCombos = {
+
+    "14": "Traditionally associated with loans, liabilities, legal concerns and struggles.",
+
+    "41": "Traditionally associated with loans, liabilities, legal concerns and struggles.",
+
+    "16": "Traditionally considered a highly challenging combination for relationships, marriage and income.",
+
+    "61": "Traditionally considered a highly challenging combination for relationships, marriage and income.",
+
+    "18": "Traditionally considered a very challenging combination involving relationships, family and career instability.",
+
+    "81": "Traditionally considered a very challenging combination involving relationships, family and career instability.",
+
+    "23": "May have many opponents, although they may not be able to cause significant harm.",
+
+    "32": "May have many opponents, although they may not be able to cause significant harm.",
+
+    "26": "Traditionally associated with barriers in studies and relationship-related challenges.",
+
+    "62": "Traditionally associated with barriers in studies and relationship-related challenges.",
+
+    "27": "Good intuition but traditionally associated with joint or urinary concerns.",
+
+    "72": "Good intuition but traditionally associated with joint or urinary concerns.",
+
+    "28": "May have money but traditionally associated with excessive expenditure and relationship disturbances.",
+
+    "82": "May have money but traditionally associated with excessive expenditure and relationship disturbances.",
+
+    "34": "Traditionally associated with physical and family health-related concerns.",
+
+    "43": "Traditionally associated with physical and family health-related concerns.",
+
+    "45": "Traditionally associated with medical and legal concerns and restrictions.",
+
+    "54": "Traditionally associated with medical and legal concerns and restrictions.",
+
+    "46": "Traditionally associated with extra relationships and relationship complications.",
+
+    "64": "Traditionally associated with extra relationships and relationship complications.",
+
+    "48": "Traditionally considered a highly challenging combination with health-related concerns.",
+
+    "84": "Traditionally considered a highly challenging combination with health-related concerns.",
+
+    "67": "Traditionally associated with love marriage and possible disturbances in married life.",
+
+    "76": "Traditionally associated with love marriage and possible disturbances in married life.",
+
+    "68": "Traditionally associated with eye or organ-related health concerns.",
+
+    "86": "Traditionally associated with eye or organ-related health concerns.",
+
+    "89": "Argumentative and principle-oriented nature. Traditionally associated with chronic concerns later in life.",
+
+    "98": "Argumentative and principle-oriented nature. Traditionally associated with chronic concerns later in life."
+
+};
+
+
+/* =====================================================
+   TOTAL NUMBER PREFERENCES
+===================================================== */
+
+const totalPreferences = {
+
+    1: {
+        preference: "46 > 64 > 37 > 55",
+        description: "Associated with authority, career, politics and professional ambitions. Your sheet also lists possible career, government, respect and health challenges."
+    },
+
+    3: {
+        preference: "66 > 39 > 30",
+        description: "Associated with knowledge, prosperity, teaching, luck and health."
+    },
+
+    5: {
+        preference: "41 > 32 > 50 > 59",
+        description: "Associated with overall balance, education, profession, business, communication and money flow."
+    },
+
+    6: {
+        preference: "42 > 24 > 33 > 60",
+        description: "42 is preferred for marriage and luxury. 33 is associated with foreign travel, relationships and increasing money flow."
+    }
+
+};
+
+
+/* =====================================================
+   CALCULATE ROOT NUMBER
+===================================================== */
+
+function getRootNumber(number) {
+
+    let sum = number
+        .split("")
+        .reduce((total, digit) => total + parseInt(digit), 0);
+
+    let originalSum = sum;
+
+    while (sum > 9) {
+
+        sum = sum
+            .toString()
+            .split("")
+            .reduce((total, digit) => total + parseInt(digit), 0);
+
+    }
+
+    return {
+        total: originalSum,
+        root: sum
+    };
+
+}
+
+
+/* =====================================================
+   CREATE COMBINATION CARD
+===================================================== */
+
+function createComboCard(combo, type, description) {
+
+    let className = "";
+    let tagClass = "";
+    let tagText = "";
+
+    if (type === "Good") {
+        className = "good";
+        tagClass = "tag-good";
+        tagText = "GOOD COMBINATION";
+    }
+
+    if (type === "Neutral") {
+        className = "neutral";
+        tagClass = "tag-neutral";
+        tagText = "NEUTRAL COMBINATION";
+    }
+
+    if (type === "Negative") {
+        className = "negative";
+        tagClass = "tag-negative";
+        tagText = "MALEFIC / NEGATIVE";
+    }
+
+    if (type === "Repeated") {
+        className = "repeat";
+        tagClass = "tag-repeat";
+        tagText = "REPEATED COMBINATION";
+    }
+
+    return `
+        <div class="combo-card ${className}">
+
+            <div class="combo-title">
+                ${combo}
+            </div>
+
+            <div class="tag ${tagClass}">
+                ${tagText}
+            </div>
+
+            <p>
+                ${description}
+            </p>
+
+        </div>
+    `;
+
+}
+
+
+/* =====================================================
+   MAIN ANALYSIS
+===================================================== */
+
+function analyzeNumber() {
+
+    let mobile = document
+        .getElementById("mobileNumber")
+        .value
+        .replace(/\D/g, "");
+
+    let error = document.getElementById("error");
+
+    error.innerHTML = "";
+
+    if (mobile.length < 8) {
+
+        error.innerHTML =
+        "Please enter a valid mobile number with at least 8 digits.";
+
+        document
+            .getElementById("results")
+            .classList
+            .add("hidden");
+
+        return;
+    }
+
+
+    /* DISPLAY BASIC DETAILS */
+
+    document
+        .getElementById("displayNumber")
+        .innerHTML = mobile;
+
+    let calculation = getRootNumber(mobile);
+
+    document
+        .getElementById("totalSum")
+        .innerHTML = calculation.total;
+
+    document
+        .getElementById("rootNumber")
+        .innerHTML = calculation.root;
+
+
+    /* COUNTERS */
+
+    let goodCount = 0;
+    let neutralCount = 0;
+    let negativeCount = 0;
+    let repeatCount = 0;
+
+    let resultsHTML = "";
+
+
+    /* ANALYSE ADJACENT COMBINATIONS */
+
+    for (let i = 0; i < mobile.length - 1; i += 2) {
+
+    let combo = mobile.substring(i, i + 2);
+
+        if (repeatedCombos[combo]) {
+
+            repeatCount++;
+
+            resultsHTML += createComboCard(
+                combo,
+                "Repeated",
+                repeatedCombos[combo]
+            );
+
+        }
+
+        else if (goodCombos[combo]) {
+
+            goodCount++;
+
+            resultsHTML += createComboCard(
+                combo,
+                "Good",
+                goodCombos[combo]
+            );
+
+        }
+
+        else if (neutralCombos[combo]) {
+
+            neutralCount++;
+
+            resultsHTML += createComboCard(
+                combo,
+                "Neutral",
+                neutralCombos[combo]
+            );
+
+        }
+
+        else if (negativeCombos[combo]) {
+
+            negativeCount++;
+
+            resultsHTML += createComboCard(
+                combo,
+                "Negative",
+                negativeCombos[combo]
+            );
+
+        }
+
+    }
+
+
+    /* IF NO COMBINATION FOUND */
+
+    if (resultsHTML === "") {
+
+        resultsHTML = `
+            <div class="warning">
+                No specific combination
+                was found in this mobile number.
+            </div>
+        `;
+
+    }
+
+
+    document
+        .getElementById("combinationResults")
+        .innerHTML = resultsHTML;
+
+
+    /* UPDATE COUNTERS */
+
+    document
+        .getElementById("goodCount")
+        .innerHTML = goodCount;
+
+    document
+        .getElementById("neutralCount")
+        .innerHTML = neutralCount;
+
+    document
+        .getElementById("negativeCount")
+        .innerHTML = negativeCount;
+
+    document
+        .getElementById("repeatCount")
+        .innerHTML = repeatCount;
+
+
+    /* TOTAL PREFERENCE */
+
+    let preferenceHTML = "";
+
+    if (totalPreferences[calculation.root]) {
+
+        let data =
+            totalPreferences[calculation.root];
+
+        preferenceHTML = `
+            <div class="preference-card">
+
+                <strong>
+                    Root Number ${calculation.root}
+                </strong>
+
+                <p style="margin-top:10px;">
+                    <b>Preferred Totals:</b>
+                    ${data.preference}
+                </p>
+
+                <p style="margin-top:10px;">
+                    ${data.description}
+                </p>
+
+            </div>
+        `;
+
+    }
+
+    else {
+
+        preferenceHTML = `
+            <div class="warning">
+
+                No specific total preference for ${calculation.root}. is recommended.
+
+            </div>
+        `;
+
+    }
+
+
+    document
+        .getElementById("totalPreference")
+        .innerHTML = preferenceHTML;
+
+
+    /* CHECK AVOID PATTERNS */
+
+    let avoidPatterns = [
+
+        "00",
+        "000",
+        "0000",
+
+        "99",
+        "999",
+
+        "88",
+        "888",
+
+        "77",
+        "777",
+
+        "666",
+
+        "555",
+
+        "444",
+        "44",
+
+        "333",
+
+        "22",
+        "222",
+
+        "111"
+
+    ];
+
+    let warningsHTML = "";
+
+    avoidPatterns.forEach(pattern => {
+
+        if (mobile.includes(pattern)) {
+
+            warningsHTML += `
+
+                <div class="warning">
+
+                    ⚠️ The pattern <b>${pattern}</b> is present
+                    in this mobile number.
+
+                    This pattern must be Avoided.
+
+                </div>
+
+            `;
+
+        }
+
+    });
+
+
+    if (warningsHTML === "") {
+
+        warningsHTML = `
+
+            <div class="preference-card">
+
+                No major warning pattern was detected.
+
+            </div>
+
+        `;
+
+    }
+
+
+    document
+        .getElementById("warnings")
+        .innerHTML = warningsHTML;
+
+
+    /* SHOW RESULTS */
+
+    document
+        .getElementById("results")
+        .classList
+        .remove("hidden");
+
+
+    /* SCROLL TO RESULTS */
+
+    document
+        .getElementById("results")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* =====================================================
+   ENTER KEY SUPPORT
+===================================================== */
+
+document
+    .getElementById("mobileNumber")
+    .addEventListener("keypress", function(event) {
+
+        if (event.key === "Enter") {
+            analyzeNumber();
+        }
+
+    });
+
 
 </script>
 

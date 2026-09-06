@@ -907,11 +907,10 @@ body {
 <style id="birth-destiny-details-theme">
 .number-details-section{margin-top:24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
 .number-detail-card{background:#fff;border:1px solid #cfe3d5;border-radius:16px;padding:20px;box-shadow:0 8px 24px rgba(22,101,52,.10);overflow:hidden}
-.number-detail-card .detail-heading{font-size:20px;font-weight:800;color:#166534;margin:0 0 16px;padding-bottom:12px;border-bottom:2px solid #e6f2e9}
 .number-detail-card .detail-group{margin:0 0 14px}
+.number-detail-card .detail-card-title{font-size:20px;font-weight:800;color:#166534;margin:0 0 16px;padding-bottom:12px;border-bottom:2px solid #e6f2e9}
 .number-detail-card .detail-label{display:block;font-size:13px;font-weight:800;color:#166534;margin-bottom:6px;text-transform:uppercase;letter-spacing:.35px}
 .number-detail-card .detail-text{font-size:14px;line-height:1.65;color:#334155;white-space:pre-wrap;word-break:break-word}
-.number-detail-card .detail-note{font-size:12px;color:#64748b;margin-top:12px;font-style:italic}
 @media(max-width:800px){.number-details-section{grid-template-columns:1fr}}
 </style>
 
@@ -919,13 +918,10 @@ body {
 .compound-details-section{margin-top:24px;background:#fff;border:1px solid #cfe3d5;border-radius:16px;padding:22px;box-shadow:0 8px 24px rgba(22,101,52,.10)}
 .compound-details-section h2{margin:0 0 12px;color:#166534;font-size:22px}.compound-pet-name{font-size:18px;font-weight:800;color:#14532d;margin-bottom:10px}.compound-meaning{font-size:15px;line-height:1.7;color:#334155}.compound-note{font-size:12px;color:#64748b;margin-top:14px;font-style:italic}
 </style>
-
-<style id="top-left-logo-theme">
-.top-left-logo{position:fixed;top:18px;left:22px;z-index:1000;display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border:1px solid #b7d9c0;border-radius:14px;background:rgba(255,255,255,.96);box-shadow:0 6px 20px rgba(22,101,52,.12);color:#166534;font-family:Georgia,"Times New Roman",serif;font-size:18px;font-weight:800;letter-spacing:.2px;text-decoration:none}
-.top-left-logo .logo-mark{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#166534;color:#fff;font-family:Arial,sans-serif;font-size:14px;font-weight:900}
-@media(max-width:700px){.top-left-logo{position:static;margin:0 auto 14px;width:max-content;max-width:calc(100% - 20px);font-size:16px}.top-left-logo .logo-mark{width:26px;height:26px}}
-.number-detail-card .detail-text{font-family:Arial,"Helvetica Neue",sans-serif;font-size:15px;line-height:1.8;letter-spacing:.05px;text-align:left;white-space:normal;word-break:normal}
-.number-detail-card .detail-label{font-family:Arial,"Helvetica Neue",sans-serif}
+<style id="bn-dn-highlight-theme">
+.number-detail-card .detail-group{display:block;margin:0 0 18px;padding:0 0 2px}
+.number-detail-card .detail-label.highlighted-detail-label{display:block;width:max-content;max-width:100%;box-sizing:border-box;margin:0 0 8px;padding:7px 12px;border-radius:8px;background:#e8f5ec;border-left:4px solid #166534;color:#14532d;font-size:14px;font-weight:800;line-height:1.35;text-transform:none;letter-spacing:.1px}
+.number-detail-card .detail-text{display:block;margin:0;padding-left:2px;line-height:1.85}
 </style>
 </head>
 
@@ -933,8 +929,6 @@ body {
 <body>
 
 <div class="container">
-
-
 <h1>The Name Change Specialist</h1>
 
 <div class="subtitle">
@@ -1853,6 +1847,22 @@ function renderFilledGrid(
 }
 
 
+
+
+/* =====================================================
+   TWO-DIGIT REDUCTION DISPLAY
+===================================================== */
+
+function formatTwoDigitReduction(rawNumber, reducedNumber) {
+
+    if(rawNumber === null || rawNumber === undefined || rawNumber === "-") {
+        return "-";
+    }
+
+    return String(Math.abs(Number(rawNumber))).padStart(2, "0")
+        + " -> " + reducedNumber;
+}
+
 /* =====================================================
    LOSHU CALCULATOR
 ===================================================== */
@@ -1881,32 +1891,34 @@ function calculateLoshu() {
     }
 
 
-    let birth =
-        reduceNumber(dob.day);
+    let birthRaw =
+        Number(dob.day);
 
+    let birth =
+        reduceNumber(birthRaw);
+
+
+    let destinyRaw =
+        dob.digits
+        .split("")
+        .reduce(function(total,digit) {
+
+            return total + Number(digit);
+
+        },0);
 
     let destiny =
-        reduceNumber(
-
-            dob.digits
-            .split("")
-            .reduce(function(total,digit) {
-
-                return total + Number(digit);
-
-            },0)
-
-        );
+        reduceNumber(destinyRaw);
 
 
     document
     .getElementById("loshuBirth")
-    .textContent = birth;
+    .textContent = formatTwoDigitReduction(birthRaw, birth);
 
 
     document
     .getElementById("loshuDestiny")
-    .textContent = destiny;
+    .textContent = formatTwoDigitReduction(destinyRaw, destiny);
 
 
     /* =========================
@@ -1937,6 +1949,7 @@ function calculateLoshu() {
 
 
     let kua = "-";
+    let rawKua = null;
 
 
     let kuaCalculation =
@@ -1949,7 +1962,7 @@ function calculateLoshu() {
 
     if(gender === "male") {
 
-        let rawKua =
+        rawKua =
             11 - reducedYear;
 
         kua =
@@ -1979,7 +1992,7 @@ function calculateLoshu() {
 
     else if(gender === "female") {
 
-        let rawKua =
+        rawKua =
             4 + reducedYear;
 
         kua =
@@ -2000,7 +2013,10 @@ function calculateLoshu() {
 
     document
     .getElementById("kuaNumber")
-    .textContent = kua;
+    .textContent =
+        rawKua === null
+        ? "-"
+        : formatTwoDigitReduction(rawKua, kua);
 
 
     /* =========================
@@ -2133,8 +2149,8 @@ const zodiacNumbers = {
     Scorpio: 9,
     Sagittarius: 3,
     Capricorn: 8,
-    Aquarius: 8,
-    Pisces: 3
+    Aquarius: 4,
+    Pisces: 7
 
 };
 
@@ -2295,22 +2311,24 @@ function calculateVedic() {
     }
 
 
-    let birth =
-        reduceNumber(dob.day);
+    let birthRaw =
+        Number(dob.day);
 
+    let birth =
+        reduceNumber(birthRaw);
+
+
+    let destinyRaw =
+        dob.digits
+        .split("")
+        .reduce(function(total,digit) {
+
+            return total + Number(digit);
+
+        },0);
 
     let destiny =
-        reduceNumber(
-
-            dob.digits
-            .split("")
-            .reduce(function(total,digit) {
-
-                return total + Number(digit);
-
-            },0)
-
-        );
+        reduceNumber(destinyRaw);
 
 
     let zodiac =
@@ -2341,6 +2359,8 @@ function calculateVedic() {
 
 
     let backSeater;
+    let backSeaterRaw =
+        yearDigit1 + yearDigit2;
 
 
     /*
@@ -2360,22 +2380,19 @@ function calculateVedic() {
     else {
 
         backSeater =
-            reduceNumber(
-                yearDigit1 +
-                yearDigit2
-            );
+            reduceNumber(backSeaterRaw);
 
     }
 
 
     document
     .getElementById("vedicBirth")
-    .textContent = birth;
+    .textContent = formatTwoDigitReduction(birthRaw, birth);
 
 
     document
     .getElementById("vedicDestiny")
-    .textContent = destiny;
+    .textContent = formatTwoDigitReduction(destinyRaw, destiny);
 
 
     document
@@ -2392,7 +2409,7 @@ function calculateVedic() {
 
     document
     .getElementById("vedicBack")
-    .textContent = backSeater;
+    .textContent = formatTwoDigitReduction(backSeaterRaw, backSeater);
 
 
     document
@@ -2592,7 +2609,8 @@ document
    Source: "Birth number and Destiny number(1).docx"
    The text below is integrated from the supplied document.
 ========================================================= */
-const birthDestinyDetails = {"1":["Lucky Professions:","They do not like to do the same profession for a long time Change in","profession seeks something new. The power and computer sectors are suitable for them Suitable for fire industries, sun based elastic industries Export and import related","businesses are profitable They excel as promoters, surveyors, photographers and commission agents Gems, jewellery research ( excel mainly in the elastic professions Excellent in the professions of Teachers, Writers, Musical, Science, Librarian. He also excels in the fields of astrologers, architecture and numerologists Political","Leaders, Doctors, Heart, Specialist, TV and the film industry, sectors thrive Electrical, engineering, designers","Health Problems:  Blood related diseases and seizures due to high heat. It can cause","high blood pressure, heart diseases, eye diseases, spinal diseases, brain fever, heart attack, lungs and heart problems.","Lucky Numbers 1 2 3 4 5 7 and 9","Lucky Gems: Ruby","Lucky Days: Sundays and Mondays","Lucky Colours: Yellow, Orange, Pink, Orange, Light Blue, White and Purple"," Unlucky Numbers: 8 and 6","Unlucky Colours: Black","Donations: Wheat, red cloths, red flowers and sandalwood","Direction: East","Metal: Gold"],"2":["Lucky Profession:","Good for journalism ,teaching, literature, music, arts, petroleum, chemicals, watertransport, seafood.Dairy related milk, yoghurt, products are good bargains. Excel as a chemist, dentist and doctors. They excel as writers, poets, actors and musicians. As a politician, they excel in academia, teaching, hospitality, training, care, nursing, consultancy and services. Suitable for radio, television, medicine, medicine, doctors, lab technicians. Teaching, backing, bookkeepers, secretary sectors are well suited. Pearls and gems related businesses thrive. Suitable for science, computer, management fields.Luxury, cosmetics, perfumes, and goods related businesses thrive. Food, eateries, hotels, farm supplies are well suited. Doctors, Electronic Engineers, Liquids, Traveling, Dancing, Teachers, Journalism, Musicians, Poets, Artists, Designers, Constructions, Consultants, Nursing, Creative Art, Bookkeepers, Secretaries, Dairy, Agriculture, Animals, Ice, Ice Cream Parlour, Milk Bakeries, Timber, Coal, Mice, Travel Agents, Import, Export Trade, Acting, All Arts.","Health Problems :Stomach Problems, Uterus, Chest or Breast Related Problems. Nervous System, Kidney Related Problems, Left Eye Problem. Death can because of mouthulcers or watery eyes.","Lucky & Positive Numbers:1,2,3,5,6 and 7","Lucky Gems:Pearl,Moonstone.","Lucky Days: Sundays, Monday,Friday.","Lucky Colours: White, Cream, Green, yellow, Orange, pink, orange and light blue."," Unlucky Numbers:8 and 9.","Unlucky Colours:Black and Red.","Direction : North-West,West."],"3":["Lucky Profession:","Banking, Accounting, Teaching, Writing, Music, Arts, Aesthetics, Architecture, Salesman, NewItems, Toys, Sports Businesses are suitable.Finance Company,Consultancy Services, Advisory Services Banking, Designers, Chartered Accountants, Advertising, Music, Musicians, Art, Artist, Shares, Chits, Cloth Store, Book-Stall, Star Hotel, Coaching Centre, Teaching Services, Educational Institution, Writer, Suitable for designers, salesmen. Administrators, Professors, Judicial Services, Civil Services, Ambassadorship, Philosophy, Religion, Vedas, Police, Navy, Air Force, Doctors, Nurses, Compounders, Insurance, Legal Advisers, Lawyers, Judges, E.O.Of Temples, Ministers, Endowment Services, Spiritual.","Health Problems:(Arthritis, dermatitis, asthma, liver disease, abdominal Diseases)are more likely to occur.Liver Complaints, Stomach, Digestive Organs, Wrist, Back, Hip, Legs, Arthritis, Joint Pains, Gout, Piles, Eczema, Itching, Skin Allergies, Acidity, Gas Trouble, Indigestion, Castration, Jaundice, Paralysis, Paralysis, Hernia, Kidney, Obesity, Fat Related Problems, Lungs and Asthmatic Breathing Problems","Lucky & Positive Numbers:1,2,3,5,7 and 9.","Lucky Gems: Topaz(KanakaPushparagam), Zircon and Amethyst.","Lucky Days: Thursdays, Fridays and Tuesdays.","Lucky Colours: Yellow, Golden, Pink, Orange, Purple, Violet, Sandal, Blue, Purple and Pale Amber.","Unlucky Numbers:6.","Things to donate: Gold, Topaz, Peas, Yellow, Yellow cloths and Yellow flowers.", " Direction : North-East","Metal: Gold"],"4":["Lucky Profession:","Most of them are engineers, scientists and lawyers. Excel in all areas related to new technology. Engineering, Mechanical Works, Electrical Works, Mechanical Engineering Commerce, Building Contractors, Accounting, Teaching, Computer Fields, Designers, Teachers. They excel as educators, architects, storekeepers, farmers, tailors, technicians, hotel management, stock exchange business and forest officers. As scientists, financial entrepreneurs, manufacturers, managers, politicians, lawyers, computer engineering. Cement Factories and Related Works, Railways, Mining, Leather Goods, Pharmaceuticals, Electrical Shop, Transport Service, Automobile, Missionary Gas Agency, Alcoholic and Narcotic Business, Tobacco, Medicinal Chemicals, Physiology, Meta-Physics, Photography.","Health Problems: Skin allergies, Lungs Troubles, TB, Anaemia, Bone Problems, Osteoporosis, Swelling, Back Pain, Headache. Kidney, Bladder Related Problems, Mental Disorders, Deep Depression, Abdominal Diseases, Acidity, Indigestion","Lucky & Positive Numbers:1,4,5 and 6","Lucky Gems:Garnet,Red and Annex,","Lucky Days: Sundays, Mondays ,Fridays.","Lucky Colours: Electric Blue, White, Grey, Light Blue, Yellow, Sandal wood and Mixed Colours","Unlucky Colours: Black and Red","Direction: East."],"5":["Lucky Profession:","Number Person Professions: Number 5 People any work related to public, business, able to perform any job wonderfully. They become involved in activities that involve genius rather than physical exertion. They are Public Relations Officers and Sales Executives. Transportation As managers in tourism companies, as well as in entertainment related professions, sports and sports organizers, they excel in the fields of acting and film industry. Commissions business without investment. Contract professions Paper Business, Newspaper Reporters. Communication Banking Sectors, insurance Mathematics.", "Health issues: They are more likely to suffer from neurological impairment, paralysis and lung diseases. Changes in diet can cause illness. So it is better to be careful about food. Breathing problem, Brain, Nervous breakdown, kidney, tongue, skin, thyroid glands, and throat.","Lucky & Positive Numbers: 1,5,6,8,9.","Lucky Gems: Emeralds.","Lucky Days: Wednesdays, Fridays and Saturdays,","Lucky Colours: Green, Yellow, Blue, White and Pink.","Things to be donated: Sugar, leaf green clothes, 'Alms to the poor, to the orphans"," Direction: North", "Metal: Lead"],"6":["Lucky Professions:","Luxury, warehousing, hotels, clubs, luxury apartments, parks, zoology, mining, sailing, irrigation. Suitable for fashion, acting, photography, At present they excel in the fields of entertainment, film, TV and media. Music, music schools. Writers, Producers, Restaurants, Interior Decoration, Architecture, Engineering, Jewellery, Foreign Currency, Food Inspire, Hotel Production, Social Work, Watch Repairing, Fine Arts, Scents and Perfumes, Flooring Works, Brokerage Business, Catering, Agriculture, Dairy Business, Fancy Shop, Dry Foods, Bakery Stall, Flowers, Beauty Parlour, Paints, Beauty and Luxury Items.","Health issues: Heart Problems, Heart Attack, Throat, Kidney, Breast, Neck, Nose, Lung, Chest, Blood Related Problems and Uterus, Breast Related Problems in Women and urinary tract infections, dental, sciatica, influenza."," Lucky & Positive Numbers: 5, 6 and 9.","Lucky Gems: Opal and Diamonds.","Lucky Days: Tuesdays, Thursdays and Fridays."," Lucky Colours: Emerald, Blue, Light Blue, White, Silver, Golden, Rose and Orange.","Unlucky Numbers: 1 and 6","Direction: South-East.", "Metal: Gold.","Donations: Donating to orphans or providing some assistance for their expenses."],"7":["Lucky Professions:","Ambassadorship, Art, Music, Movie Theaters, Photo Studio, Film Industry, Poets, Writers, Advisors, Philosophers, Counsellors, CID, Detective Services, Secret Services, Driving, Rubber, Archaeology, Medicine, Liquid, Hospitals, Nurses, Doctors, Philosophers, Suitable for the fields of occult science and astrologers.","Health issues: Skin Allergies, Races, Itching, Blisters, Small Pox,Mental Disorders, Irritating, Nature, Sweat Related Problems. Epidemics, Cholera, Diseases Cause by Worms, Poisonous Bites and Kidney related Problems, Abortions, Bad Dreams. Abdominal diseases, gastrouble, diarrhoea, abdominal pain.", "Lucky & Positive Numbers: 1 ,2, 3, 5, 6, 7.","Lucky Gems:Cats Eye(Lehsunia).","Lucky Days: Sundays and Mondays.", "Lucky Colours: White, Silver, Light Yellow, Light Blue, Light Green, Brown and Pale Shades", " Unlucky Numbers: 8,"," Direction: North-West, West.","Donations: Lemon, Mango Powder"],"8":["Lucky Professions:","Chemistry, Physics, Medicine and Mathematics. Experience in Tantric matters as well. Excels in Commerce, Management, CA, LLB, fields. Most of what they read is accounts, management, law, politics. Areas such as real estate, mining, timber, oil, petrol, diesel, mining, agriculture are well suited. Iron, stainless steel, brass, bricks, pots, Cement, Sanitary Work Coal, Timber, Poultry, Chemicals, Fertilizers, Pesticides, Gas Agencies, Printers, Publishers, Engineers, Philosophers, Scientist, Social Works, Public Speakers.","Health issues:They may suffer from neurological diseases,leg problems, varicos eveins and haemorrhoids, and dental diseases. Liver Problems, Bile and Intestinal Problems, Anaemia, Intestinal Inflammation, Stomach Pine, Indigestion, Gastric Complaints, Skin, Bone, Hair Related Problems, Gout, Lucky & Positive Numbers:5,6 and 8.","Lucky Days: Wednesday, Thursdays, Fridays, Saturdays","Gems :Blue Sapphire.","Lucky Colours: Dark Blue,Dark Grey, Black and Purple.","Unlucky Numbers: 1,2 and 9 ","Unlucky Colours: Red.","Direction: West ","Metal: Iron.","Donations: Donations for the elderly and the disabled. Feeding crows and dogs."],"9":["Lucky Profession:","Politicians, doctors, chemist and druggist. Iron and steel businesses thrive. Civil and mechanical fields the film industry, photography, electrical field, doctors, lawyers, legal figures and teachers. Artists, Writers, Actors, Painters, Designers, Lecturers, Religions, Composers, Publishers, Entertainers, Directors, Surgeons, Restaurateurs, Commanders, Tourism, General Leadership, Contract, Missionary and Fire, Electronic Goods, Sports, Metals, Food, Entertainment Business, School and Educational Institutions, Plywood, Hardware, Chemical Items, Gas Agency, Security Guards, Court, Army, Mechanical Engineers, Computer, Sports, Dentist, Ayurvedic.","Health issues: Cardio vascular Diseases, Various Fever, Kidneys, Urinary tract infections may occur. Injuries and fractures can be caused by fire and accidents. Acute Fever, Blood Poison, Operations, Surgeries, Wounds by Fire and Accidents, Cuts, Wounds,Bleeding Injuries, Ulcers.","Lucky & Positive Numbers: 1, 3, 5, 6 and 9.","Lucky Gems: Coral,","Lucky Days: Tuesdays, Wednesdays and Fridays.","Lucky Colours: Red, Dark, Blue, Yellow, Sandal and crimson.","Donation: Blood Donation"]};
+const birthDestinyDetails = {"1":["Lucky Profession:","They do not like to do the same profession for a long time Change in","profession seeks something new. The power and computer sectors are suitable for them","Suitable for fire industries, sun based elastic industries Export and import related","businesses are profitable They excel as promoters, surveyors, photographers and","commission agents Gems, jewellery research ( excel mainly in the elastic","professions Excellent in the professions of Teachers, Writers, Musical, Science, Librarian","He also excels in the fields of astrologers, architecture and numerologists Political","Leaders, Doctors, Heart, Specialist, TV and the film industry, sectors thrive Electrical","engineering, designers","Health Problems:  Blood related diseases and seizures due to high heat. It can cause","high blood pressure, heart diseases, eye diseases, spinal diseases, brain fever","Lucky Numbers 1 2 3 4 5 7 and 9","LuckyGems: Ruby","LuckyColours: Yellow, Orange, Pink, Orange, Light Blue, White and Purple","UnluckyNumbers: 8 and 6","UnluckyColours: Black","Direction: East"],"2":["Lucky Profession:","Good for journalism ,teaching, literature, music, arts, petroleum, chemicals, water transport, sea food. Dairy related milk, yoghurt.Chemist,dentist and doctor.Writers, poets, actors and musicians. As a politician,they excel in academia, teaching, hospitality, training, care, nursing, consultancy and service. Suitable for radio,television,medicine,doctors,lab technicians.Teaching, backing,book keepers. Crystals and Gemstonedrelated businesses. Suitable for science, computer,management fields.Luxury,cosmetics,perfumes,and goods related businesses thrive.Food,eateries,hotels,farmsupplies.Doctors,Electronic Engineers,Liquids,Traveling,Dancing,Teachers,Journalism,Musicians,Poets,Artists,Designers,Constructions,Consultants,Nursing,CreativeArt,Bookkeepers,Secretaries,Dairy,Agriculture,Animals,Ice,IceCreamParlour,Milk Parlour, Bakeries,Timber,Coal,Mice,Travel Agents,Import,ExportTrade,Acting,AllArts.","HealthProblems for :Stomach Problems,Uterus,Chest or Breast Related Problems.Nervous System, Kidney Related Problems, Left Eye Problem.Mouth ulcers,watery eyes.","Lucky&PositiveNumbers:1,2,3,5,6and7","LuckyGems:Pearl,Moonstone.","LuckyColours:White.Cream,green,yellow,Orange,pink,orange and lightblue.UnluckyNumbers:8and9.","UnluckyColours:Black and Red.","Direction:North-West,West."],"3":["Lucky Profession:","ForBanking,Accounting,Teaching,Writing,Music,Arts,Aesthetics,Architecture,Salesman,NewItems,Toys,Sports Businesses.Finance Company,Consultancy Services, Advisory Services Banking, Designers,Chartered Accountants, Advertising, Music, Musicians, Art,Artist,Shares,Chits,Cloth Store,BookStall,Hotel,Coaching Centre,Teaching Services,Educational Institution,Writer,Suitable for designers,salesmen.Administrators, Professors, Judicial Services,Civil Services, Ambassadorship, Philosophy, Religion,Vedas,Police,Navy,AirForce,Doctors Nurses,Compounders,Insurance,Legal Advisers,Lawyers,Judges,E.O.Of Temples,Ministers, Endowment Services,Spiritual.","HealthProblems For :Arthritis, dermatitis,asthma,liver disease,abdominal Diseases,Stomach,Digestive Organs,Wrist,Back,Hip,Legs,Arthritis,JointPains,Gout,Piles,Eczema,Itching,SkinAllergies,Acidity,GasTrouble,Indigestion,Castration,Jaundice,Paralysis,Paralysis,Hernia,Kidney,Obesity,Fat Related Problems,Lungs and Asthmatic Breathing Problems","Lucky&PositiveNumbers:1,2,3,5,7and9.","LuckyGems:Topaz,Zircon and Amethyst.","LuckyColours:Yellow,Golden,Pink,Orange,Purple,Violet,Sandal,Blue,Purple and Pale Amber.","UnluckyNumbers:6.","Direction:North-East"],"4":["Lucky Profession:","Most of them are engineers,scientists and lawyers.Excel in all areas related to new technology.Engineering, Mechanical Works,Electrical Works,Mechanical Engineering Commerce, Building Contractors, Accounting,Teaching,Computer Fields,Designers,Teachers.They excel as educators,architects,store keepers,farmers,tailors,technicians,hotel management,stock exchange business,and forest officers.Scientists,financial entrepreneurs, manufacturers, managers,politicians,lawyers,computer engineering. Cement Factories and Related Works,Railways,Mining,Leather Goods,Pharmaceuticals,Electrical Shop,Transport Service,Automobile,Missionary, Gas Agency,Alcoholic and Narcotic Business, Tobacco,Medicinal Chemicals, Physiology, Meta Physics, Photography.","HealthProblems for :Skin allergies, Lungs Troubles, TB,Anaemia,BoneProblems,Osteoporosis,Swelling,BackPain,Headache.Kidney,BladderRelatedProblems,MentalDisorders,DeepDepression,AbdominalDiseases,Acidity,Indigestion","Lucky&PositiveNumbers:1,4,5and6","LuckyGems:Garnet,RedandAnnex","LuckyColours:ElectricBlue,White,Grey,LightBlue,Yellow,Sandalwood and MixedColours","UnluckyColours:Black and Red","Direction:East."],"5":["Lucky Profession: business,able to perform any job wonderfully.They become involved in activities that involve genius rather than physical exertion.They are Public Relations Officers and Sales Executives.Transportation As managers in tourism companies,as well as in entertainment related professions,sports and sports organizers,they excel in the fields of acting and film industry. Commissions business without investment. Contract professions Paper Business, Newspaper Reporters.Communication Banking Sectors,insurance Mathematics.","HealthProblems for:Neurological impairment, paralysis and lung diseases.Changes in diet can cause illness. So it is better to be careful about food. Breathing problem, Brain, Nervous break kidney, tongue, skin,thyroid glands,and throat.","Lucky&PositiveNumbers:1,5,6,8,9.","LuckyGems:Emerald","LuckyColours:Green,Yellow,Blue,White and Pink.","Direction:North"],"6":["Lucky Profession:","Luxury,warehousing,hotels,clubs,luxury apartments,parks,zoology,mining,sailing,irrigation.Suitable for fashion,acting,photography. Entertainment,film,TV and media. Music,music schools,suitable.Writers,Producers,Restaurants,InteriorDecoration,Architecture,Engineering,Jewellery,Foreign Currency,Food Inspire,Hotel Production,Social Work,Watch Repairing, Fine Arts,Scents and Perfumes, Flooring Works,BrokerageBusiness,Catering, Agriculture,Dairy Business,Fancy Shop,Dry Foods,Bakery Stall,Flowers,Beauty Parlour,Paints,Beauty and LuxuryItems.","HealthProblems for:Heart Problems,Throat,Kidney,Breast,Neck,Nose,Lung,Chest,Blood Related Problems and Uterus,Breast Related Problems in Women. And urinary tract infections,dental,sciatica,influenza.","Lucky&PositiveNumbers:5,6and9.","LuckyGems:Emerald,DiamondandTorque.","LuckyColours:Emerald,Blue,LightBlue,White,Silver,Golden,RoseandOrange.UnluckyNumbers:3","Direction:South-East(Southeast)."],"7":["Lucky Profession:","Ambassadorship,Art,Music,Movie Theaters,PhotoStudio,FilmIndustry,Poets,Writers,Advisors,Philosophers,Counsellors,CID,Detective Services,Secret Services,Driving,Rubber,Archaeology,Medicine,Liquid,Hospitals,Nurses,Doctors,Philosophers,occult science and astrologers.","HealthProblems for: Skin Allergies,Races,Itching,Blasters,SmallFox,Conception,Mental Disorders,Irritating,Nature,SweatRelatedProblems.Epidemics,Cholera,DiseasesCausebyWorms,PoisonousBites,andKidneyrelatedProblems,Abortions,BadDreams.Abdominaldiseases,gastrouble,diarrhoea,abdominalpain.","Lucky&PositiveNumbers:1,2,3,5,6,7.","LuckyGems:CatsEye(Lehsunia),Chandrakanthamani.","LuckyColours:White,Silver,LightYellow,LightBlue,LightGreen,BrownandPaleShades","UnluckyNumbers:8,9.","Direction:North-West,West."],"8":["Lucky Profession:","Chemistry,Physics,Medicine and Mathematics. Experience in Tantric matters as well.Excels in Commerce,Management,CA,LLB,fields.Most of what they read is accounts,management,law,politics, the chances of settling in the fields are high.Areas such as real estate,mining,timber,oil,petrol,diesel,mining,are well suited.Iron,stainless steel,brass,bricks,pots,Cement,Sanitary Work Coal,Harvard,Timber,Poultry,Chemicals,Fertilizers,Pesticides,GasAgencies,Printers,Publishers,Engineers,Philosophers,Scientist,SocialWorks,PublicSpeakers.","Healthissues: Neurological diseases,leg problems,varicose veins and haemorrhoids,and dental diseases.Liver Problems,Bile and Intestinal Problems,Anaemia,Intestinal Inflammation,StomachPine,Indigestion,Gastric Complaints,Skin,Bone,Hair Related Problems,Gout.","Lucky&PositiveNumbers:5,6and8.","Gems:BlueSapphire.","LuckyColours:Dark Blue,Dark Grey,Black and Purple.","UnluckyColours:Red.","Direction:West."],"9":["Lucky Profession:","Professions,politicians,doctors,chemistanddruggist.Ironandsteelbusinessesthrive.Civil and mechanical fields the filmindustry, photography, electrical field,doctors,lawyers,legal figuresand teachers.Artists,Writers,Actors,Painters,Designers,Lecturers,Religions,Composers,Publishers,Entertainers,Directors,Surgeons,Restaurateurs,Commanders,Tourism,General Leadership,Contract,Missionary and Fire,Electronic Goods,Sports,Metals,Food,Entertainment Business,School and Educational Institutions,Plywood, Hardware,Chemical Items,Gas Agency,Security Guards,Court,Army,Mechanical Engineers,Computer,Sports,Dentist,Ayurvedic.","Healthissues:Cardiova0scular Diseases,VariousFever,Kidneys,Urinary tract infections may occur.Injuries and fractures can be caused by fire and accidents.AcuteFever,BloodPoison,Operations,Surgeries,WoundsbyFireandAccidents,Cuts,Wounds,BleedingInjuries,Ulcers.","Lucky&PositiveNumbers:1,3,5,6and9.","LuckyGems:Coral,Kanakapushparagam,Red.","LuckyColours:Red,Dark,Blue,Yellow,Sandal,andcrimson.",""]};
+
 function escapeDetailHtml(value){
     return String(value ?? "")
         .replace(/&/g,"&amp;")
@@ -2613,39 +2631,31 @@ function splitDetailLine(line){
         [/^Lucky Numbers:?/i,"Lucky Numbers"],
         [/^LuckyGems:?/i,"Lucky Gems"],
         [/^Gems:?/i,"Gems"],
-        [/^LuckyDays:?/i,"Lucky Days"],
         [/^LuckyColours:?/i,"Lucky Colours"],
         [/^UnluckyNumbers:?/i,"Unlucky Numbers"],
         [/^UnluckyColours:?/i,"Unlucky Colours"],
         [/^WorshipedDeities:?/i,"Worshiped Deities"],
-        [/^Goddessestobeworshiped:?/i,"Goddesses to be worshiped"],
-        [/^Godstobeworshiped:?/i,"Gods to be worshiped"],
-        [/^Deitiestobeworshiped:?/i,"Deities to be worshiped"],
-        [/^Mantratoberecited:?/i,"Mantra to be recited"],
         [/^Thingstobedonated:?/i,"Things to be donated"],
-        [/^Donations:?/i,"Donations"],
-        [/^Donation:?/i,"Donation"],
         [/^Direction:?/i,"Direction"],
-        [/^Metal:?/i,"Metal"]
     ];
     for(const [rx,label] of rules){
         if(rx.test(line)) return {label, text:line.replace(rx,'').trim()};
     }
-    return {label:"Details", text:line.trim()};
+    return {label:"", text:line.trim()};
 }
 
 function cleanDetailText(text){
     let t=String(text||'').replace(/\u00ad/g,' ').replace(/\s+/g,' ').trim();
     const replacements=[
       [/watertransport/gi,'water transport'],[/goodbargains/gi,'good bargains'],[/productsaregoodbargains/gi,'products are good bargains'],[/farmsupplies/gi,'farm supplies'],[/IceCreamParlour/gi,'ice cream parlour'],[/MilkBakeries/gi,'milk bakeries'],[/TravelAgents/gi,'travel agents'],[/Import,ExportTrade/gi,'import and export trade'],[/AllArts/gi,'all arts'],
-      [/HealthProblems for/gi,'Health Problems'],[/HealthProblems/gi,'Health Problems'],[/Lucky&PositiveNumbers/gi,'Lucky & Positive Numbers'],[/LuckyGems/gi,'Lucky Gems'],[/LuckyDays/gi,'Lucky Days'],[/LuckyColours/gi,'Lucky Colours'],[/UnluckyNumbers/gi,'Unlucky Numbers'],[/UnluckyColours/gi,'Unlucky Colours'],[/WorshipedDeities/gi,'Worshiped Deities'],[/Worshipeddeities/gi,'Worshiped Deities'],[/Godstobeworshiped/gi,'Gods to be worshiped'],[/Goddessestobeworshiped/gi,'Goddesses to be worshiped'],[/Deitiestobeworshiped/gi,'Deities to be worshiped'],[/Mantratoberecited/gi,'Mantra to be recited'],[/Thingstobedonated/gi,'Things to be donated'],[/Thingstodonate/gi,'Things to donate'],[/Donations/gi,'Donations'],[/Donation/gi,'Donation'],
+      [/HealthProblems for/gi,'Health Problems'],[/HealthProblems/gi,'Health Problems'],[/Lucky&PositiveNumbers/gi,'Lucky & Positive Numbers'],[/LuckyGems/gi,'Lucky Gems'],[/LuckyColours/gi,'Lucky Colours'],[/UnluckyNumbers/gi,'Unlucky Numbers'],[/UnluckyColours/gi,'Unlucky Colours'],[/WorshipedDeities/gi,'Worshiped Deities'],[/Worshipeddeities/gi,'Worshiped Deities'],[/Thingstobedonated/gi,'Things to be donated'],[/Thingstodonate/gi,'Things to donate'],
       [/North-West\.\s*\(Northwest\)/gi,'North-West (Northwest)'],[/South-East\.\s*\(Southeast\)/gi,'South-East (Southeast)'],[/North-East\.\s*\(Northeast\)NE/gi,'North-East (Northeast)'],
       [/([a-z])([A-Z])/g,'$1 $2'],[/([A-Za-z])([0-9])/g,'$1 $2'],[/([0-9])([A-Za-z])/g,'$1 $2'],
-      [/\s*,\s*/g,', '],[/\s*\.\s*/g,'. '],[/\s*:\s*/g,': '],[/\s*\;\s*/g,'; '],[/\s{2,}/g,' '],
+      [/\s*,\s*/g,', '],[/\s*\.\s*/g,'. '],[/\s*:\s*/g,': '],[/\s*\;\s*/g,'; '],[/\s{2}/g,' '],
       [/\.\s*([a-z])/g,(m,c)=>'. '+c.toUpperCase()],[/\b([a-z])\s+([a-z])\b/g,(m,a,b)=>a+' '+b]
     ];
     for(const [rx,repl] of replacements) t=t.replace(rx,repl);
-    t=t.replace(/\b([A-Z]{2,})([A-Z][a-z])/g,'$1 $2');
+    t=t.replace(/\b([A-Z]{2})([A-Z][a-z])/g,'$1 $2');
     t=t.replace(/\s+([,.])/g,'$1').replace(/,\s*and/g,', and');
     if(t && !/[.!?]$/.test(t) && !/^[-—]+$/.test(t)) t += '.';
     return t;
@@ -2658,7 +2668,7 @@ function renderNumberDetailCard(number, role){
     let current=null;
     for(const line of lines){
         const parsed=splitDetailLine(line);
-        if(parsed.label === "Details" && current && current.label === "Lucky Profession"){
+        if(!parsed.label && current){
             current.text += " " + parsed.text;
         } else {
             if(current) groups.push(current);
@@ -2667,8 +2677,32 @@ function renderNumberDetailCard(number, role){
     }
     if(current) groups.push(current);
 
-    const body=groups.map(g=>`<div class="detail-group"><span class="detail-label">${escapeDetailHtml(g.label)}</span><div class="detail-text">${escapeDetailHtml(cleanDetailText(g.text))}</div></div>`).join("");
-    return `<section class="number-detail-card"><h3 class="detail-heading">${escapeDetailHtml(role)} ${number} — Details</h3>${body}<div class="detail-note">Details integrated from the supplied Birth Number and Destiny Number document.</div></section>`;
+    const highlightedLabels = new Set([
+        "Lucky Profession", "Lucky Professions", "Health Problems", "Health Issues",
+        "Healthissues", "Lucky&PositiveNumbers", "Lucky & Positive Numbers",
+        "Lucky Gems", "Lucky Colours",
+        "Things to donate", "Things to be donated"
+    ]);
+    const body=groups.filter(g => {
+        return true;
+    }).map(g=>{
+        const isHighlighted = highlightedLabels.has(g.label);
+        const displayLabel = (g.label === "Lucky Profession" ? "Lucky Professions" :
+            (g.label === "Health Problems" || g.label === "Healthissues" ? "Health Issues" :
+            (g.label === "Lucky&PositiveNumbers" ? "Lucky & Positive Numbers" :
+            (g.label === "Donation" ? "Donations" :
+            (g.label === "Things to donate" || g.label === "Things to be donated" ? "Donations" : g.label)))));
+        const inlineLabel = /^(Lucky Gems|Lucky Colours|Lucky Numbers)$/i.test(displayLabel);
+        const labelHtml = displayLabel
+            ? `<span class="detail-label${isHighlighted ? ' highlighted-detail-label' : ''}">${escapeDetailHtml(displayLabel)}</span>`
+            : "";
+        const cleanedText = cleanDetailText(g.text);
+        if(inlineLabel){
+            return `<div class="detail-group inline-detail-group">${labelHtml}<span class="detail-text inline-detail-text">${escapeDetailHtml(cleanedText)}</span></div>`;
+        }
+        return `<div class="detail-group">${labelHtml}<div class="detail-text">${escapeDetailHtml(cleanedText)}</div></div>`;
+    }).join("");
+    return `<section class="number-detail-card"><div class="detail-card-title">${escapeDetailHtml(role)} ${number}</div>${body}</section>`;
 }
 
 function renderBirthDestinyDetails(targetId,birth,destiny){

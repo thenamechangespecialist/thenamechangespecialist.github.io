@@ -3,167 +3,379 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Name Change Specialist — Name Numerology Calculator</title>
+<title>The Name Change Specialist — Pronology Calculator</title>
 <style>
 * { box-sizing: border-box; }
+
+:root {
+    --green-900: #123b2a;
+    --green-800: #185c3b;
+    --green-700: #23734a;
+    --green-600: #2f8a5a;
+    --green-100: #e9f5ed;
+    --gold: #c99a2e;
+    --gold-light: #e7ca78;
+    --gold-pale: #f8edc9;
+    --cream: #fffaf0;
+    --cream-2: #f7f0dd;
+    --text: #243229;
+    --muted: #66736a;
+    --white: #ffffff;
+}
+
+html { scroll-behavior: smooth; }
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #f3f8f3, #fff8df);
+    font-family: "Segoe UI", Arial, sans-serif;
+    background:
+        radial-gradient(circle at 15% 10%, rgba(201,154,46,.14), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(35,115,74,.12), transparent 30%),
+        linear-gradient(135deg, var(--cream), #eef7f0 55%, var(--cream));
     min-height: 100vh;
-    padding: 30px 15px;
-    color: #222;
-}
-.container { max-width: 1100px; margin: auto; }
-.header { text-align: center; margin-bottom: 25px; }
-.header h1 {
-    margin: 0;
-    font-size: 34px;
-    color: #166534;
-}
-.header p { color: #8a6a00; font-size: 17px; font-weight: bold; }
-.input-box, .card {
-    background: white;
-    border-radius: 18px;
-    box-shadow: 0 8px 25px rgba(0,0,0,.08);
-}
-.input-box { padding: 25px; margin-bottom: 25px; }
-label { display: block; font-size: 18px; font-weight: bold; margin-bottom: 10px; color:#166534; }
-input {
-    width: 100%; padding: 16px; font-size: 22px;
-    border: 2px solid #d9c878; border-radius: 12px; outline: none;
-}
-input:focus { border-color: #8a6a00; }
-.results { display:grid; grid-template-columns:repeat(2,1fr); gap:25px; }
-.card { padding:25px; border-top:6px solid #d4af37; }
-.card h2 { margin-top:0; text-align:center; font-size:25px; }
-.chaldean h2 { color:#9b6500; }
-.pythagorean h2 { color:#1769aa; }
-.name-display { text-align:center; font-size:22px; font-weight:bold; margin:15px 0 25px; min-height:28px; }
-.summary { text-align:center; }
-.total { font-size:24px; margin-bottom:16px; }
-.compound { font-size:18px; color:#8a6a00; font-weight:bold; margin-bottom:12px; }
-.final-label { font-size:16px; color:#666; margin-bottom:8px; }
-.final-number {
-    display:inline-flex; width:70px; height:70px; border-radius:50%;
-    align-items:center; justify-content:center; font-size:30px;
-    font-weight:bold; background:#166534; color:white;
-}
-.formula { margin-top:15px; font-size:15px; color:#777; }
-.interpretation {
-    margin-top:22px; padding:18px; border-radius:14px;
-    background:linear-gradient(135deg,#f6fff7,#fffbed);
-    border:1px solid #e1cf7a; text-align:left;
-}
-.interpretation h3 { margin:0 0 12px; color:#8a6a00; font-size:19px; }
-.interpretation ul { margin:0; padding-left:20px; }
-.interpretation li { margin:7px 0; line-height:1.45; }
-.clear-btn {
-    display:block; margin:25px auto 0; padding:12px 28px;
-    border:none; border-radius:10px; background:#166534;
-    color:white; cursor:pointer; font-size:16px;
-}
-.clear-btn:hover { opacity:.85; }
-.note { text-align:center; margin-top:22px; font-size:13px; color:#666; }
-@media (max-width:700px) {
-    .results { grid-template-columns:1fr; }
-    .header h1 { font-size:27px; }
+    padding: 34px 16px 45px;
+    color: var(--text);
 }
 
+.container { max-width: 1120px; margin: auto; }
+
+.header {
+    position: relative;
+    text-align: center;
+    margin-bottom: 28px;
+    padding: 28px 20px 25px;
+    border-radius: 24px;
+    background: linear-gradient(145deg, var(--green-900), var(--green-700));
+    box-shadow: 0 16px 38px rgba(18,59,42,.20);
+    overflow: hidden;
+}
+
+.header::before,
+.header::after {
+    content: "";
+    position: absolute;
+    border: 1px solid rgba(231,202,120,.45);
+    border-radius: 50%;
+    pointer-events: none;
+}
+.header::before { width: 180px; height: 180px; left: -85px; top: -95px; }
+.header::after { width: 240px; height: 240px; right: -125px; bottom: -150px; }
+
+.header h1 {
+    position: relative;
+    margin: 0;
+    font-size: clamp(28px, 4vw, 38px);
+    letter-spacing: .3px;
+    color: #fffdf5;
+    text-shadow: 0 2px 12px rgba(0,0,0,.18);
+}
+
+.header p {
+    position: relative;
+    color: var(--gold-light);
+    font-size: 16px;
+    font-weight: 700;
+    margin: 10px 0 0;
+    letter-spacing: .4px;
+}
+
+.input-box, .card {
+    background: rgba(255,255,255,.94);
+    border-radius: 22px;
+    box-shadow: 0 10px 30px rgba(18,59,42,.10);
+    border: 1px solid rgba(201,154,46,.24);
+}
+
+.input-box {
+    padding: 26px;
+    margin-bottom: 27px;
+    position: relative;
+}
+
+.input-box::before {
+    content: "";
+    display: block;
+    height: 4px;
+    width: 72px;
+    margin: 0 auto 20px;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--green-700), var(--gold));
+}
+
+label {
+    display: block;
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: var(--green-800);
+}
+
+input {
+    width: 100%;
+    padding: 16px 18px;
+    font-size: 21px;
+    color: var(--text);
+    background: var(--cream);
+    border: 2px solid var(--gold-light);
+    border-radius: 14px;
+    outline: none;
+    transition: .25s ease;
+}
+
+input::placeholder { color: #9a9a88; }
+
+input:focus {
+    border-color: var(--green-600);
+    box-shadow: 0 0 0 4px rgba(47,138,90,.12);
+    background: #fffdf7;
+}
+
+.results {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 27px;
+}
+
+.card {
+    padding: 26px;
+    border-top: 7px solid var(--gold);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 36px rgba(18,59,42,.14);
+}
+
+.card h2 {
+    margin: 0;
+    text-align: center;
+    font-size: 24px;
+    color: var(--green-800);
+}
+
+.chaldean h2,
+.pythagorean h2 { color: var(--green-800); }
+
+.name-display {
+    text-align: center;
+    font-size: 23px;
+    font-weight: 800;
+    color: var(--green-900);
+    margin: 17px 0 25px;
+    min-height: 28px;
+    word-break: break-word;
+}
+
+.summary { text-align: center; }
+
+.total {
+    font-size: 23px;
+    margin-bottom: 15px;
+    color: var(--green-900);
+}
+
+.compound {
+    font-size: 17px;
+    color: #8a6816;
+    font-weight: 800;
+    margin-bottom: 13px;
+}
+
+.final-label {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.final-number {
+    display: inline-flex;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: 900;
+    background: linear-gradient(145deg, var(--green-800), var(--green-600));
+    color: #fff;
+    border: 4px solid var(--gold-light);
+    box-shadow: 0 7px 18px rgba(18,59,42,.20);
+}
+
+.formula {
+    margin-top: 15px;
+    font-size: 14px;
+    color: var(--muted);
+    min-height: 20px;
+}
+
+.interpretation,
 .sound-analysis {
     margin-top: 22px;
-    padding: 18px;
-    border-radius: 14px;
-    background: linear-gradient(135deg,#f6fff7,#fffbed);
-    border: 1px solid #e1cf7a;
+    padding: 19px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--green-100), var(--gold-pale));
+    border: 1px solid rgba(201,154,46,.42);
     text-align: left;
 }
+
+.interpretation h3,
 .sound-analysis h3 {
     margin: 0 0 12px;
-    color: #8a6a00;
-    font-size: 19px;
+    color: #8a6816;
+    font-size: 18px;
 }
-.sound-item {
-    padding: 12px;
-    margin: 8px 0;
-    border-radius: 10px;
-    line-height: 1.45;
-}
-.sound-good { background: #e9f7ec; border-left: 5px solid #166534; }
-.sound-bad { background: #fff0f0; border-left: 5px solid #b91c1c; }
-.sound-neutral { background: #f4f4f4; border-left: 5px solid #888; }
-.sound-label { font-weight: bold; }
-.sound-good .sound-label { color:#166534; }
-.sound-bad .sound-label { color:#b91c1c; }
-.sound-note { font-size:13px; color:#666; margin-top:10px; }
 
+.interpretation ul { margin: 0; padding-left: 20px; }
+.interpretation li { margin: 7px 0; line-height: 1.5; }
 
-.sound-analysis {
-    margin-top: 22px;
-    padding: 18px;
-    border-radius: 14px;
-    background: linear-gradient(135deg,#f6fff7,#fffbed);
-    border: 1px solid #e1cf7a;
-    text-align: left;
+.clear-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 12px 30px;
+    border: 1px solid var(--gold-light);
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--green-800), var(--green-600));
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 800;
+    box-shadow: 0 7px 16px rgba(18,59,42,.16);
+    transition: .2s ease;
 }
-.sound-analysis h3 {
-    margin: 0 0 14px;
-    color:#8a6a00;
-    font-size:19px;
+
+.clear-btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.06);
+    box-shadow: 0 10px 20px rgba(18,59,42,.22);
 }
+
+.note {
+    text-align: center;
+    margin-top: 24px;
+    padding: 13px 18px;
+    font-size: 13px;
+    color: #66736a;
+    background: rgba(255,250,240,.75);
+    border-radius: 12px;
+    border: 1px solid rgba(201,154,46,.25);
+}
+
 .sound-item {
-    padding:14px;
-    margin:10px 0;
-    border-radius:10px;
-    line-height:1.5;
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 11px;
+    line-height: 1.5;
 }
+
 .sound-good {
-    background:#e9f7ec;
-    border:2px solid #166534;
+    background: #e9f7ec;
+    border: 2px solid var(--green-700);
 }
+
 .sound-bad {
-    background:#fff0f0;
-    border:2px solid #b91c1c;
+    background: #fff4df;
+    border: 2px solid var(--gold);
 }
+
 .sound-neutral {
-    background:#f4f4f4;
-    border:1px solid #aaa;
+    background: var(--cream);
+    border: 1px solid #d7cda9;
 }
+
 .sound-match {
-    font-size:20px;
-    font-weight:800;
+    font-size: 19px;
+    font-weight: 900;
 }
-.sound-good .sound-match { color:#166534; }
-.sound-bad .sound-match { color:#b91c1c; }
+
+.sound-good .sound-match { color: var(--green-800); }
+.sound-bad .sound-match { color: #946b0e; }
+
 .matched-sound {
-    display:inline-block;
-    padding:3px 9px;
-    border-radius:7px;
-    background:#fff;
-    border:2px solid currentColor;
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 7px;
+    background: #fffdf7;
+    border: 2px solid currentColor;
 }
+
 .sound-interpretation {
-    margin-top:6px;
-    font-size:15px;
+    margin-top: 6px;
+    font-size: 14px;
 }
+
+.sound-note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 10px;
+}
+
 .name-good-highlight {
-    color:#166534;
-    background:#dcfce7;
-    border:2px solid #166534;
-    border-radius:6px;
-    padding:2px 5px;
+    color: var(--green-800);
+    background: #dcf4e3;
+    border: 2px solid var(--green-700);
+    border-radius: 6px;
+    padding: 2px 5px;
 }
+
 .name-bad-highlight {
-    color:#b91c1c;
-    background:#fee2e2;
-    border:2px solid #b91c1c;
-    border-radius:6px;
-    padding:2px 5px;
+    color: #946b0e;
+    background: #fff0c7;
+    border: 2px solid var(--gold);
+    border-radius: 6px;
+    padding: 2px 5px;
+}
+
+.name-medical-highlight {
+    color: #72540c;
+    background: #f8e6ad;
+    border: 2px solid #b8860b;
+    border-radius: 6px;
+    padding: 2px 5px;
+}
+
+.sound-medical {
+    border: 2px solid #b8860b;
+    color: #72540c;
+    background: #fff8df;
 }
 
 
-.name-medical-highlight { color:#7a5200; background:#fff1b8; border:2px solid #b8860b; border-radius:6px; padding:2px 5px; }
-.sound-medical { border-color:#b8860b; color:#7a5200; }
+.standalone-row {
+    width: 100%;
+    margin-top: 22px;
+}
+
+.standalone-row .interpretation,
+.standalone-row .sound-analysis {
+    margin-top: 0;
+    padding: 24px 26px;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(18,59,42,.10);
+}
+
+.interpretation-row .interpretation {
+    background: linear-gradient(135deg, var(--cream), var(--gold-pale));
+    border: 1px solid rgba(201,154,46,.48);
+}
+
+.pronology-row .sound-analysis {
+    background: linear-gradient(135deg, var(--green-100), var(--cream));
+    border: 1px solid rgba(35,115,74,.28);
+}
+
+@media (max-width: 700px) {
+    body { padding: 20px 11px 32px; }
+    .results { grid-template-columns: 1fr; }
+    .header h1 { font-size: 27px; }
+    .input-box, .card { padding: 20px; border-radius: 18px; }
+    .card h2 { font-size: 22px; }
+}
+
 </style>
 </head>
 <body>
@@ -189,17 +401,6 @@ input:focus { border-color: #8a6a00; }
                 <div class="final-label">Final Number</div>
                 <div class="final-number" id="chaldeanFinal">0</div>
                 <div class="formula" id="chaldeanFormula">—</div>
-                <div class="interpretation">
-                    <h3 id="chaldeanTitle">Compound Number Interpretation</h3>
-                    <ul id="chaldeanInterpretation"><li>Start typing your name...</li></ul>
-                </div>
-                <div class="sound-analysis">
-                    <h3>🔊 Pronology — Good &amp; Bad Sounds</h3>
-                    <div id="soundResults">
-                        <div class="sound-item sound-neutral">Start typing your name to check the sounds in the name...</div>
-                    </div>
-                    <div class="sound-note">Good and bad sounds are highlighted from the entered spelling.</div>
-                </div>
             </div>
         </div>
 
@@ -213,6 +414,23 @@ input:focus { border-color: #8a6a00; }
                 <div class="final-number" id="pythagoreanFinal">0</div>
                 <div class="formula" id="pythagoreanFormula">—</div>
             </div>
+        </div>
+    </div>
+
+    <div class="standalone-row interpretation-row">
+        <div class="interpretation">
+            <h3 id="chaldeanTitle">Compound Number Interpretation</h3>
+            <ul id="chaldeanInterpretation"><li>Start typing your name...</li></ul>
+        </div>
+    </div>
+
+    <div class="standalone-row pronology-row">
+        <div class="sound-analysis">
+            <h3>🔊 Pronology — Good &amp; Bad Sounds</h3>
+            <div id="soundResults">
+                <div class="sound-item sound-neutral">Start typing your name to check the sounds in the name...</div>
+            </div>
+            <div class="sound-note">Good and bad sounds are highlighted from the entered spelling.</div>
         </div>
     </div>
 
@@ -955,7 +1173,7 @@ function reduceNumber(number) {
 
 
 const goodSounds = ["BA", "VIN", "UP", "ON", "DAY", "JAYA", "RS", "KAN", "KHAN", "HAN", "CAN", "AR", "RA", "RS", "KAR", "GAR", "CAT", "KAT", "CHEE", "CHIN", "CEL", "DAR", "DRA", "FATH", "FETH", "HIN", "HIM", "HA", "IN", "JA", "JH", "JAI", "JOY", "JAKI", "OK", "KA", "KI", "LAC", "LAK", "LAM", "LION", "LV", "LK", "MAS", "MANI", "ME", "MET", "MY", "MV", "MIT", "NJ", "NC", "OO", "PM", "QE", "RAY", "RNAI", "RAT", "RATH", "RS", "SAL", "TAL", "TOL", "VN", "VEIL", "WAY"];
-const badSounds = ["NO","SH","OO","AH","VI","KVR","VC","SC","SK","VAR","WAR","WARI","KUMAR","VR","MAL","IL","ILL","NO","NA","NI","KL","DI","DY","LAL","LAN","AB","EE","ER","ES","MAR","LO","END","KK","SU","BAD", "WAR", "END", "LO SU", "DI NIL", "IL", "POOR", "ER", "MALA","MAN", "SAD", "MAD", "AIR", "RAM", "SUE", "AIAH", "DASS", "ALL", "AH", "APE", "BACH", "BY", "DIE", "DOWN", "DU", "DY", "EET", "IFR", "GO", "G", "HAND", "HAT", "HET", "HES", "HER", "HOT", "ILL", "KL", "KILL", "KS", "HIP", "MAR", "KITE", "CITE", "KICK", "KK", "VK", "LOS", "LEE", "LO", "LEEK", "LEAK", "LIIK", "LASS", "MAT", "MELT", "SIK", "MOOD", "NA", "NE", "NO", "NO NIL", "NLR", "PAY", "PUT", "PIT", "PT", "PC", "RAN", "RAP", "RP", "ROP", "RAO", "ROD", "SK", "SO", "SAT", "SES", "CHES", "SWAM", "SLO", "SK", "VK", "VC", "THA", "TI", "TIE", "UI", "VC", "VEN", "WARI", "WAR", "WHY", "WIO",];
+const badSounds = ["SH","OO","AH","VI","KVR","VC","SC","SK","VAR","WAR","WARI","KUMAR","VR","MAL","IL","ILL","NO","NA","NI","KL","DI","DY","LAL","LAN","AB","EE","ER","ES","MAR","LO","END","KK","SU","BAD", "WAR", "END", "LO", "NIL", "IL", "POOR", "ER", "MALA","MAN", "SAD", "MAD", "AIR", "RAM", "SUE", "AIAH", "DASS", "ALL", "AH", "APE", "BACH", "BY", "DIE", "DOWN", "DU", "DY", "EET", "IFR", "GO", "HAND", "HAT", "HET", "HES", "HER", "HOT", "ILL", "KL", "KILL", "KS", "HIP", "MAR", "KITE", "CITE", "KICK", "KK", "VK", "LOS", "LEE", "LO", "LEEK", "LEAK", "LIIK", "LASS", "MAT", "MELT", "SIK", "MOOD", "NA", "NE", "NO","NLR", "PAY", "PUT", "PIT", "PT", "PC", "RAN", "RAP", "RP", "ROP", "RAO", "ROD", "SK", "SO", "SAT", "SES", "CHES", "SWAM", "SLO", "SK", "VK", "VC", "THA", "TI", "TIE", "UI", "VC", "VEN", "WARI", "WAR", "WHY", "WIO",];
 
 const medicalSounds = {
     "SH":"sick or silent",

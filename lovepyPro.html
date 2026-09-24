@@ -1545,6 +1545,19 @@ input:focus {
 .sound-legend .negative-legend{background:#ffe3e3;color:#a61b1b;border:1px solid #c62828}
 .sound-legend .common-legend{background:#f1ecf8;color:#633b8f;border:1px solid #8b63b5}
 .sound-segmentation-note{margin-top:9px;text-align:center;font-size:12px;color:#66736a}
+.sound-segment-status{
+    display:block;
+    margin-top:2px;
+    font-size:10px;
+    letter-spacing:.5px;
+    font-weight:900;
+}
+.sound-segment-separator{
+    font-weight:900;
+    color:#66736a;
+    font-size:18px;
+}
+
 
 
 .sound-interpretation {
@@ -1644,81 +1657,51 @@ body{
 #pythagoras .input-section{display:none!important;}
 #loshu .reset,#vedic .reset{display:none!important;}
 @media(max-width:700px){.unified-input-grid{grid-template-columns:1fr;}.unified-input-panel{padding:18px 14px;}}
-</style>
-<style id="mobile-brand-header-fix">
-/* =========================================================
-   MOBILE BRAND HEADER ORDER FIX
-   Mobile order:
-   1. The Name Change Specialist
-   2. Website
-   3. Contact Number
-   4. All social-media icons in ONE row
-   ========================================================= */
-@media (max-width: 600px) {
-    .brand-header {
-        display: grid;
-        grid-template-columns: repeat(6, 39px);
-        justify-content: center;
-        align-items: center;
-        row-gap: 10px;
-        column-gap: 9px;
-        width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-    }
 
-    /* Make the links inside .social-links participate directly
-       in the mobile grid without changing the HTML structure. */
-    .social-links {
-        display: contents;
-    }
-
-    .brand-title-row {
-        grid-column: 1 / -1;
-        grid-row: 1;
-        width: 100%;
-        margin: 0;
-        justify-self: center;
-    }
-
-    .website-link {
-        grid-column: 1 / -1;
-        grid-row: 2;
-        margin: 0 !important;
-        justify-self: center;
-        max-width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .phone-link {
-        grid-column: 1 / -1;
-        grid-row: 3;
-        margin: 0 !important;
-        justify-self: center;
-    }
-
-    /* Every social icon is explicitly placed on the same row. */
-    .social-link {
-        grid-row: 4;
-        width: 39px;
-        height: 39px;
-        margin: 0;
-        justify-self: center;
-    }
-
-    .social-link.youtube  { grid-column: 1; }
-    .social-link.instagram{ grid-column: 2; }
-    .social-link.facebook { grid-column: 3; }
-    .social-link.telegram { grid-column: 4; }
-    .social-link.quora    { grid-column: 5; }
-    .social-link.whatsapp { grid-column: 6; }
+/* Attractive Compound Number Interpretation rows */
+#chaldeanInterpretation {
+    margin-top: 18px;
+    padding-left: 30px;
 }
-</style>
 
-</head>
+#chaldeanInterpretation li {
+    margin: 12px 0;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fff8df 0%, #fffdf2 52%, #eaf5e6 100%);
+    border: 2px solid #c9a227;
+    border-left: 7px solid #176b2f;
+    box-shadow: 0 5px 14px rgba(23,107,47,0.14), inset 0 0 0 1px rgba(201,162,39,0.18);
+    font-size: 1.08rem;
+    line-height: 1.65;
+    color: #173b24;
+}
+
+#chaldeanInterpretation .compound-number-prefix {
+    font-weight: 700;
+    font-size: 1.05em;
+}
+
+#chaldeanInterpretation .compound-interpretation-text {
+    font-size: 1.12em;
+    font-weight: 800;
+    letter-spacing: 0.1px;
+    color: #145a2a;
+}
+
+@media (max-width: 600px) {
+    #chaldeanInterpretation {
+        padding-left: 22px;
+    }
+    #chaldeanInterpretation li {
+        padding: 12px 14px;
+        font-size: 1rem;
+    }
+    #chaldeanInterpretation .compound-interpretation-text {
+        font-size: 1.06em;
+    }
+}
+</style></head>
 <body>
 <div class="container integrated-page">
 <div class="brand-header">
@@ -2034,7 +2017,6 @@ Pythagorean Numerology Chart
 </div>
 </section>
 <div class="integrated-hidden-input" aria-hidden="true">
-<input id="nameInput" type="text">
 <input id="loshuDOB" type="text">
 <input id="vedicDOB" type="text">
 
@@ -3287,129 +3269,6 @@ const chaldeanValues = {
 
 };
 
-
-const compoundNameDetails = {
-    1: {title: 'The Sun', meaning: 'Independence, original thought, leadership, authority.'},
-    2: {title: 'The Moon', meaning: 'Sensitivity, empathy, diplomacy, cooperation.'},
-    3: {title: 'Jupiter', meaning: 'Wisdom, creative expansion, teaching, optimism.'},
-    4: {title: 'Rahu (Uranus)', meaning: 'Unconventionality, sudden events, deep focus, structural mind.'},
-    5: {title: 'Mercury', meaning: 'Communication, rapid intellect, commercial trade, adaptability.'},
-    6: {title: 'Venus', meaning: 'Art, harmony, domestic responsibilities, magnetic affection.'},
-    7: {title: 'Ketu (Neptune)', meaning: 'Mysticism, isolation, investigative analysis, spiritual seeking.'},
-    8: {title: 'Saturn', meaning: 'Karmic discipline, heavy duties, perseverance, ultimate destiny.'},
-    9: {title: 'Mars', meaning: 'Courage, assertive force, humanitarian defense, intense endings.'},
-    10: {title: 'The Wheel of Fortune', meaning: 'Instant manifestation, cyclical success, honors.'},
-    11: {title: 'The Lion’s Muzzle', meaning: 'High spiritual strength, hidden trials, treachery warning.'},
-    12: {title: 'The Sacrifice', meaning: 'Learning through delays, surrender, intellectual illumination.'},
-    13: {title: 'Transformation / Re-birth', meaning: 'Destruction before sudden elevation or power.'},
-    14: {title: 'Temperance / Fluidity', meaning: 'Creative communication, safety in media, travel fortune.'},
-    15: {title: 'The Magician', meaning: 'High personal magnetism, spellbinding speech, material fortune.'},
-    16: {title: 'The Shattered Tower', meaning: 'Sudden karmic updates, collapse of pride, rebuilding.'},
-    17: {title: 'The Star of the Magi', meaning: 'Divine protection, legacy, rising superior to trials.'},
-    18: {title: 'Spiritual Illusion', meaning: 'Internal conflicts, warning of secret plots or deceptions.'},
-    19: {title: 'The Sun Prince', meaning: 'Absolute victory, clarity, fulfillment after trials.'},
-    20: {title: 'The Awakening', meaning: 'Spiritual calling, critical life reviews, calculated risks.'},
-    21: {title: 'The Crown of the Magi', meaning: 'Global success, high social honors, absolute victory.'},
-    22: {title: 'The Master Builder', meaning: 'Colossal creative power but accompanied by a heavy weight of duty.'},
-    23: {title: 'The Royal Star of the Lion', meaning: 'Incredible protection, effortless success via speech.'},
-    24: {title: 'Love and Art', meaning: 'Financial gain through romantic or creative ventures, luxury.'},
-    25: {title: 'The Deep Researcher', meaning: 'Spiritual gains through careful analytical study.'},
-    26: {title: 'The Conflict', meaning: 'Power struggles, severe warning against poor advice.'},
-    27: {title: 'The Warrior Sage', meaning: 'Intellectual bravery, independent victory, command.'},
-    28: {title: 'The Overthrow', meaning: 'Severe loss when trying to dominate others blindly.'},
-    29: {title: 'The Emotional Trial', meaning: 'Intense sensitivity, relationship trials, karmic test.'},
-    30: {title: 'The Creative Mind', meaning: 'Introspective expression, temporary mental isolation.'},
-    31: {title: 'The Isolated Thinker', meaning: 'Opposition from society, eccentric mindset, delays.'},
-    32: {title: 'Gentle Growth', meaning: 'Peaceful expansion, great connections, steady wealth.'},
-    33: {title: 'The Master Teacher', meaning: 'Profound compassion, high responsibilities, guiding others.'},
-    34: {title: 'The Strain', meaning: 'Internal anxiety, obstacle courses, hidden domestic burdens.'},
-    35: {title: 'The Strategist', meaning: 'Highly diplomatic persuasion, sharp financial sense.'},
-    36: {title: 'The Heavy Burden', meaning: 'Emotional responsibility, family duties, creative labor.'},
-    37: {title: 'The Lucky Mystic', meaning: 'High financial luck, safe relationships, spiritual focus.'},
-    38: {title: 'Material Loss', meaning: 'Financial leakages, friend disputes, warning of betrayal.'},
-    39: {title: 'Warrior Communicator', meaning: 'Assertive writing or speech, strategic planning.'},
-    40: {title: 'The Restriction', meaning: 'Sudden delays, legal red tape, quiet meditation.'},
-    41: {title: 'The Creative Executive', meaning: 'Commercial leadership, fast ideas, travel luck.'},
-    42: {title: 'Cosmic Love', meaning: 'Harmonious marriage, community work, artistic eye.'},
-    43: {title: 'The Battle', meaning: 'Abrupt change, conflicts, need for absolute integrity.'},
-    44: {title: 'Double Foundation', meaning: 'Heavy institutional weight, structural tests, solid gain.'},
-    45: {title: 'The Shield', meaning: 'Victory via legal or protective professions, dynamic focus.'},
-    46: {title: 'The Royal Crown', meaning: 'High institutional power, political success, protection.'},
-    47: {title: 'The Seeker', meaning: 'Deep spiritual investigation, quiet intuition, analytical.'},
-    48: {title: 'Divine Sacrifice', meaning: 'Delayed material success due to serving a higher cause.'},
-    49: {title: 'The Disruptor', meaning: 'Radical reforms, public shifts, clearing outdated grids.'},
-    50: {title: 'The Explorer', meaning: 'Freedom, major market movements, excellent trade skill.'},
-    51: {title: 'The Aggressive Winner', meaning: 'Sudden financial peaks, unexpected professional rise.'},
-    52: {title: 'The Alert Sentinel', meaning: 'Good eventual success but commands extreme situational awareness.'},
-    53: {title: 'The Royal Sage (Echo of 8)', meaning: 'Strategic administration, institutional mastery.'},
-    54: {title: 'Karmic Completion (Echo of 9)', meaning: 'Universal leadership, finishing past debts.'},
-    55: {title: 'The Divine Gateway (Echo of 10)', meaning: 'Rapid shifts, immediate spiritual download.'},
-    56: {title: 'Team Alliance (Echo of 11)', meaning: 'Success through unified efforts, avoiding personal ego.'},
-    57: {title: 'Spiritual Insight (Echo of 12)', meaning: 'Inner communication, deep visionary channel.'},
-    58: {title: 'Financial Loss Warning (Echo of 13)', meaning: 'Severe material warning, needs asset protection.'},
-    59: {title: 'The Aggressive Mind (Echo of 14)', meaning: 'Verbal debates, journalism, intense mental drive.'},
-    60: {title: 'The Comfort Grid (Echo of 15)', meaning: 'Abundance, domestic happiness, ease.'},
-    61: {title: 'New Love Catalyst (Echo of 16)', meaning: 'Shocking relational changes that spark personal growth.'},
-    62: {title: 'Secure Partnerships (Echo of 17)', meaning: 'Trustworthy business alliances, legal balance.'},
-    63: {title: 'Artistic Power House (Echo of 18)', meaning: 'Highly creative output via emotional depth.'},
-    64: {title: 'Sudden Variable (Echo of 19)', meaning: 'Swift, unpredictably lucky transformations.'},
-    65: {title: 'Intellectual Artistry (Echo of 20)', meaning: 'Accomplishments in literature, teaching, or publishing.'},
-    66: {title: 'Double Venus Power (Echo of 21)', meaning: 'Luxurious living, profound charisma, attachment traps.'},
-    67: {title: 'The Mystic Teacher (Echo of 22)', meaning: 'Deep occult authority, humanitarian voice.'},
-    68: {title: 'The Emotional Maze (Echo of 23)', meaning: 'Navigating complex relationship strings.'},
-    69: {title: 'Relational Karma (Echo of 24)', meaning: 'Perfect balancing of masculine and feminine currents.'},
-    70: {title: 'The Spiritual Exam (Echo of 25)', meaning: 'Temporary withdrawal to gain monumental inner truth.'},
-    71: {title: 'Quiet Strategy (Echo of 26)', meaning: 'Unseen operations, chess-master intelligence.'},
-    72: {title: 'Psychic Empath (Echo of 27)', meaning: 'Navigating immense energetic sensitivities.'},
-    73: {title: 'Ancestral Wisdom (Echo of 28)', meaning: 'Traditional educational roles, deep legacy.'},
-    74: {title: 'Structural Discipline (Echo of 29)', meaning: 'Moving through harsh boundary constraints safely.'},
-    75: {title: 'Occult Magnetism (Echo of 30)', meaning: 'Unlocked inner magic, esoteric counseling.'},
-    76: {title: 'Heavy Karmic Duty (Echo of 31)', meaning: 'Clearing older ancestral lineages.'},
-    77: {title: 'The Double Mystic (Echo of 32)', meaning: 'Severe isolation leading to ultimate internal enlightenment.'},
-    78: {title: 'Corporate Struggle (Echo of 33)', meaning: 'Direct clash with old leadership hierarchies.'},
-    79: {title: 'Aggressive Karmic Rebirth (Echo of 34)', meaning: 'Swift dismantling of bad habits.'},
-    80: {title: "Saturn's Heavy Gate (Echo of 35)", meaning: 'Massive long-term career endurance.'},
-    81: {title: 'Commanding Force (Echo of 36)', meaning: 'Gaining real victory after long endurance tests.'},
-    82: {title: 'Emotional Regulator (Echo of 37)', meaning: 'Learning control over external situations.'},
-    83: {title: 'Strategic Orator (Echo of 38)', meaning: 'Persuasion used for large corporate structures.'},
-    84: {title: 'Imperial Debt (Echo of 39)', meaning: 'Working closely within institutional law or service.'},
-    85: {title: 'Steely Focus (Echo of 40)', meaning: 'Razor-sharp analytical engineering intellect.'},
-    86: {title: 'Betrayal Warning (Echo of 41)', meaning: 'Vital need to screen secondary financial partners.'},
-    87: {title: 'The Hidden Ally (Echo of 42)', meaning: 'Divine, invisible protection in moments of need.'},
-    88: {title: 'Double Saturn Cross (Echo of 43)', meaning: 'Demands extreme material and spiritual balance.'},
-    89: {title: 'Destiny Reset (Echo of 44)', meaning: 'Absolute clearing of a lifestyle to forge a path forward.'},
-    90: {title: 'Universal Protector (Echo of 45)', meaning: 'Worldwide reach, high philosophical values.'},
-    91: {title: 'Imperial Crown Octave (Echo of 46)', meaning: 'Massive executive command, political reach.'},
-    92: {title: 'Divine Compass (Echo of 47)', meaning: 'Absolute guidance through intuitive instincts.'},
-    93: {title: 'Grand Design Sacrifice (Echo of 48)', meaning: 'Relinquishing personal desires for a community.'},
-    94: {title: 'Structural Change (Echo of 49)', meaning: 'Creating new models of tech or infrastructure.'},
-    95: {title: 'Planetary Trader (Echo of 50)', meaning: 'Massive international import-export or travel grid.'},
-    96: {title: 'Sovereign Beauty (Echo of 51)', meaning: 'Patron of fine arts, global design dominance.'},
-    97: {title: 'Elite Sentinel (Echo of 52)', meaning: 'Unwavering protection of critical secrets.'},
-    98: {title: 'Global Administrator (Echo of 53)', meaning: 'Managing heavy multinational networks.'},
-    99: {title: 'The Archetypal Warrior (Echo of 54)', meaning: 'Supreme cosmic endings, fierce protection.'},
-    100: {title: 'Total Awakening (Echo of 1)', meaning: 'Absolute integration with source energy, new beginnings.'},
-    101: {title: 'The New Pioneer (Echo of 2)', meaning: 'Harmonizing raw creation with deep diplomatic grace.'},
-    102: {title: 'Universal Expansion (Echo of 3)', meaning: 'Limitless educational flow, spiritual optimism.'},
-    103: {title: 'The Architect (Echo of 4)', meaning: 'Building new evolutionary systems from scratch.'},
-    104: {title: 'Rapid Messenger (Echo of 5)', meaning: 'Mastering instant data transformation across spaces.'},
-    105: {title: 'Harmonic Universe (Echo of 6)', meaning: 'Purest expression of deep love, healing, and luxury.'},
-    106: {title: 'Infinite Mystic (Echo of 7)', meaning: 'Deep oceanic awareness, boundless spiritual secrets.'},
-    107: {title: 'Eternal Pillars (Echo of 8)', meaning: 'Timeless architecture, massive cosmic resilience.'},
-    108: {title: 'The Cosmic Mandala (Echo of 9)', meaning: 'The sacred complete loop of reality; absolute fulfillment.'}
-};
-
-function renderCompoundNameDetails(number){
-    const target=document.getElementById("compoundNameDetails");
-    const detail=compoundNameDetails[number];
-    if(!target) return;
-    if(!detail){ target.innerHTML=""; target.style.display="none"; return; }
-    target.innerHTML=`<h2>Chaldean Compound Name Number ${number}</h2><div class="compound-pet-name">${detail.title}</div><div class="compound-meaning"><strong>Primary Spiritual Meaning:</strong> ${detail.meaning}</div><div class="compound-note">Traditional title and meaning as given by you.</div>`;
-    target.style.display="block";
-}
-
-
-
 /* =====================================================
    RESET LOSHU
 ===================================================== */
@@ -3525,496 +3384,256 @@ renderStandardGrid(
 
 
 
-(function(){
-
-
+(function () {
 
 /* =========================================
-   PYTHAGOREAN ALPHABET VALUES
+   PYTHAGOREAN NUMEROLOGY
+   Live calculation + live matrix
 ========================================= */
 
-const letterValues = {
-
-    A:1, J:1, S:1,
-
-    B:2, K:2, T:2,
-
-    C:3, L:3, U:3,
-
-    D:4, M:4, V:4,
-
-    E:5, N:5, W:5,
-
-    F:6, O:6, X:6,
-
-    G:7, P:7, Y:7,
-
-    H:8, Q:8, Z:8,
-
-    I:9, R:9
-
+const pythagoreanValues = {
+    A: 1, J: 1, S: 1,
+    B: 2, K: 2, T: 2,
+    C: 3, L: 3, U: 3,
+    D: 4, M: 4, V: 4,
+    E: 5, N: 5, W: 5,
+    F: 6, O: 6, X: 6,
+    G: 7, P: 7, Y: 7,
+    H: 8, Q: 8, Z: 8,
+    I: 9, R: 9
 };
 
-
-
-/* =========================================
-   REDUCE NUMBER
-========================================= */
-
-function reduceNumber(number) {
-
+function pythReduce(number) {
+    number = Number(number) || 0;
     while (number > 9) {
-
-        number =
-            number
-            .toString()
-            .split("")
-            .reduce(
-                (sum, digit) =>
-                sum + parseInt(digit),
-                0
-            );
-
+        number = String(number).split('').reduce((sum, digit) => sum + Number(digit), 0);
     }
-
     return number;
-
 }
 
-
-
-/* =========================================
-   SHOW CALCULATION
-
-   Example:
-
-   23 = 5
-   47 = 11 = 2
-   40 = 4
-========================================= */
-
-function formatCalculation(number) {
-
-    if (
-        number === null ||
-        number === undefined ||
-        number === 0
-    ) {
-
-        return "-";
-
-    }
-
-
-    let steps = [number];
-
-    let current = number;
-
-
+function pythFormat(number) {
+    if (number === null || number === undefined || number === '') return '-';
+    let current = Number(number);
+    if (!Number.isFinite(current)) return '-';
+    const steps = [current];
     while (current > 9) {
-
-        current =
-            current
-            .toString()
-            .split("")
-            .reduce(
-                (sum, digit) =>
-                sum + parseInt(digit),
-                0
-            );
-
-
+        current = String(current).split('').reduce((sum, digit) => sum + Number(digit), 0);
         steps.push(current);
-
     }
-
-
-    return steps.join(" = ");
-
+    return steps.join(' = ');
 }
 
-
-
-/* =========================================
-   LIFE PATH CALCULATION
-========================================= */
-
-function calculateLifePath(dob) {
-
-    if (!dob) {
-
-        return {
-            total: null,
-            final: null
-        };
-
-    }
-
-
-    const digits =
-        dob.replace(/-/g, "");
-
-
-    let total = 0;
-
-
-    for (
-        let digit of digits
-    ) {
-
-        total += parseInt(digit);
-
-    }
-
-
-    return {
-
-        total: total,
-
-        final: reduceNumber(total)
-
-    };
-
+function pythLifePath(dob) {
+    if (!dob) return { total: null, final: null };
+    const digits = String(dob).replace(/[^0-9]/g, '');
+    if (!digits) return { total: null, final: null };
+    const total = digits.split('').reduce((sum, digit) => sum + Number(digit), 0);
+    return { total, final: pythReduce(total) };
 }
 
-
-
-/* =========================================
-   CLEAR MATRIX
-========================================= */
-
-function resetMatrix() {
-
-    for (
-        let i = 1;
-        i <= 9;
-        i++
-    ) {
-
-        document
-            .getElementById(
-                "cell" + i
-            )
-            .innerHTML = "";
-
+function pythResetMatrix() {
+    for (let i = 1; i <= 9; i++) {
+        const cell = document.getElementById('cell' + i);
+        if (cell) cell.innerHTML = '';
     }
-
 }
 
+function pythAddToMatrix(value) {
+    const n = Number(value);
 
+    /* Only final single-digit numerology results 1–9 are allowed. */
+    if (!Number.isInteger(n) || n < 1 || n > 9) return false;
 
-/* =========================================
-   PUT ONLY SINGLE DIGIT
-   INSIDE MATRIX
-========================================= */
+    const cell = document.getElementById('cell' + n);
+    if (!cell) return false;
 
-function addToMatrix(
-    finalNumber
-) {
+    /* appendChild is intentional: repeated results must remain visible. */
+    const item = document.createElement('div');
+    item.className = 'matrix-value';
+    item.textContent = String(n);
+    cell.appendChild(item);
 
-    if (
-        finalNumber === null ||
-        finalNumber === undefined
-    ) {
-
-        return;
-
-    }
-
-
-    const cell =
-        document.getElementById(
-            "cell" + finalNumber
-        );
-
-
-    if (cell) {
-
-        cell.innerHTML += `
-
-            <div class="matrix-value">
-
-                ${finalNumber}
-
-            </div>
-
-        `;
-
-    }
-
+    return true;
 }
 
+window.calculatePythagorasNumerology = function () {
+    const nameInput = document.getElementById('pythNameInput');
+    const dobInput = document.getElementById('pythDobInput');
+    const name = nameInput ? String(nameInput.value || '').toUpperCase() : '';
+    const dob = dobInput ? String(dobInput.value || '') : '';
 
-
-/* =========================================
-   MAIN CALCULATION
-========================================= */
-
-window.calculatePythagorasNumerology = function calculatePythagorasNumerology() {
-
-
-    const name =
-        document
-        .getElementById(
-            "pythNameInput"
-        )
-        .value
-        .toUpperCase();
-
-
-    const dob =
-        document
-        .getElementById(
-            "pythDobInput"
-        )
-        .value;
-
-
-    /* CLEAR MATRIX */
-
-    resetMatrix();
-
+    /* Rebuild ONLY the four numerology results.
+       Do NOT put individual letter values (such as 888 or 1111) into the matrix. */
+    pythResetMatrix();
 
     let heartTotal = 0;
-
     let expressionTotal = 0;
 
+    /* Heart Desire = Pythagorean total of VOWELS only.
+       Expression = Pythagorean total of the FULL NAME. */
+    for (const character of name) {
+        const value = pythagoreanValues[character];
+        if (value === undefined) continue;
 
+        expressionTotal += value;
 
-    /* =====================================
-       CALCULATE NAME
-    ===================================== */
-
-    for (
-        let letter of name
-    ) {
-
-
-        if (
-            letterValues.hasOwnProperty(
-                letter
-            )
-        ) {
-
-
-            const value =
-                letterValues[letter];
-
-
-            /* EXPRESSION */
-
-            expressionTotal += value;
-
-
-            /* HEART DESIRE */
-
-            if (
-                "AEIOU".includes(
-                    letter
-                )
-            ) {
-
-                heartTotal += value;
-
-            }
-
+        if ('AEIOU'.includes(character)) {
+            heartTotal += value;
         }
-
     }
 
+    /* Keep the compound/two-digit number and reduce it to one digit. */
+    const heartNumber = heartTotal > 0 ? pythReduce(heartTotal) : null;
+    const expressionNumber = expressionTotal > 0 ? pythReduce(expressionTotal) : null;
 
+    /* Life Path = total of all DOB digits, then reduce. */
+    const lifePath = pythLifePath(dob);
 
-    /* =====================================
-       HEART DESIRE
-    ===================================== */
+    /* Maturity = Life Path + Expression Number. */
+    const maturityTotal =
+        lifePath.final !== null && expressionNumber !== null
+            ? lifePath.final + expressionNumber
+            : null;
+    const maturityNumber = maturityTotal !== null ? pythReduce(maturityTotal) : null;
 
-    const heartNumber =
+    /* -----------------------------
+       DISPLAY THE CALCULATIONS
+       Heart Desire is explicitly shown as:
+       double-digit/raw total → single digit
+    ----------------------------- */
+    const heartEl = document.getElementById('pythHeartDesire');
+    const expressionEl = document.getElementById('pythExpressionNumber');
+    const lifeEl = document.getElementById('pythLifePath');
+    const maturityEl = document.getElementById('pythMaturityNumber');
 
-        heartTotal > 0
-
-        ? reduceNumber(
-            heartTotal
-        )
-
-        : null;
-
-
-
-    /* =====================================
-       EXPRESSION
-    ===================================== */
-
-    const expressionNumber =
-
-        expressionTotal > 0
-
-        ? reduceNumber(
-            expressionTotal
-        )
-
-        : null;
-
-
-
-    /* =====================================
-       LIFE PATH
-    ===================================== */
-
-    const lifePath =
-        calculateLifePath(
-            dob
-        );
-
-
-
-    /* =====================================
-       MATURITY
-
-       LIFE PATH + EXPRESSION
-    ===================================== */
-
-    let maturityTotal = null;
-
-    let maturityNumber = null;
-
-
-    if (
-
-        lifePath.final !== null &&
-
-        expressionNumber !== null
-
-    ) {
-
-
-        maturityTotal =
-
-            lifePath.final +
-
-            expressionNumber;
-
-
-        maturityNumber =
-
-            reduceNumber(
-                maturityTotal
-            );
-
+    if (heartEl) {
+        heartEl.innerText = heartTotal > 0
+            ? `${heartTotal} → ${heartNumber}`
+            : '-';
     }
 
+    if (expressionEl) {
+        expressionEl.innerText = expressionTotal > 0
+            ? pythFormat(expressionTotal)
+            : '-';
+    }
 
+    if (lifeEl) {
+        lifeEl.innerText = lifePath.total !== null
+            ? pythFormat(lifePath.total)
+            : '-';
+    }
 
-    /* =====================================
-       DISPLAY CALCULATIONS
-    ===================================== */
+    if (maturityEl) {
+        maturityEl.innerText = maturityTotal !== null
+            ? pythFormat(maturityTotal)
+            : '-';
+    }
 
-
-    document
-        .getElementById(
-            "pythHeartDesire"
-        )
-        .innerText =
-
-        heartTotal > 0
-
-        ? formatCalculation(
-            heartTotal
-        )
-
-        : "-";
-
-
-
-    document
-        .getElementById(
-            "pythExpressionNumber"
-        )
-        .innerText =
-
-        expressionTotal > 0
-
-        ? formatCalculation(
-            expressionTotal
-        )
-
-        : "-";
-
-
-
-    document
-        .getElementById(
-            "pythLifePath"
-        )
-        .innerText =
-
-        lifePath.total !== null
-
-        ? formatCalculation(
-            lifePath.total
-        )
-
-        : "-";
-
-
-
-    document
-        .getElementById(
-            "pythMaturityNumber"
-        )
-        .innerText =
-
-        maturityTotal !== null
-
-        ? formatCalculation(
-            maturityTotal
-        )
-
-        : "-";
-
-
-
-    /* =====================================
-       FILL PYTHAGOREAN MATRIX
+    /* -----------------------------
+       PYTHAGOREAN MATRIX — CORRECTED
+       ONLY the four final single-digit results go into the grid.
 
        IMPORTANT:
-       ONLY FINAL SINGLE DIGITS
-       ARE PLACED IN MATRIX.
-
-       NO LABELS.
-    ===================================== */
-
-
-    addToMatrix(
-        heartNumber
-    );
-
-
-    addToMatrix(
-        expressionNumber
-    );
-
-
-    addToMatrix(
-        lifePath.final
-    );
-
-
-    addToMatrix(
+       • If a result occurs twice, display it twice.
+       • If a result occurs three times, display it three times.
+       • If a result occurs four times, display it four times.
+       • There can NEVER be more than four entries because there
+         are exactly four calculations: Heart Desire, Expression,
+         Life Path and Maturity.
+       • Individual letter values are NEVER placed in the matrix.
+    ----------------------------- */
+    const matrixNumbers = [
+        heartNumber,
+        expressionNumber,
+        lifePath.final,
         maturityNumber
-    );
+    ];
 
+    /* Add every valid result separately.
+       Do NOT use a Set here — duplicate numbers are intentional. */
+    let matrixEntryCount = 0;
 
+    for (const number of matrixNumbers) {
+        if (number === null || number === undefined) continue;
+        if (matrixEntryCount >= 4) break;
+
+        pythAddToMatrix(number);
+        matrixEntryCount++;
+    }
+
+    /* Keep the separate Pythagorean name card synchronized. */
+    const cardName = document.getElementById('pythagoreanName');
+    const cardTotal = document.getElementById('pythagoreanTotal');
+    const cardCompound = document.getElementById('pythagoreanCompound');
+    const cardFinal = document.getElementById('pythagoreanFinal');
+    const cardFormula = document.getElementById('pythagoreanFormula');
+
+    if (cardName) cardName.innerText = name || '—';
+    if (cardTotal) cardTotal.innerText = expressionTotal || 0;
+    if (cardCompound) cardCompound.innerText = expressionTotal
+        ? 'Compound Number: ' + expressionTotal
+        : 'Compound Number: —';
+    if (cardFinal) cardFinal.innerText = expressionNumber === null ? 0 : expressionNumber;
+    if (cardFormula) cardFormula.innerText = expressionTotal
+        ? pythFormat(expressionTotal)
+        : '—';
+
+    return {
+        heartTotal,
+        heartNumber,
+        expressionTotal,
+        expressionNumber,
+        lifePath,
+        maturityTotal,
+        maturityNumber
+    };
+};
+
+function attachPythLiveListeners() {
+    const pythNameInput = document.getElementById('pythNameInput');
+    const pythDobInput = document.getElementById('pythDobInput');
+    const masterNameInput = document.getElementById('masterNameInput');
+    const masterDobInput = document.getElementById('masterDobInput');
+
+    if (pythNameInput) {
+        pythNameInput.addEventListener('input', window.calculatePythagorasNumerology);
+        pythNameInput.addEventListener('keyup', window.calculatePythagorasNumerology);
+    }
+    if (pythDobInput) {
+        pythDobInput.addEventListener('input', window.calculatePythagorasNumerology);
+        pythDobInput.addEventListener('change', window.calculatePythagorasNumerology);
+    }
+
+    /* Listen directly to the visible Master Name box as well.
+       This guarantees live calculation even if the hidden-field sync changes. */
+    if (masterNameInput) {
+        masterNameInput.addEventListener('input', function () {
+            const value = masterNameInput.value || '';
+            if (pythNameInput && pythNameInput.value !== value) pythNameInput.value = value;
+            window.calculatePythagorasNumerology();
+        });
+    }
+
+    if (masterDobInput) {
+        masterDobInput.addEventListener('input', function () {
+            window.setTimeout(window.calculatePythagorasNumerology, 0);
+        });
+    }
+
+    window.calculatePythagorasNumerology();
 }
 
-
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', attachPythLiveListeners, { once: true });
+} else {
+    attachPythLiveListeners();
+}
 
 })();
 (function(){
 
-const chaldean = {
-    A:1,B:2,C:3,D:4,E:5,F:8,G:3,H:5,I:1,J:1,K:2,L:3,M:4,
-    N:5,O:7,P:8,Q:1,R:2,S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7
-};
+const chaldean = chaldeanValues;
 
 const pythagorean = {
     A:1,B:2,C:3,D:4,E:5,F:6,G:7,H:8,I:9,
@@ -4022,93 +3641,156 @@ const pythagorean = {
     S:1,T:2,U:3,V:4,W:5,X:6,Y:7,Z:8
 };
 
+
+   
+
 /* Source-derived compound-number interpretations: 1–108 */
 const interpretations = {
         1: [
-            "but it is not",
-            "advisable to use this number."
+			"The Sun",
+			"Independence",
+			"Original thought",
+			"leadership",
+			"Authority"
+           
         ],
         2: [
+			"The Moon",
+			"Sensitivity",
+			"Empathy",
+			"Diplomacy",
+			"Cooperation.",
             "Lack of self confidence",
             "Fear and anxiety",
             "Good imagination",
-            "Wasted life and missed opportunities",
-            "Really care name, still not helpful though"
+            "Missed opportunities",
+            
         ],
         3: [
+			"Jupiter",
+			"Wisdom",
+			"Creative expansion",
+			"Teaching",
+			"Optimism.",
             "Spiritual and strong intelligence",
             "Honest and optimistic",
             "Good in academics",
             "Creativity and abundance",
             "Self made person",
-            "Overall good name except no. 6 ones"
+            "Overall good name except for no.6 ones"
         ],
         4: [
-            "and"
+			"Rahu",
+			"Unconventional",
+			"Sudden events",
+			"Deep focus",
+			"Structural mind."
         ],
         5: [
+			"Mercury",
+			"Communication",
+			"Intellectual",
+			"Adaptable.",
             "Name and fame",
             "Multitalented",
             "Mindset of getting pleasure and comfort",
             "Divine grace and knack of getting money"
         ],
         6: [
-            "people"
+			"Venus",
+			"Art",
+			"Family Oriented",
+			"Harmony",
+			"Domestic Responsibilities",
+			"Magnetic affection.",
+			"Healing and Practising any Art form is an Inborn Talent"
+            
         ],
         7: [
+			"Ketu",
+			"Mysticism",
+			"Isolation", 
+			"Investigative",
+			"Analysis",
+			"Spiritual seeking.",
             "This is like onion. There is too much layers",
-            "You are like onion, comprised of multiple layers",
-            "Amazing mental capacities. You are like of knowledge",
             "Your personal life may not be good",
             "Always searching for deeper meaning",
-            "You are smart, learned, intelligent yet struggling to get deserving success",
+            "Struggling to get deserving success",
             "Better to avoid this name for happy, Overall life family issue",
             "Frequent change in life, No family pleasure, person with their own goals in life",
-            "Mass support for public life, Superb counsellors, efforts will not produce",
-            "the desired results"
+            "Mass support for public life, Superb counsellors","Efforts will not produce the desired results"
         ],
         8: [
-            "Complete influence of Saturn hence struggle",
-            "Dangers and accidents",
+			"Saturn",
+			"Unwanted Delays", 
+			"Hurdles and Friction",
+			"Dangers and accidents",
+			"Karmic discipline",
+			"Hardworking",
+			"Labourious",
+			"Perseverance",
             "Turn towards spirituality to bring harmony and meaning to life",
             "Not at all good for Prominent 1’s and 4’s"
         ],
         9: [
-            "person"
+			"Mars",
+			"Couragious",
+			"Assertive force",
+			"Humanitarian",
+			"Army, Police, Athletics ie high energy demand jobs suits them",
+			"Intense Endings."
+            
         ],
         10: [
-            "No shortage of wealth, Fluctuations",
-            "Ex: Shahid Afridi- Jersey No.10",
-            "Fluctuations, Its pleasure to be with these people",
+			"The Wheel of Fortune",
+			"Instant manifestation",
+			"Cyclical Success",
+			"Honors",
+            "No shortage of wealth",
+			"Fluctuations in Life",
+            "Its pleasure to be with these people",
             "Better no than standalone 1",
             "Attentions – Never ever shout on low class, maintain honesty"
         ],
         11: [
+			"The Lion’s Muzzle",
+			"High spiritual strength",
+			"Hidden trials",
+			"Treachery Warning.",
             "Liable to be let down by friend and relatives",
             "Honest",
-            "Faith or not faith in God decides the destiny?",
+            "Faith or no faith in God decides the destiny?",
             "Be careful in money matters",
             "Danger with water, careful with accidents",
-            "In many jobs / business"
+            "Many jobs / business"
         ],
         12: [
-            "Wonder-stuck with oratory skills, Honest",
+			"The Sacrifice",
+			"Learning through delays",
+			"Honest",
+			"Intellectual Illumination.",
+            "Wonder-stuck with oratory skills",
             "Sharing difficulty of others by shouldering their burdens",
             "Working for welfare",
             "Tend towards social causes",
             "Initial trouble later prosperous",
             "Good number for NGO’s",
-            "Don’t use for"
         ],
         13: [
+			"Transformation / Re-birth",
+			"Destruction before sudden elevation or power.",
             "Mis-Luck",
             "Never ever go for extra marital affair",
             "Life with struggles",
-            "Men of this number have bitter experiences and face a lot",
-            "of difficulties because of women",
+            "Men of this number have bitter experiences and face a lot of difficulties because of women",
             "Though these people manage to come up in life materially, they would still lead sad lives, full of struggles"
         ],
         14: [
+			"Temperance / Fluidity",
+			"Creative communication",
+			"Success in media",
+			"Travel fortune.",
             "Successful in many trades and meet lot of people",
             "Friends, Colorful life, parties, Travel",
             "Not easy to handle and won’t settle easily",
@@ -4117,6 +3799,10 @@ const interpretations = {
             "Marriage matters-Be very careful or ready to repent"
         ],
         15: [
+		    "The Magician",
+			"High personal magnetism",
+			"Spellbinding speech",
+			"Material fortune.",
             "Presentable, Neat and clean",
             "Gift of the gab and Personal Magnetism",
             "More than one source of income",
@@ -4126,6 +3812,10 @@ const interpretations = {
             "No 3s should avoid"
         ],
         16: [
+			"The Shattered Tower",
+			"Sudden karmic updates",
+			"Collapse of Pride",
+			"Rebuilding",
             "Good beginning but poor end",
             "It shows a fall from power, grace, office, position",
             "Unexpected shock or catastrophe",
@@ -4133,6 +3823,10 @@ const interpretations = {
             "This number severely impacts those with a prominent"
         ],
         17: [
+		    "The Star of the Magi",
+			"Divine protection", 
+			"Legacy",
+			"Rising superior to trials.",
             "Leader",
             "Honest",
             "Take person to great heights",
@@ -4143,6 +3837,9 @@ const interpretations = {
             "Ambition"
         ],
         18: [
+			"Spiritual Illusion",
+			"Internal conflicts", 
+			"Warning of secret plots or deceptions.",
             "Number of extremes",
             "Though some 18s are extremely successful(same is seen in",
             "1 and 8 combination)",
@@ -4151,6 +3848,10 @@ const interpretations = {
             "Selfishness"
         ],
         19: [
+			"The Sun Prince", 
+			"Absolute victory",
+			"Clarity",
+			"Fulfillment after trials",
             "The number indicates the RISING SUN",
             "Successful completion of any endeavor",
             "Position, status, happiness, success and wealth will be on a continuous rise.",
@@ -4158,16 +3859,27 @@ const interpretations = {
             "Profession – shine well in politics, admin work, army, social work"
         ],
         20: [
-            "Artist, Creative, Emotional, Peace-lover Profession – Medicine",
+			"The Awakening",
+			"Spiritual calling",
+			"Critical life reviews",
+			"Calculated risks",
+            "Artist, Creative, Emotional, Peace-lover",
+			"Profession – Suitable for Medicine",
             "Caution – Anger and self interest should be managed Avoid giving this no’s for"
         ],
         21: [
+			"The Crown of the Magi",
+			"Global success",
+			"High social honors", 
+			"Absolute victory",
             "Self centeredness-Own happiness and matters profitable to them",
             "With growing age you grow in both wealth and wisdom",
             "You are cunning, you are planner and achiever",
             "You go beyond the limit to achieve your goals"
         ],
         22: [
+			"The Master Builder",
+			"Colossal creative power but accompanied by a heavy weight of duty",
             "They don’t want to listen too many suggestions",
             "Self destructions - You loose out your things because of your own ways of working",
             "Humiliations and Vyasan",
@@ -4175,8 +3887,13 @@ const interpretations = {
             "They are good administrators",
             "Positive – Multidimensional and multitalented",
             "Dominant 8, 9 ( Health issue)"
-        ],
+        ],		
+		
+		
         23: [
+			"The Royal Star of the Lion",
+			"Incredible protection",
+			"Effortless success via speech",
             "Luck number",
             "Getting success in what they aspire for",
             "Earn good reputation over the period of time",
@@ -4186,26 +3903,32 @@ const interpretations = {
             "Profession – Politics, Business, Transport and commission work"
         ],
         24: [
+			"Love and Art",
+			"Financial gain through creative ventures, luxury",
             "Partner from higher background / status",
-            "Man gets rich / dignified / famous wife and vice versa as",
-            "well",
-            "Business expansion",
+            "Man gets rich / dignified / famous wife and vice versa as well Business Expansion",
             "It’s quite good to have them as a friend",
             "Profession – Media, Politics, Social work, Defense / Police / Military"
         ],
         25: [
+			"The Deep Researcher",
+			"Spiritual gains through careful analytical study",
             "Your social life will have glamour effect and personal life will have dullness",
             "Lose your hard earned money",
             "Trials and Tribulations",
             "Earn international fame and reputations"
         ],
         26: [
+			"The Conflict",
+			"Power struggles, severe warning against poor advice.",
             "Losses due to partnership and friends",
             "Be cautious in investment matters",
             "Business and professions are adversely affected due to indirect enemies",
             "False promises"
         ],
         27: [
+			"The Warrior Sage", 
+			"Intellectual bravery, independent victory, command",
             "Equally good as 24",
             "Authority, power and command",
             "Don’t be submissive",
@@ -4214,6 +3937,8 @@ const interpretations = {
             "Profession – Army, Healing, Occult science"
         ],
         28: [
+			"The Overthrow",
+			"Severe loss when trying to dominate others blindly",
             "They may have to start their life again and again",
             "Struggles, challenges, court cases, bad luck, failures",
             "Hard earned money may be lost unexpectedly",
@@ -4221,26 +3946,35 @@ const interpretations = {
             "Though these numbers have power of"
         ],
         29: [
-            "Trouble due to opposite sex, marital bliss",
+			"The Emotional Trial",
+			"Intense sensitivity, relationship trials, karmic test",
+            "Trouble due to opposite sex",
             "When they find one recessive, they try to bully",
             "Involvement in police complaints",
             "Strong willpower, creativity",
-            "Remedy- Don’t try to bull anyone"
+            "Remedy- Don’t try to bully anyone"
         ],
         30: [
-            "understands and helps others easily",
-            "They don’t make compromise for the fame, ego"
+			"The Creative Mind",
+			"Introspective expression",
+			"Temporary mental isolation.",
+            "Understands and helps others easily",
+            "They don’t make compromise for the fame or ego"
         ],
         31: [
+			"The Isolated Thinker",
+			"Opposition from society, eccentric mindset, delays",
             "You are non-conventional",
             "You are business lover",
             "You love freedom of speech and act",
             "They always love to be independent and fly like free birds",
             "They don’t want to listen others",
             "Some of them give up family life",
-            "Spirituality, Yoga, Occult sciences"
+            "They get relief in Spirituality, Yoga, Occult sciences"
         ],
         32: [
+			"Gentle Growth",
+			"Peaceful expansion, great connections, steady wealth.",
             "This is a magical name, Unique ideas and technique",
             "Ability to discover new techniques and implement these ideas",
             "They have good intelligence and have an impressive appearance",
@@ -4255,21 +3989,27 @@ const interpretations = {
             "They attract variety of people"
         ],
         33: [
-            "Ashta Laxmi",
-            "Astrology, Medicine and Spiritual, Wisdom",
+			"The Master Teacher", 
+			"It is the number of Ashta Laxmi, Kubera(The Lord of Wealth)",
+			"Profound compassion, high responsibilities, guiding others.",
+            "Astrology, Medicine and Spiritual Wisdom",
             "They get all kinds of wealth like gold, money, house, vehicle and such",
             "They get money in many ways and means",
             "Prosperity will always be on rise",
             "Life will be full of luxury, everlasting wealth",
-            "They are good in education, well travelled, gifted talkers",
-            "Good vehicle"
+            "They are good in education, well travelled, gifted talkers"
         ],
         34: [
-            "It is very easy for 34 no. people to earn money, quite easily money will come but some strange habits give them issue",
+			"The Strain",
+			"Internal anxiety, obstacle courses, hidden domestic burdens.",
+            "It is very easy for number 34 people to earn money",
+			"Quite easily money will come but some strange habits give them issues",
             "Confusion, specially related to home activities",
             "They get addicted in sexual and materialistic things"
         ],
-        35: [
+        35: [    
+			"The Strategist",
+			"Highly diplomatic persuasion, sharp financial sense",
             "Issues due to friends and associates",
             "They will adopt immoral ways in order to earn money",
             "Trials and tribulations, Litigations",
@@ -4278,29 +4018,40 @@ const interpretations = {
             "It is found that the center of the house (Brahmsthan) of these people disturbed"
         ],
         36: [
+			"The Heavy Burden",
+			"Emotional responsibility, family duties, creative labor",
             "If they will stay in home town they will struggle, if they will go away from home town then succeed – Choice of them",
             "They have to go away from home town to get success",
             "Profession – Good number for Sports and Admin jobs"
         ],
         37: [
+			"The Lucky Mystic",
+			"High financial luck",
+			"Safe relationships",
+			"Spiritual focus",
             "Get benefit from opposite sex",
             "It brings success in love",
             "Enjoy high and dignified position in the society",
             "Even if they struggle in starting, they will make up in the end",
             "They have an attractive appearance",
-            "Wealth is constantly rise",
+            "Wealth is constantly on the rise",
             "Unexpected success, they are known for their looks and attractions",
             "These persons may have to live far from their father",
             "At right expectation if the person get good position in life, shouldn’t be very ambitious or egoistic otherwise the power of this number won’t work"
         ],
         38: [
+			"Material Loss",
+			"Financial leakages",
+			"Friend disputes",
+     		"Warning of betrayal.",
             "Good number for public life",
             "They get support of big shots",
             "They may have to suffer because of unexpected dangers that jumps on them suddenly or because of indirect enemies",
             "Accident chance in later stage of life",
             "They grow with a good rate and they earn wealth and fame Even if a very humble being, they may get injured, blood related issue, end of life is troublesome"
         ],
-        39: [
+		39: [
+			"Warrior Communicator","Assertive writing or speech, strategic planning",
             "Name and fame",
             "They work for other’s welfare",
             "Hardworking",
@@ -4309,28 +4060,35 @@ const interpretations = {
             "you earn right ways, Good success in later part of life)"
         ],
         40: [
+			"The Restriction",
+			"Sudden delays, legal red tape, quiet meditation.",
             "This number give good amount of wealth (sudden flow of money)",
             "Good confidence and intelligence",
-            "Later part of life they will lose all their money and in neglecting",
+            "Later part of life they will lose all their money and in neglect",
             "life becomes fruitless and in vein"
         ],
         41: [
-            "Success in al endeavors",
+			"The Creative Executive",
+			"Commercial leadership, fast ideas, travel luck.",
+            "Success in almost all endeavors",
             "Power to govern",
             "Triumph over competition",
             "Good number for international fame",
             "Leader respected by masses",
-            "If you are in small organization, everyone know by their name"
+            "If you are in an organization, everyone knows you by name"
         ],
         42: [
+			"Cosmic Love",
+			"Harmonious marriage, community work, artistic eye.",
             "Good number to fulfill endeavor",
             "Do good in politics, Social wealth, arts, mass media, public life",
             "Good number to cure any illness",
             "Good physique and looks, charismatic",
-            "Power to subdue others",
-            "Special Tip?"
+            "Power to subdue others"
         ],
         43: [
+			"The Battle",
+			"Abrupt change, conflicts, need for absolute integrity.",
             "Dual, Fickle mind, and confusions",
             "Speaking and writing, imagination",
             "Trial, Tribulations and Revolutionary changes",
@@ -4338,21 +4096,26 @@ const interpretations = {
             "Family life is not quite peaceful / shaky"
         ],
         44: [
+			"Double Foundation",
+			"Heavy institutional weight, structural tests, solid gain",
             "Shoulder family burden",
-            "Honest",
             "This number indicates that they will have to spend some time in prison",
             "End is drastic and not so happy",
             "Physical illness and mental affliction"
         ],
         45: [
+			"The Shield",
+			"Good number for Health and protection from illness",
+			"Victory via legal or protective professions, dynamic focus",
             "They get good name, fame and position",
             "They keep their cards near to their chest",
-            "Good number to protect from illness",
             "It indicates a strong body and a strong willpower",
             "Happy life and good amount of wealth",
             "Brilliant at running large organizations"
         ],
         46: [
+			"The Royal Crown",
+			"High intuitional power, political success, protection",
             "Symbol of success, luck, wealth, knowledge and international fame",
             "Even if you are born in small family, with time your success stories will be talk of town",
             "Divine support",
@@ -4360,16 +4123,18 @@ const interpretations = {
             "Will reach to the topmost position of whatever profession"
         ],
         47: [
+			"The Seeker",
+			"Deep spiritual investigation, quiet intuition, analytical",
             "Ability to think out of the box",
-            "Sudden richness, sudden growth, even ordinary person",
-            "can become rich",
+            "Sudden richness, sudden growth, even ordinary person can become rich",
             "Great at solving typical issues",
-            "Concerned about their own progress and will not rest until",
-            "its completed",
+            "Concerned about their own progress and will not rest until its completed",
             "Good in money related things"
         ],
         48: [
-            "Welfare of others.",
+			"Divine Sacrifice",
+			"An avoidable compound number",
+			"Delayed material success due to serving a higher cause Welfare of others.",
             "They will do a lot of work for public welfare",
             "Will engage in public service but have to face stiff opposition",
             "Over extending, feeling burdened and struggling, trying to do much by shouldering all the work",
@@ -4377,13 +4142,16 @@ const interpretations = {
             "Earning money and wealth but loosing it, fate is not that good"
         ],
         49: [
-            "Sudden money, immovable",
-            "Celebration, freedom, rejoicing over success, Eventful life",
-            "Travelling, Sudden fortunes and prosperity",
+			"The Disruptor",
+			"Radical reforms, public shifts, clearing outdated grids",
+            "Sudden money, immovable Celebration, freedom, rejoicing over success, Eventful life Travelling",
+			"Sudden fortunes and prosperity",
             "Even accident will happen suddenly",
             "Gives good imagination"
         ],
         50: [
+			"The Explorer", 
+			"Freedom, major market movements, excellent trade skill",
             "Orator ship, Intelligence, Imagination",
             "Excel in education, Good in analysis",
             "They earn through writing and speaking skills",
@@ -4391,6 +4159,8 @@ const interpretations = {
             "Gets straight to the point, don’t beat around bush"
         ],
         51: [
+			"The Aggressive Winner",
+			"Sudden financial peaks, unexpected professional rise",
             "Sudden prosperity, money from unexpected source",
             "Even person is ordinary he will become great",
             "Dynamic",
@@ -4399,6 +4169,8 @@ const interpretations = {
             "Wide circle of friends and relatives"
         ],
         52: [
+			"The Alert Sentinel",
+			"Good eventual success but commands extreme situational awareness",
             "Loving, tender hearted, intuitive, psychology",
             "Indicates great fame and popularity",
             "Their speech is full of life, they are source of inspiration to others",
@@ -4407,47 +4179,58 @@ const interpretations = {
             "A gifted counselor and a caring friend"
         ],
         53: [
+			"The Royal Sage",
+			"Strategic administration, intuitional mastery",
             "They are disappointed in partnership ventures",
             "They become famous when they take up social service",
-            "They master esoteric arts like magic, yoga, mastery of arts",
-            "and controlling the spirits",
-            "They posses extraordinary",
-            "It represents courage and determination to succeed no",
-            "matter what opposition or obstacle lies ahead",
+            "They master esoteric arts like magic, yoga and controlling the spirits",
+            "It represents courage and determination to succeed no matter what opposition or obstacle lies ahead",
             "They achieve success after hard work"
         ],
         54: [
+			"Karmic Completion",
+			"Good to have if you have any health Issues",
+			"Universal leadership, finishing past debts",
             "Less freedom and more control of others",
             "Struggle in beginning and merry in the end is theme of the life",
-            "High fluctuations in life, good orator ship skills",
+            "High fluctuations in life, good oratory skills",
             "They may begin their lives with prestige, reputations and prosperity",
             "Becoming too wisely and holding lot of things so stomach issues can be seen as well, Accumulate the wealth",
             "Tip: Stay away from greed and proud, impulsive decision and adamantness"
-        ],
+        ],		
+		
         55: [
+			"The Divine Gateway",
+			"Rapid shifts, Immediate spiritual download.",
             "Partnership ventures are not suitable to them",
             "Independent business is suitable",
-            "They are great in counselling people",
+            "They are great in counselling people and are scholars",
             "They have a broad knowledge spread over many fields will bring victory over enemies",
-            "Scholars",
             "People under this number will astonish others by their knowledge and win them over will power and intuitive knowledge"
-        ],
+             ],
         56: [
+			"Team Alliance",
+			"Success through unified efforts, avoiding personal ego",
             "This number is full of happenings to bring fortune and fame",
             "Frequent changes in life",
             "Mental conflict in them",
             "Stay away from temptation and unrealistic projects"
         ],
         57: [
+			"Spiritual Insight",
+			"Inner communication, deep visionary channel",
             "Person running into race so well and in the end loosing it with quite a margin,",
             "Don’t do capital related work",
             "They have to be deliberate in making any decision whatsoever",
-            "Profession: Cinema theatres, printing presses, coal and iron mining, painting, making of furniture and sports goods and organizing contests will earn them good income",
+            "Profession: Cinema theatres,Banking, printing presses, coal and iron mining, painting, making of furniture and sports goods and organizing contests will earn them good income",
             "Hiring out vehicles like buses, lorries and cars will also be rewarding",
-            "Banking",
-            "Their minds will go astray in bad ways"
+            "Their minds will go astray in seldom"
         ],
         58: [
+			"The Aggressive Mind",
+			"Verbal debates, journalism, intense mental drive",
+			"Financial Loss Warning",
+			"Severe material warning, needs asset protection",
             "Outstanding popularity and power to captivate",
             "Mass appeal and High status",
             "Dryness in life",
@@ -4462,13 +4245,18 @@ const interpretations = {
             "Disease - Nervous"
         ],
         60: [
+			"The Comfort Grid",
+			"Abundance, domestic happiness, ease",
             "Peaceful home and a loving wife",
-            "Good in tark vitark, logical arguments",
+            "Good in analytical and logical arguments",
             "Good family life, good fortunate number",
             "They entertain others",
             "They have artistic talents"
-        ],
+        ],	
+		
         61: [
+			"New Love Catalyst",
+			"Shocking relational changes that spark personal growth",
             "Don’t stick on to any place whatever be their business or profession",
             "It is good for them if they live a sedate life",
             "They enjoy great name and fame",
@@ -4476,6 +4264,8 @@ const interpretations = {
             "Life is full of ups and downs"
         ],
         62: [
+			"Secure Partnerships",
+			"Trustworthy business alliances, legal balance.",
             "These people can charm everyone easily",
             "Generally it will give great fame, victories and a comfortable life",
             "They don’t maintain good relationship with relatives",
@@ -4483,6 +4273,10 @@ const interpretations = {
             "They are tempted by anything that is attractive"
         ],
         63: [
+			"Sudden Variable", 
+			"Swift, unpredictably lucky transformations",
+			"Artistic Power House",
+			"Highly creative output via emotional depth",
             "Trouble attractor",
             "Their mind is never stable",
             "Sleep during day",
@@ -4495,14 +4289,17 @@ const interpretations = {
             "They have the privilege of being obliged by many"
         ],
         65: [
+			"Intellectual Artistry",
+			"Accomplishments in literature, teaching, or publishing",
             "It will earn the help of wealthy and powerful patrons",
             "Good number for marital life",
             "This is a great interest in spirituality",
-            "They enjoy the support and trust of the great",
-            "They have a happy and contented life",
-            "Thank You"
+            "They enjoy the trust and support",
+            "They have a happy and contented life"
         ],
         66: [
+			"Double Venus Power",
+			"Luxurious living, profound charisma, attachment traps",
             "Spontaneous and eloquent skills",
             "They should not be addicted to comfort zone they are getting",
             "Abundant happiness, satisfaction",
@@ -4513,6 +4310,8 @@ const interpretations = {
             "This number denotes dynamism and oratorical skills, perfection in the fine arts, patronage from the government authorities and also a comfortable life ."
         ],
         67: [
+			"The Mystic Teacher",
+			"Deep occult authority, humanitarian voice",
             "Intelligent, They are famous persons",
             "They have a mass appeal",
             "Popular support and the support become power for them",
@@ -4524,15 +4323,18 @@ const interpretations = {
             "They can never achieve anything if they are selfish"
         ],
         68: [
+			"The Emotional Maze",
+			"Navigating complex relationship strings.",
             "They make profit in business and occupation related to iron,",
             "machinery, vehicles, commission, real estate",
             "You are always moving from one option to another",
             "It is a fortunate number for those with a prominent 5, 8 or 9 in their birth date",
-            "He is like a performer, who keeps all the balls in continuous",
-            "motion",
+            "He is like a performer, who keeps all the balls in continuous motion",
             "Caution: Stay away from greed"
-        ],
+        ],		
         69: [
+			"Relational Karma",
+			"Perfect balancing of masculine and feminine currents",
             "Name number indicates success in any endeavor",
             "They enjoy the status of a king of the society",
             "They accumulate a large wealth",
@@ -4542,10 +4344,12 @@ const interpretations = {
             "They overtake others and retain their position safely by their own efforts",
             "They are known to spend money lavishly for their self satisfaction",
             "There is a certain royalty about their speech and actions",
-            "A brilliant name for all, except for those with a prominent 3 in the birth",
-            "date. Royal Bank of Scotland & Danzel Washington are both"
+            "A brilliant name for all, except for those with a prominent 3 in the birth date", 
+			"Royal Bank of Scotland & Danzel Washington are both 69"
         ],
         70: [
+			"The Spiritual Exam",
+			"Temporary withdrawal to gain monumental inner truth",
             "Misfortune plagues the 70 for the first two-thirds of life",
             "After 43 years they come across good progress and fame in life",
             "While they have struggle and fall prey to addiction, as they grow old, they",
@@ -4559,179 +4363,524 @@ const interpretations = {
             "The fame is always growing"
         ],
         71: [
-            "This number is synonymous with the intelligent person. They are men of intelligent thoughts. They shape the thoughts of the world of thoughts. They resolve the problems of many. They take up mission related to places or worship like renovation of temples. The beginning of life is full of struggle. As they proceed in life, they get one success after the other. They acquire wealth by many means. They take up charitable and benevolent acts wholeheartedly. They have the luck of making money by writing and speaking. They become famous as artistes. They get high positions and fame. There is great danger from indirect enemies. It indicates extraordinary wisdom. They are the light of wisdom. They are impatient and prone to anger. There is a certain speed and haste about their actions. They take up great endeavors and fail. They can be easily cheated."
-        ],
+			"Quiet Strategy",
+			"Unseen operations, chess-master intelligence",
+            "This number is synonymous with the intelligent person. They are men of intelligent thoughts.",
+			"They shape the thoughts of the world of thoughts. They resolve the problems of many.",
+			"They take up mission related to places or worship like renovation of temples",
+			"The beginning of life is full of struggle. As they proceed in life, they get one success after the other.",
+			"They acquire wealth by many means. They take up charitable and benevolent acts wholeheartedly.",
+			"They have the luck of making money by writing and speaking.", 
+			"They become famous as artistes. They get high positions and fame.", 
+			"There is great danger from indirect enemies.",
+			"It indicates extraordinary wisdom. They are the light of wisdom.",
+			"They are impatient and prone to anger.", 
+			"There is a certain speed and haste about their actions.",
+			"They take up great endeavors and fail.",
+			"They can be easily cheated."
+        ],		
+		
         72: [
+			"Psychic Empath",
+			"Navigating immense energetic sensitivities.",
             "Quite a good number in 9 series",
             "Good Name number for material success",
             "This number has great potential and administrative ability. They progress in life with their own efforts.",
-            "They accumulate property like house, vehicle and lands. They get wealth by many means. They accumulate all varieties of grain and gems. Business related to money brings them great wealth. Export and Import business also makes them rich. They have to be realistic and adjustable. That will make them very rich persons. They have the indications of exercising authority over many. This number endows one with money, position, fame and all. It gives a long and happy life."
+            "They accumulate property like house, vehicle and lands. They get wealth by many means.",
+			"They accumulate all varieties of grain and gems.",
+			"Business related to money brings them great wealth.",
+			"Export and Import business also makes them rich.", 
+			"They have to be realistic and adjustable.", 
+			"They have the indications of exercising authority over many.",
+			"This number endows one with money, position, fame and all.", 
+			"It gives a long and happy life."
         ],
         73: [
-            ":",
-            "This number gives the life of a lord. It brings fame, position and riches. They stand to be benefit from the government and those in high positions. They plan in confidence and achieve success without the knowledge of others.",
-            "They are full of property like land, house and vehicle. They get money from many sources. When they remain devoted to God and honest, they come to enjoy all kinds of pleasures in life.",
+            "Ancestral Wisdom",
+			"Traditional educational roles, deep legacy",
+            "This number gives the life of a lord. It brings fame, position and riches.",
+			"They stand to be benefit from the government and those in high positions.",
+			"They plan in confidence and achieve success without the knowledge of others.",
+            "They are full of property like land, house and vehicle. They get money from many sources.",
+			"When they remain devoted to God and honest, they come to enjoy all kinds of pleasures in life.",
             "If they have a perfect character, they succeed in anything with the grace of God."
         ],
         74: [
-            ":",
-            "How ever, much they get, they always run short of money . They have the objective of reforming the society. They have staunch faith in religion. They keep on facing difficulties. They are adept in propaganda. Only the life of a sanyasi brings happiness to them. Their sufferings are unending.",
-            "They have problem with their stomach. They are interested in arts and literature. Their mind is not stable at all. This number makes life futile and therefore not beneficial."
+            "Structural Discipline",
+			"Moving through harsh boundary constraints safely",
+            "However, how much they get they always run short of money",
+			"They have the objective of reforming the society.",
+			"They have staunch faith in religion.",
+			"They keep on facing difficulties.",
+			"They are adept in propaganda.",
+			"Only the life of a sanyasi brings happiness to them. Their sufferings are unending.",
+            "They have problem with their stomach. They are interested in arts and literature. Their mind is not stable at all.",
+			"This number makes life futile and therefore not beneficial."
         ],
         75: [
-            ":",
-            "They are creative writers. They are always surrounded by friends wherever they go. They have great fame. They write many books.",
-            "They become suddenly rich and famous. They earn with their writing and speech. They are by nature helpful to others. They have a great many good friends. They excel in music and acting."
+            "Occult Magnetism",
+			"Unlocked inner magic, esoteric counseling.",
+            "They are creative writers.",
+			"They are always surrounded by friends wherever they go.",
+			"They have great fame.",
+			"They write many books.",
+            "They become suddenly rich and famous.",
+			"They earn with their writing and speech.",
+			"They are by nature helpful to others.",
+			"They have a great many good friends.",
+			"They excel in music and acting."
         ],
         76: [
-            "indicates great status and wealth. But suddenly they lose everything. They become famous. When they lose all that they had, they accumulate more than what they had lost.",
-            "They take up new endeavors and succeed. Their powers of divine grace keeps on increasing. They earn money through spiritual means. Half of their life time is spent idly in eating, sleeping and indulging. They come to have wealth by means that remain a mystery to others. Their life is full of ups and downs throughout."
+			"Heavy Karmic Duty",
+			"Clearing older ancestral lineages",
+            "Indicates great status and wealth. But suddenly they lose everything.",
+			"They become famous. When they lose all that they had, they accumulate more than what they had lost.",
+            "They take up new endeavors and succeed.",
+			"Their powers of divine grace keeps on increasing.",
+			"They earn money through spiritual means.",
+			"Half of their life time is spent idly in eating, sleeping and indulging in fruitless things.",
+			"They come to have wealth by means that remain a mystery to others.",
+			"Their life is full of ups and downs throughout."
         ],
+		
         77: [
-            ":",
-            "This number lodges many an esoteric philosophy. They are tenacious and progress with their own efforts. They have a very good reputation. They are famous. They go by the principles of justice and fairness. They do not look for any help from anyone but keep working towards their ideals themselves.",
-            "They make considerable progress in life. They have a life of high status. They take up frequent travel to other places. They visit foreign countries. When they develop devotion to God and spiritual thoughts, they become very famous. They get good positions by taking up social work. They live with a mental discipline. They live a life of fame and popularity."
+            "The Double Mystic",
+			"Severe isolation leading to ultimate internal enlightenment",
+            "This number lodges many an esoteric philosophy.",
+			"They are tenacious and progress with their own efforts.",
+			"They have a very good reputation.",
+			"They are famous.",
+			"They go by the principles of justice and fairness.",
+			"They do not look for any help from anyone but keep working towards their ideals themselves.",
+            "They make considerable progress in life.",
+			"They have a life of high status.",
+			"They take up frequent travel to other places. They visit foreign countries",
+			"When they develop devotion to God and spiritual thoughts, they become very famous.",
+			"They get good positions by taking up social work.",
+			"They live with a mental discipline.",
+			"They live a life of fame and popularity."
         ],
         78: [
-            "have powers of divine aspects and the most virtuous. They live a life of justice. They have a very fertile imagination. Their speech is attractive. They excel in acting, creative writing, dance and music. They have a great liking for social work. They earn money with their intelligence. They very easily master magic, incantation and other esoteric arts. They are appreciated by many. The government honors them. Their words become true. Enjoying the grace of God, they become pious.",
+			"Corporate Struggle",
+			"Direct clash with old leadership hierarchies",
+            "have powers of divine aspects and the most virtuous.",
+			"They live a life of justice.",
+			"They have a very fertile imagination.",
+			"Their speech is attractive.",
+			"They excel in acting, creative writing, dance and music.",
+			"They have a great liking for social work.",
+			"They earn money with their intelligence.",
+			"They very easily master magic, incantation and other esoteric arts.",
+			"They are appreciated by many. The government honors them. Their words become true. Enjoying the grace of God, they become pious.",
             "They are the treasure of arts. They get monetary help from various sources.",
             "Those who become quite mature in wisdom happen to lose all their wealth.",
             "When they are a little cautious, they can avoid it."
         ],
         79: [
-            "indicates struggle at the early part of life and popularity in the later part. They achieve great progress in business and occupation only to fall to great depths. This number indicates the tendency to pursue spiritual life and the worship of God. There is a large group of people in waiting to listen to their words. They have the ability to guide others. They have a mass appeal.",
+			"Aggressive Karmic Rebirth", 
+			"Swift dismantling of bad habits",
+            "Indicates struggle at the early part of life and popularity in the later part.",
+			"They achieve great progress in business and occupation only to fall to great depths.",
+			"This number indicates the tendency to pursue spiritual life and the worship of God.",
+			"There is a large group of people in waiting to listen to their words. They have the ability to guide others. They have a mass appeal.",
             "Their faith in anything is firm.",
-            "Though they stand to be lucky in many ways, their family life is full of quarrels. They excel in studies and reasoning. They have strong will power. They remain greatly spiritualistic."
+            "Though they stand to be lucky in many ways but their family life is full of quarrels.",
+			"They excel in studies and reasoning",
+			"They have strong will power.",
+			"They remain greatly spiritualistic."
         ],
+		
         80: [
-            ":",
-            "This name number indicates expertise in philosophy. They have mysterious powers in plenty. Their esoteric tricks succeed. They accomplish rare feats and become famous. They are constantly working out one revolution or the other. They succeed in competitions. They accomplish the impossible feats and become famous. Their method of worship of God is unique. They are knowledgeable in scriptures and science. Even in the midst of fearsome life, they live comfortably. They face dangers that pass. They live according to situations. This number incites extremism. This number brings a lot of changes in life. It is beneficial to a certain extent."
+            "Saturn's Heavy Gate",
+			"Massive long-term career endurance",
+            "This name number indicates expertise in philosophy. They have mysterious powers in plenty. Their esoteric tricks succeed.",
+			"They accomplish rare feats and become famous.",
+			"They are constantly working out one revolution or the other.",
+			"They succeed in competitions.",
+			"They accomplish the impossible feats and become famous.",
+			"Their method of worship of God is unique.",
+			"They are knowledgeable in scriptures and science.",
+			"Even in the midst of fearsome life, they live comfortably.",
+			"They face dangers that pass.",
+			"They live according to situations. This number incites extremism. This number brings a lot of changes in life. It is beneficial to a certain extent."
         ],
         81: [
-            ":",
-            "This number gives a lot of interest in spiritualism. They become teachers and counselors to many. There is a certain power about their speech. They progress in life staidly and enjoy luck in stages. They are very just persons. If they are not cautious, they may incur loss of property and disappointment.",
-            "They are very much interested in progressing in life. They keep on planning for their betterment. They are always surrounded by people. They become teachers, scholars and public speakers."
-        ],
+            "Commanding Force",
+			"Gaining real victory after long endurance tests",
+            "This number gives a lot of interest in spiritualism.",
+			"They become teachers and counselors to many.",
+			"There is a certain power about their speech.",
+			"They progress in life steadly and enjoy luck in stages.",
+			"They are very just persons.",
+			"If they are not cautious, they may incur loss of property and disappointment.",
+            "They are very much interested in progressing in life.",
+			"They keep on planning for their betterment.",
+			"They are always surrounded by people.",
+			"They become teachers, scholars and public speakers."
+        ],  
+       
         82: [
-            ":",
-            "This number has the power of domination. It makes even an ordinary person a great accomplisher. It has the fortune of a king. It gives one the power to rule. It brings great fame. one the ruler of a fertile nation. There is a grate attraction in the looks and speech of the person. It brings luxurious vehicles. They can master magical powers. The number has the power of dominance over land. It brings romantic affairs.",
-            "They become great by virtue of their sense of duty and hard work. They meet challenges and become successful. They get the highest offices in the country. They enjoy the possession of gold, land and all. They are verily princes. They get the wealth of land and gold. They acquire esoteric knowledge like magic, yoga, meditation and all such powers. They have the ability to rule over people.",
-            "They work nobly and become great. There is an attraction in their eyes. They are dignified and dutiful. They earn a very good reputation."
+            "Emotional Regulator",
+			"Learning control over external situations",
+            "This number has the power of domination. It makes even an ordinary person a great accomplisher.",
+			"It has the fortune of a king. It gives one the power to rule.",
+			"It brings great fame.",
+			"One of the ruler of a fertile nation.",
+			"There is a great attraction in the looks and speech of the person.",
+			"It brings luxurious vehicles.",
+			"They can master magical powers.",
+			"The number has the power of dominance over land.",
+			"It brings romantic affairs.",
+            "They become great by virtue of their sense of duty and hard work.",
+			"They meet challenges and become successful.",
+			"They get the highest offices in the country.",
+			"They enjoy the possession of gold, land and all.",
+			"They are verily princes. They get the wealth of land and gold.",
+			"They acquire esoteric knowledge like magic, yoga, meditation and all such powers.",
+			"They have the ability to rule over people.",
+            "They work nobly and become great.",
+			"There is an attraction in their eyes.",
+			"They are dignified and dutiful.",
+			"They earn a very good reputation."
         ],
         83: [
-            ":",
-            "This number gives the majesty of royalty. It brings venerable greatness. It gives a royal life. They enjoy sensuous pleasures. They are excellent in winning over the enemies. They are always the winning. They win easily. They succeed in anything easily. They stand to get unexpected large profits in their business.",
-            "They get high status, fame and dignity. They help many persons. Great positions come seeking them. They have lasting and large wealth. The enjoy constant fame. They are venerated as the Messiahs and divine beings. They live a happy life."
+            "Strategic Orator",
+			"Persuasion used for large corporate structures",
+            "This number gives the majesty of royalty.",
+			"It brings venerable greatness. It gives a royal life.",
+			"They enjoy sensuous pleasures.",
+			"They are excellent in winning over the enemies.",
+			"They are always the winning.",
+			"They win easily. They succeed in anything easily. They stand to get unexpected large profits in their business.",
+            "They get high status, fame and dignity.",
+			"They help many persons. Great positions come seeking them.",
+			"They have lasting and large wealth.",
+			"The enjoy constant fame.",
+			"They are venerated as the Messiahs and divine beings.",
+			"They live a happy life."
         ],
         84: [
-            ":",
-            "They are very much interested in spiritualism. They are very fastidious. They accomplish rare missions. Youth is full of struggle. They feel anxiety every now and then. They stand to gain because of visits abroad.",
-            "They attract unnecessary enmity frequently. Their achievements are not commensurate with their efforts. They should follow the path of devotion to avoid sufferings in life. That brings peace to their heart."
+            "Imperial Debt",
+			"Working closely within institutional law or service",
+            "They are very much interested in spiritualism.",
+			"They are very fastidious.",
+			"They accomplish rare missions.",
+			"Youth is full of struggle.",
+			"They feel anxiety every now and then they stand to gain because of visits abroad.",
+            "They attract unnecessary enmity frequently.",
+			"Their achievements are not commensurate with their efforts.",
+			"They should follow the path of devotion to avoid sufferings in life. Which brings peace to their heart."
         ],
         85: [
-            "They are masters in performing and creative arts. They become famous doctors of medicine. They have the power to dispel the distress of others. They work their way to greatness. They win over the evil. They have great faith in devoting to God.",
-            "Theyenjoy scenes of natural beauty and historical places. They become venerable masters. Struggling through youth, they attain happiness after adolescence. They accumulate a lot of name and fame in medicine, defense, religion and spiritualism."
+			"Steely Focus",
+			"Razor-sharp analytical engineering intellect",
+            "They are masters in performing and creative arts.",
+			"They become famous doctors of medicine.",
+			"They have the power to dispel the distress of others.",
+			"They work their way to greatness.",
+			"They win over the evil.",
+			"They have great faith in devoting to God.",
+            "They enjoy scenes of natural beauty and historical places.",
+			"They become venerable masters.",
+			"Struggling through youth, they attain happiness after adolescence.",
+			"They accumulate a lot of name and fame in medicine, defense, religion and spiritualism."
         ],
         86: [
-            ":",
-            "This number brings benefits from friends. They enjoy the support of the government and influential persons. They work hard to greatness and progress. They accumulate a large wealth.",
-            "Their life is comfortable. They are dignified and virtuous. They get the help of many persons. The later part of life is better than the earlier part. They get money from women. They become famous after a lot of struggle."
+            "Betrayal Warning",
+			"Vital need to screen secondary financial partners.",
+            "This number brings benefits from friends.",
+			"They enjoy the support of the government and influential persons.",
+			"They work hard to greatness and progress.",
+			"They accumulate a large wealth.",
+            "Their life is comfortable.",
+			"They are dignified and virtuous.",
+			"They get the help of many persons.",
+			"The later part of life is better than the earlier part.",
+			"They get money from women.",
+			"They become famous after a lot of struggle."
         ],
         87: [
-            "."
+            "The Hidden Ally",
+			"Divine, invisible protection in moments of need"
         ],
         88: [
-            ":",
-            "Those whose name number is 88 become very good in spiritualism. They are liberal minded. They are wise persons. They are afraid of committing a sin.",
-            "They are prophetic. They have pure love for all. They take up social service wholeheartedly. They practice nonviolence, truth, love in life and succeed. They get great fame and reputation."
+            "Double Saturn Cross",
+			"Demands extreme material and spiritual balance",
+            "Those whose name number is 88 become very good in spiritualism.",
+			"They are liberal minded.",
+			"They are wise persons.",
+			"They are afraid of committing a sin.",
+            "They are prophetic. They have pure love for all.",
+			"They take up social service wholeheartedly.",
+			"They practice nonviolence, truth, love in life and succeed.",
+			"They get great fame and reputation."
         ],
         89: [
-            "They are brisk and skillful persons. There is a certain energy about their speech and actions. They are likely to face danger from electricity, sharp weapons or instruments and fire. They look at anything from a different perspective from that of others. They get all forms of wealth. They possess farms and cattle wealth.",
-            "They accumulate artistic products. They accumulate gems and gold. There is a beauty, charm and magic of attractiveness about their face. They entice people towards them. Men are liked by women and women by men. Their attractive beauty is quite a pleasant surprise. They want to become farmers. They have a long life. They have more of immovable property than the other way. They live with their powers of attraction undiminished."
-        ],
+			"Destiny Reset",
+			"Absolute clearing of a lifestyle to forge a path forward",
+            "They are brisk and skillful persons.",
+			"There is a certain energy about their speech and actions.",
+			"They are likely to face danger from electricity, sharp weapons or instruments or fire.",
+			"They look at anything from a different perspective from that of others.",
+			"They get all forms of wealth.",
+			"They possess farms and cattle wealth.",
+            "They accumulate artistic products.",
+			"They accumulate gems and gold.",
+			"There is a beauty, charm and magic of attractiveness about their face.",
+			"They entice people towards them. Men are liked by women and women by men.",
+			"Their attractive beauty is quite a pleasant surprise.",
+			"They want to become farmers.",
+			"They have a long life.",
+			"They have more of immovable property than the other way.",
+			"They live with their powers of attraction undiminished."
+        ],		
         90: [
-            "This number gives perennial property like the perennial river. They keep on giving others endlessly. They get great fame. Since they have the fullest auspicious influence of Mars, they become successful in politics. They are very fastidious about personal affairs. They become leaders of movements. They are industrious and brisk.",
-            "They are good in scriptural knowledge. They reach their objectives easily and quickly. They take up frequent travels abroad and other places. They love lands. They have the ability to assess and evaluate lands."
+			"Universal Protector",
+			"Worldwide reach, high philosophical values",
+            "This number gives perennial property like the perennial river.",
+			"They keep on giving others endlessly.",
+			"They get great fame.",
+			"Since they have the fullest auspicious influence of Mars, they become successful in politics.",
+			"They are very fastidious about personal affairs.",
+			"They become leaders of movements.",
+			"They are industrious and brisk.",
+            "They are good in scriptural knowledge.",
+			"They reach their objectives easily and quickly.",
+			"They take up frequent travels abroad and other places.",
+			"They love lands. They have the ability to assess and evaluate lands."
         ],
         91: [
-            "This number enhances self-confidence. It increases divine grace and wealth. They take up foreign travel ls beyond the seas. They take up pilgrimages.",
-            "They stand to gain in export and import business. They are full of will power. They are constantly on travel. They are travelers by nature. They have a firm mind.",
-            "They achieve success with the practice of esoteric arts like magic, meditation and yoga. They live independently. They have a comfort able life. They make money in business associated with shipping, lorry, airplane."
+			"Imperial Crown Octave",
+			"Massive executive command, political reach.",
+            "This number enhances self-confidence.",
+			"It increases divine grace and wealth.",
+			"They take up foreign travel ie beyond the seas. They take up pilgrimages.",
+            "They stand to gain in export and import business.",
+			"They are full of will power.",
+			"They are constantly on travel.",
+			"They are travelers by nature.",
+			"They have a firm mind.",
+            "They achieve success with the practice of esoteric arts like magic, meditation and yoga.",
+			"They live independently.",
+			"They have a comfort able life.",
+			"They make money in business associated with shipping, lorry, airplane."
         ],
         92: [
-            "This number gives a lot of money. It also brings all form of wealth like gold, land and gems. They acquire lands and farms of considerable quantity. They become masters of esoteric arts. They exploit esoteric knowledge to advantage. They know astral travel. They know to shift from one body to another. They know yoga and Pranayam.",
-            "They are knowledgeable in alchemy. They live an in dependent life. They never subject themselves to anyone's authority. Their family life has problems. They do not enjoy very good health. They have the luck of crossing the seas. During the later part of life, they lose interest in worldly affairs."
+			"Divine Compass", 
+			"Absolute guidance through intuitive instincts.",
+            "This number gives a lot of money.",
+			"It also brings all form of wealth like gold, land and gems.",
+			"They acquire lands and farms of considerable quantity.",
+			"They become masters of esoteric arts. They exploit esoteric knowledge to advantage. They know astral travel. They know to shift from one body to another. They know yoga and Pranayam.",
+            "They are knowledgeable in alchemy. They live an in dependent life.",
+			"They never subject themselves to anyone's authority.",
+			"Their family life has problems.",
+			"They do not enjoy very good health.",
+			"They have the luck of crossing the seas.",
+			"During the later part of life, they lose interest in worldly affairs."
         ],
         93: [
-            ":",
-            "This number bestows great intellectual Powers. They accomplish very difficult tasks that are also novel. They are knowledgeable in all matters of the world. They have the reputation of the knowledgeable person.",
-            "They are successful creative writers. They enjoy all pleasures they desire. They are in different business and occupations. They gain fame, dignity and wealth beyond the ordinary level. They excel in cinema, TV and drama. They are full of imagination. They achieve feats in literature, music and philosophy."
+            "Grand Design Sacrifice",
+			"Relinquishing personal desires for a community",
+            "This number bestows great intellectual Powers.",
+			"They accomplish very difficult tasks that are also noble.",
+			"They are knowledgeable in all matters of the world.",
+			"They have the reputation of the knowledgeable person.",
+            "They are successful creative writers.",
+			"They enjoy all pleasures they desire.",
+			"They are in different business and occupations.",
+			"They gain fame, dignity and wealth beyond the ordinary level.",
+			"They excel in cinema, TV and drama.",
+			"They are full of imagination.They achieve feats in literature, music and philosophy."
         ],
         94: [
-            "This number brings great fame and dignity. They become venerated through the world. They work out grand plans for the sake of the betterment of the human kind. Happiness and sufferings alternate in their life.",
-            "They dedicate themselves to public welfare. They live with",
-            "great ideals. Their principles are adapted by many."
+			"Structural Change",
+			"Creating new models of tech or infrastructure",
+            "This number brings great fame and dignity.",
+			"They become venerated through the world.",
+			"They work out grand plans for the sake of the betterment of the human kind.",
+			"Happiness and sufferings alternate in their life.",
+            "They dedicate themselves to public welfare.",
+			"They live with great ideals.",
+			"Their principles are adapted by many."
         ],
         95: [
-            "Those with 95 as name number are persons of dignity duty and discipline. They accomplish new records. It brings them great fame. They are very efficient persons. They take up any endeavor with courage and succeed. They are always brisk.",
-            "They may have to take up frequent travel to other places and foreign lands. They sell fancy articles and imported articles and make money. They succeed in dealing with fashionable goods. They gain a lot of advertisement for themselves."
+			"Planetary Trader",
+			"Massive international import-export or travel grid.",
+            "Those with 95 as name number are persons of dignity duty and discipline.",
+			"They accomplish new records.",
+			"It brings them great fame.",
+			"They are very efficient persons.",
+			"They take up any endeavor with courage and succeed.",
+			"They are always brisk.",
+            "They may have to take up frequent travel to other places and foreign lands.",
+			"They sell fancy articles and imported articles and make money.",
+			"They succeed in dealing with fashionable goods.",
+			"They gain a lot of advertisement for themselves."
         ],
         96: [
-            ":",
-            "This number indicates the grace of the Goddess of Learning, Saraswati. They are experts in all department of knowledge. They get all kinds of wealth. They are successful person who complete any job successfully. All their plan s succeed. The men have the ability to attract women, the men. They have an irresistible appeal for the opposite successful person who complete any job successfully. All their plans succeed.",
-            "The men have the ability to attract women and the women, the men. They have an irresistible appeal for the opposite sex. They are good in several forms of creative writing. This number incites lust. They have to be a little sedate in love affairs. They attract the attention of anyone with their skills in the aesthetic and the artistic. They enjoy popular luck."
+            "Sovereign Beauty",
+			"Patron of fine arts, global design dominance",
+            "This number indicates the grace of the Goddess of Learning, Saraswati. They are experts in all department of knowledge. They get all kinds of wealth.",
+			"They are successful person who complete any job successfully.",
+			"All their plans succeed.",
+			"They have an irresistible appeal for the opposite successful person who complete any job successfully.",
+			"All their plans succeed.",
+            "The men have the ability to attract women and the women, the men. They have an irresistible appeal for the opposite sex.",
+			"They are good in several forms of creative writing.",
+			"This number incites lust. They have to be a little sedate in love affairs.",
+			"They attract the attention of anyone with their skills in the aesthetic and the artistic. They enjoy popular luck."
         ],
         97: [
-            "This number gives proficiency in the scriptures and fine arts. It also gives eminence in a spiritual career. They will be successful in all their efforts and will be prosperous with astounding achievements to their credit."
+			"Elite Sentinel",
+			"Unwavering protection of critical secrets",
+            "This number gives proficiency in the scriptures and fine arts. It also gives eminence in a spiritual career.",
+			"They will be successful in all their efforts and will be prosperous with astounding achievements to their credit."
         ],
         98: [
-            "indicates living for others. They cannot earn anything for themselves. Their knowledge, wisdom and talents are all to the advantage of others. They have a great social sense. They become teachers.",
-            "They have a continuous string of sufferings in life. Both physical and mental sickness affects them. They have two families. Sex becomes perverted. They can find solutions to their problems with the grace of God. They are lords of the arts. Own business does not pay them. They have to live dependent on others."
+			"Global Administrator",
+			"Managing heavy multinational networks.",
+            "indicates living for others. They cannot earn anything for themselves.",
+			"Their knowledge, wisdom and talents are all to the advantage of others.",
+			"They have a great social sense.",
+			"They become teachers.",
+            "They have a continuous string of sufferings in life. Both physical and mental sickness affects them.",
+			"They have two families.",
+			"Sex becomes perverted.",
+			"They can find solutions to their problems with the grace of God.",
+			"They are lords of the arts.",
+			"Own business does not pay them.",
+			"They have to live dependent on others."
         ],
         99: [
-            "This number indicates goods and bad, benefit and ill luck alternatively. Unnecessary travel, confusion, two mindedness are indicated. Their mind thinks of the evil all the time. There are successive in life and at the same time, there is a lot of opposition.",
-            "They are very well educated. They enjoy all pleasures of life. They are courageous and daring. Since they have two minds, they are likely to have more than one wife. They file cases against others. They have the tendency to avenge others. They are attacked by indirect enemies. They have to be cautious."
+			"The Archetypal Warrior",
+			"Supreme cosmic endings, fierce protection",
+            "This number indicates goods and bad, benefit and ill luck alternatively.",
+			"Unnecessary travel, confusion, two mindedness are indicated.",
+			"Their mind thinks of the evil all the time.",
+			"There are successive in life and at the same time, there is a lot of opposition.",
+            "They are very well educated. They enjoy all pleasures of life. They are courageous and daring.",
+			"Since they have two minds, they are likely to have more than one wife.",
+			"They file cases against others.",
+			"They have the tendency to avenge others.",
+			"They are attacked by indirect enemies. They have to be cautious."
         ],
         100: [
-            "This number indicates success in all endeavors. Property in the form of land, gold and money accumulates. They always have a lot of money at their disposal. They are friendly and affectionate towards friends and relatives. They do not get good opportunities in life.",
-            "Great enterprises do not give them success. They lack worldly",
-            "experience. No remarkable incidents happen in life.",
-            "They get money from small time business. They are known for patience. They live a life without much of a change and live comfortably."
+			"Total Awakening",
+			"Absolute integration with source energy, new beginnings.",
+            "This number indicates success in all endeavors.",
+			"Property in the form of land, gold and money accumulates.",
+			"They always have a lot of money at their disposal.",
+			"They are friendly and affectionate towards friends and relatives.",
+			"They do not get good opportunities in life.",
+            "Great enterprises do not give them success.",
+			"They lack worldly experience.",
+			"No remarkable incidents happen in life.",
+            "They get money from small time business.",
+			"They are known for patience.",
+			"They live a life without much of a change and live comfortably."
         ],
         101: [
-            ":",
-            "This number gives luck after tireless labor. They are tenacious persons. They take up great business with the support of the government. Their business slows down very often. There is not much of a profit. The can succeed only with the help of the other numbers. This number misleads.",
-            "They get benefits from those in high positions in the government. They get less income. It is good for them to take up business that does not require capital input. They are courageous and daring. They have spiritual leanings. Since it is 1 followed by 0 followed by 1, there are no dramatic changes in life."
+            "The New Pioneer",
+			"Harmonizing raw creation with deep diplomatic grace.",
+            "This number gives luck after tireless labor. They are tenacious persons.",
+			"They take up great businesses with the support of the government. Their business slows down very often. There is not much of a profit.",
+			"The can succeed only with the help of the other numbers. This number misleads.",
+            "They get benefits from those in high positions in the government. They get less income. It is good for them to take up business that does not require capital input.",
+			"They are courageous and daring.",
+			"They have spiritual leanings.",
+			"Since it is 1 followed by 0 followed by 1, there are no dramatic changes in life."
         ],
         102: [
-            "Life is like descending into a pit and trying to come out and up. Youth is spent in luck and happiness. The middle and last parts of life are full of problems. The ultimate stage in life indicates confusion and mental disturbance. They do not get any significant success in life. They may have to lose hard earned wealth. They get involved in unconnected issues and spoil their reputation. They are adamant by birth.",
-            "Friends are a source of danger to them. They shall not take up a business that involves capital input."
+			"Universal Expansion",
+			"Limitless educational flow, spiritual optimism.",
+            "Life is like descending into a pit and trying to come out and up.",
+			"Youth is spent in luck and happiness.",
+			"The middle and last parts of life are full of problems.",
+			"The ultimate stage in life indicates confusion and mental disturbance.",
+			"They do not get any significant success in life.",
+			"They may have to lose hard earned wealth.",
+			"They get involved in unconnected issues and spoil their reputation.",
+			"They are adamant by birth.",
+            "Friends are a source of danger to them.",
+			"They shall not take up a business that involves capital input."
         ],
         103: [
-            "(Non Veg food, Digital Marketing, Youtube):",
-            "This number affords a life of all pleasures and comforts. They live the most prosperous life. They modernize the traditional business and achieve great success. They grow in affluence stage by stage. They achieve greatly in creative writing. They face opposition of course. They have a sharp intelligence. They live a life of lasting fame and lasting wealth. They live the most affluent life. The final stages in life are very remarkable."
+			"The Architect",
+			"Building new evolutionary systems from scratch",
+            "Non Veg food, Digital Marketing, Youtube",
+            "This number affords a life of all pleasures and comforts.",
+			"They live the most prosperous life.",
+			"They modernize the traditional business and achieve great success.",
+			"They grow in affluence stage by stage.",
+			"They achieve greatly in creative writing.",
+			"They face opposition of course.",
+			"They have a sharp intelligence.",
+			"They live a life of lasting fame and lasting wealth.",
+			"They live the most affluent life.",
+			"The final stages in life are very remarkable."
         ],
         104: [
-            ":",
-            "They do not get results commensurate with their efforts. The beginning of life is affluent and dignified. But after middle age, they lose all the wealth they have accumulated. They always like to be surrounded by people. They complete very difficult tasks. But only name and fame stays back.",
-            "They are very heroic. They have wealth like house, vehicles and enjoy the services of servants. They have a lot of affinity for nature. They get awards and rewards in appreciation of their achievements."
+            "Rapid Messenger",
+			"Mastering instant data transformation across spaces.",
+            "They do not get results commensurate with their efforts.",
+			"The beginning of life is affluent and dignified.",
+			"But after middle age, they lose all the wealth they have accumulated.",
+			"They always like to be surrounded by people.",
+			"They complete very difficult tasks. But only name and fame stays back.",
+            "They are very heroic.",
+			"They have wealth like house, vehicles and enjoy the services of servants.",
+			"They have a lot of affinity for nature.",
+			"They get awards and rewards in appreciation of their achievements."
         ],
         105: [
-            "indicates humanism. They get influence, wealth and fame. They live a life of extravagance. They achieve great success in business and occupation. They accumulate wealth. They get great fame.",
-            "They beget good children. Many lucky incidents happen in their life. They being advance step by step and reach great heights. They live a peaceful life. Their life is full of happy situations."
+			"Harmonic Universe",
+			"Purest expression of deep love, healing, and luxury",
+            "Indicates humanism.",
+			"They get influence, wealth and fame.",
+			"They live a life of extravagance.",
+			"They achieve great success in business and occupation.",
+			"They accumulate wealth. They get great fame.",
+            "They beget good children.",
+			"Many lucky incidents happen in their life. They advance step by step and reach great heights.",
+			"They live a peaceful life.",
+			"Their life is full of happy situations."
         ],
         106: [
-            ":",
-            "Those whose name number is 106 struggles while young and strive very hard during youth. They achieve great success only in the later part of their life. They come to enjoy all pleasure in life only late in life. They have strong sexual desires. This number has the power to induce sexual desires to a very great extent. Those with this name number should be careful with women if they are men and women should be careful with men. Otherwise, they indulge in illicit affairs and bring shame upon themselves. There frequent spells of confusion in the mind. They always have some complaint or the other about their health. Their greed leads them to great suffering."
+            "Infinite Mystic",
+			"Deep oceanic awareness, boundless spiritual secrets.",
+            "Those whose name number is 106 struggles while young and strive very hard during youth. They achieve great success only in the later part of their life.",
+			"They come to enjoy all pleasure in life only late in life.",
+			"They have strong sexual desires. This number has the power to induce sexual desires to a very great extent.",
+			"Those with this name number should be careful with women if they are men and women should be careful with men. Otherwise, they indulge in illicit affairs and bring shame upon themselves.",
+			"There frequent spells of confusion in the mind.",
+			"They always have some complaint or the other about their health.",
+			"Their greed leads them to great suffering."
         ],
         107: [
-            "This number brings difficulties in family life. Husband and wife do not see face to face. Sexual relationship does not last for long. Money is there and wealth is also there. But there is no satisfaction.",
-            "They many suffer sleep walking and such ailments. They have double mind. They do not get a compatible partner in life and feel frustrated. They are famous and popular in the world. They get great offices. Family life alone is the trouble to them. It is Sanyas within family life. They have lasting influence and fame."
+			"Eternal Pillars",
+			"Timeless architecture, massive cosmic resilience.",
+            "This number brings difficulties in family life. Husband and wife do not see face to face. Sexual relationship does not last for long.",
+			"Money is there and wealth is also there. But there is no satisfaction.",
+            "They many suffer sleep walking and such ailments.",
+			"They have double mind. They do not get a compatible partner in life and feel frustrated.",
+			"They are famous and popular in the world.",
+			"They get great offices.",
+			"Family life alone is the trouble to them.",
+			"It is Sanyas within family life.",
+			"They have lasting influence and fame."
         ],
         108: [
-            "This number indicates spiritual powers. Great positions seek them. They are guardians to the wealth of others. They have the wisdom to know happenings in advance. They have foresight. The mind feels ashamed to think of evil actions. If they indulge in any evil act, they die suddenly.",
-            "They are able to calculate the opportune time and achieve success. They are heroic. Thus they become famous throughout the world. They are leaders. They are good friends to many and guides to still many. The society always venerates them.",
-            "Thank You"
+			"The Cosmic Mandala",
+			"The sacred complete loop of reality; absolute fulfillment.",
+            "This number indicates spiritual powers. Great positions seek them.",
+			"They are guardians to the wealth of others.",
+			"They have the wisdom to know happenings in advance. They have foresight.",
+			"The mind feels ashamed to think of evil actions. If they indulge in any evil act, they die suddenly.",
+            "They are able to calculate the opportune time and achieve success.",
+			"They are heroic. Thus they become famous throughout the world. They are leaders.",
+			"They are good friends to many and guides to still many.",
+			"The society always venerates them.",
         ]
     };
 
@@ -4743,96 +4892,649 @@ function reduceNumber(number) {
 }
 
 
-const goodSounds = ["BA", "VIN", "UP", "ON", "DAY", "JAYA", "RS", "KAN", "KHAN", "HAN", "CAN", "AR", "RA", "RS", "KAR", "GAR", "CAT", "KAT", "CHEE", "CHIN", "CEL", "DAR", "DRA", "FATH", "FETH", "HIN", "HIM", "HA", "IN", "JA", "JH", "JAI", "JOY", "JAKI", "OK", "KA", "KI", "LAC", "LAK", "LAM", "MAN", "LION", "LV", "LK", "MAS", "MANI", "ME", "MET", "MY", "MV", "MIT", "NJ", "NC", "OO", "PM", "QE", "RAY", "RNAI", "RAT", "RATH", "RS", "SAL", "TAL", "TOL", "VN", "VEIL", "WAY"];
-const badSounds = ["SH","OO","AH","VI","KVR","VC","SC","SK","VAR","WAR","WARI","KUMAR","VR","MAL","IL","ILL","NO","NA","NI","KL","DI","DY","LAL","LAN","AB","EE","ER","ES","MAR","LO","END","KK","SU","BAD", "WAR", "END", "LO", "NIL", "IL", "POOR", "ER", "MALA", "SAD", "MAD", "AIR", "RAM", "SUE", "AIAH", "DASS", "ALL", "AH", "APE", "BACH", "BY", "DIE", "DOWN", "DU", "DY", "EET", "IFR", "GO", "HAND", "HAT", "HET", "HES", "HER", "HOT", "ILL", "KL", "KILL", "KS", "HIP", "MAR", "KITE", "CITE", "KICK", "KK", "VK", "LOS", "LEE", "LO", "LEEK", "LEAK", "LIIK", "LASS", "MAT", "MELT", "SIK", "MOOD", "NA", "NE", "NO","NLR", "PAY", "PUT", "PIT", "PT", "PC", "RAN", "RAP", "RP", "ROP", "RAO", "ROD", "SK", "SO", "SAT", "SES", "CHES", "SWAM", "SLO", "SK", "VK", "VC", "THA", "TI", "TIE", "UI", "VC", "VEN", "WARI", "WAR", "WHY", "WIO",];
+function getPronologySoundDetails() {
+    return [
+    		
+{ sound: "AIAH", meaning: "Life Struggles", status: "BAD" },
+{ sound: "DASS", meaning: "Gives Responsibilities", status: "BAD" },
+{ sound: "RS", meaning: "Fortunate and Peace of Mind", status: "GOOD" },
+{ sound: "AH", meaning: "Mental Tension", status: "BAD" },
+{ sound: "ACHE", meaning: "Mental Tension", status: "BAD" },
+{ sound: "AR", meaning: "Success after Hard work", status: "GOOD" },
+{ sound: "RA", meaning: "Success after Hard work and Developement in Life", status: "GOOD" },
+{ sound: "KAR", meaning: "Success after Hard work", status: "GOOD" },
+{ sound: "GAR", meaning: "Success after Hard work", status: "GOOD" },
+{ sound: "BA", meaning: "Business Success", status: "GOOD" },
+{ sound: "BAY", meaning: "Business Success", status: "GOOD" },
+{ sound: "ASS", meaning: "Gives Responsibilities", status: "BAD" },
+{ sound: "BY", meaning: "Gives Negative Results", status: "BAD" },
+{ sound: "BYE", meaning: "Gives Negative Results", status: "BAD" },
+{ sound: "CAT", meaning: "Makes Goal Achiever", status: "GOOD" },
+{ sound: "KAT", meaning: "Makes Goal Achiever", status: "GOOD" },
+{ sound: "CHEE", meaning: "Gives Strong Will Power", status: "GOOD" },
+{ sound: "CHIN", meaning: "Increases Attraction", status: "GOOD" },
+{ sound: "KAN", meaning: "Gives Success", status: "GOOD" },
+{ sound: "CAN", meaning: "Gives Success", status: "GOOD" },
+{ sound: "HAN", meaning: "Gives Success", status: "GOOD" },
+{ sound: "KHAN", meaning: "Gives Success", status: "GOOD" },
+{ sound: "CEL", meaning: "Work for Others Success", status: "BAD" },
+{ sound: "CELL", meaning: "Work for Others Success", status: "BAD" },
+{ sound: "DAR", meaning: "Achiever & makes goal oriented person", status: "GOOD" },
+{ sound: "DARE", meaning: "Achiever & makes goal oriented person", status: "GOOD" },
+{ sound: "DI", meaning: "FAMILY DISTRUBANCES", status: "BAD" },
+{ sound: "DIE", meaning: "FAMILY DISTRUBANCES", status: "BAD" },
+{ sound: "DIN", meaning: "FAMILY DISTRUBANCES", status: "BAD" },
+{ sound: "DOWN", meaning: "DOWNFALL", status: "BAD" },
+{ sound: "DM", meaning: "ACHIEVER", status: "GOOD" },
+{ sound: "DIM", meaning: "ACHIEVER", status: "GOOD" },
+{ sound: "DU", meaning: "success after hard work", status: "BAD" },
+{ sound: "DY", meaning: "Health issues", status: "BAD" },
+{ sound: "ES", meaning: "HEALTH ISSUES", status: "BAD" },
+{ sound: "EM", meaning: "Health issues", status: "BAD" },
+{ sound: "EET", meaning: "over expenditures", status: "BAD" },
+{ sound: "EAT", meaning: "over expenditures", status: "BAD" },
+{ sound: "END", meaning: "struggling life", status: "BAD" },
+{ sound: "EDGE", meaning: "struggling life", status: "BAD" },
+{ sound: "FATT", meaning: "good income", status: "GOOD" },
+{ sound: "FI", meaning: "happiness & joy", status: "GOOD" },
+{ sound: "FATH", meaning: "happy life", status: "GOOD" },
+{ sound: "FETH", meaning: "happy life", status: "GOOD" },
+{ sound: "GO", meaning: "expenditures & struggles", status: "BAD" },
+{ sound: "HEND", meaning: "you get cheated", status: "BAD" },
+{ sound: "HAND", meaning: "you get cheated", status: "BAD" },
+{ sound: "HIM", meaning: "cooperation", status: "GOOD" },
+{ sound: "HIN", meaning: "cooperation", status: "GOOD" },
+{ sound: "HAR", meaning: "indicates secret enemies", status: "BAD" },
+{ sound: "HER", meaning: "indicates secret enemies", status: "BAD" },
+{ sound: "HA", meaning: "good health and success after hard work", status: "GOOD" },
+{ sound: "HAT", meaning: "name fame problem", status: "BAD" },
+{ sound: "HET", meaning: "name fame problem", status: "BAD" },
+{ sound: "HES", meaning: "bad reputation", status: "BAD" },
+{ sound: "HIS", meaning: "bad reputation", status: "BAD" },
+{ sound: "HOT", meaning: "fights", status: "BAD" },
+{ sound: "IL", meaning: "health problems", status: "BAD" },
+{ sound: "ILL", meaning: "health problems", status: "BAD" },
+{ sound: "JH", meaning: "success", status: "GOOD" },
+{ sound: "JAI", meaning: "success", status: "GOOD" },
+{ sound: "JAY", meaning: "success", status: "GOOD" },
+{ sound: "JA", meaning: "creates happiness", status: "GOOD" },
+{ sound: "JOY", meaning: "creates happiness", status: "GOOD" },
+{ sound: "JACI", meaning: "victory", status: "GOOD" },
+{ sound: "JAKI", meaning: "victory", status: "GOOD" },
+{ sound: "KS", meaning: "negative thoughts", status: "BAD" },
+{ sound: "KP", meaning: "negative thoughts", status: "BAD" },
+{ sound: "KISS", meaning: "negative thoughts", status: "BAD" },
+{ sound: "HIP", meaning: "negative thoughts", status: "BAD" },
+{ sound: "HP", meaning: "negative thoughts", status: "BAD" },
+{ sound: "ĶAR", meaning: "success", status: "GOOD" },
+{ sound: "KL", meaning: "career up/down and losses", status: "BAD" },
+{ sound: "KUMAR", meaning: "success in the end", status: "BAD" },
+{ sound: "OK", meaning: "victory", status: "GOOD" },
+{ sound: "KITE", meaning: "struggling life", status: "BAD" },
+{ sound: "CITE", meaning: "struggling life", status: "BAD" },
+{ sound: "KHOO", meaning: "starting victory end failures", status: "BAD" },
+{ sound: "KH", meaning: "defeats enemies", status: "GOOD" },
+{ sound: "KICK", meaning: "secret enemies", status: "BAD" },
+{ sound: "KIEC", meaning: "secret enemies", status: "BAD" },
+{ sound: "KI", meaning: "successful career", status: "GOOD" },
+{ sound: "KK", meaning: "career up and down", status: "BAD" },
+{ sound: "VK", meaning: "weakness, career up and down", status: "BAD" },
+{ sound: "LO", meaning: "losses", status: "BAD" },
+{ sound: "LOS", meaning: "losses", status: "BAD" },
+{ sound: "LAK", meaning: "financial success", status: "GOOD" },
+{ sound: "LAC", meaning: "financial success", status: "GOOD" },
+{ sound: "LAM", meaning: "saves from troubles", status: "GOOD" },
+{ sound: "LAL", meaning: "up and down in life", status: "BAD" },
+{ sound: "LAY", meaning: "up and down in life", status: "BAD" },
+{ sound: "LEE", meaning: "losses", status: "BAD" },
+{ sound: "LEEK", meaning: "financial problems", status: "BAD" },
+{ sound: "LEAK", meaning: "financial problems", status: "BAD" },
+{ sound: "LEIK", meaning: "financial problems", status: "BAD" },
+{ sound: "LIIK", meaning: "financial problems", status: "BAD" },
+{ sound: "LASS", meaning: "expenditures", status: "BAD" },
+{ sound: "LOSS", meaning: "expenditures", status: "BAD" },
+{ sound: "ĹINK", meaning: "good humanitarian", status: "GOOD" },
+{ sound: "LINC", meaning: "good humanitarian", status: "GOOD" },
+{ sound: "MAN", meaning: "success", status: "GOOD" },
+{ sound: "MAS", meaning: "success", status: "GOOD" },
+{ sound: "ME", meaning: "self conscious", status: "GOOD" },
+{ sound: "MET", meaning: "self conscious", status: "GOOD" },
+{ sound: "MAT", meaning: "helpful person", status: "GOOD" },
+{ sound: "MELT", meaning: "betray or losses", status: "BAD" },
+{ sound: "MAL", meaning: "gives muscular traits", status: "BAD" },
+{ sound: "MALE", meaning: "gives muscular traits", status: "BAD" },
+{ sound: "MALA", meaning: "gives muscular traits", status: "BAD" },
+{ sound: "MV", meaning: "gives courage", status: "GOOD" },
+{ sound: "MOVE", meaning: "gives courage", status: "GOOD" },
+{ sound: "MIT", meaning: "strong", status: "GOOD" },
+{ sound: "MAD", meaning: "negative thoughts", status: "BAD" },
+{ sound: "SIK", meaning: "negative thoughts", status: "BAD" },
+{ sound: "MOOD", meaning: "negative thoughts", status: "BAD" },
+{ sound: "NI", meaning: "struggling life", status: "BAD" },
+{ sound: "NA", meaning: "struggling life", status: "BAD" },
+{ sound: "NO", meaning: "struggling life", status: "BAD" },
+{ sound: "NE", meaning: "struggling life", status: "BAD" },
+{ sound: "NJ", meaning: "happy life", status: "GOOD" },
+{ sound: "NC", meaning: "happy life", status: "GOOD" },
+{ sound: "NIC", meaning: "up and down in life", status: "BAD" },
+{ sound: "NICK", meaning: "up and down in life", status: "BAD" },
+{ sound: "DRA", meaning: "success after hard work", status: "GOOD" },
+{ sound: "ONG", meaning: "successful life", status: "GOOD" },
+{ sound: "PM", meaning: "successful", status: "GOOD" },
+{ sound: "PUT", meaning: "cash flow problem", status: "BAD" },
+{ sound: "POT", meaning: "cash flow problem", status: "BAD" },
+{ sound: "POOR", meaning: "cash flow problem", status: "BAD" },
+{ sound: "PURA", meaning: "success", status: "GOOD" },
+{ sound: "PORE", meaning: "success", status: "GOOD" },
+{ sound: "PT", meaning: "losses", status: "BAD" },
+{ sound: "PIT", meaning: "losses", status: "BAD" },
+{ sound: "PC", meaning: "troubles", status: "BAD" },
+{ sound: "PIECE", meaning: "troubles", status: "BAD" },
+{ sound: "PEEP", meaning: "troubles", status: "BAD" },
+{ sound: "RAY", meaning: "development in life", status: "GOOD" },
+{ sound: "RAT", meaning: "development in life", status: "GOOD" },
+{ sound: "RATH", meaning: "development in life", status: "GOOD" },
+{ sound: "RAN", meaning: "struggles", status: "BAD" },
+{ sound: "REP", meaning: "struggles", status: "BAD" },
+{ sound: "RAP", meaning: "struggles", status: "BAD" },
+{ sound: "RAM", meaning: "negative force", status: "BAD" },
+{ sound: "ROP", meaning: "struggles", status: "BAD" },
+{ sound: "ROPE", meaning: "struggles", status: "BAD" },
+{ sound: "RAO", meaning: "late success", status: "GOOD" },
+{ sound: "RAD", meaning: "stubborn fights", status: "BAD" },
+{ sound: "ROD", meaning: "stubborn fights", status: "BAD" },
+{ sound: "RUD", meaning: "stubborn fights", status: "BAD" },
+{ sound: "SUD", meaning: "difficulties", status: "BAD" },
+{ sound: "SAD", meaning: "difficulties", status: "BAD" },
+{ sound: "SH", meaning: "health issues", status: "BAD" },
+{ sound: "SK", meaning: "health issues", status: "BAD" },
+{ sound: "SAL", meaning: "difficulties", status: "BAD" },
+{ sound: "SAT", meaning: "difficulties", status: "BAD" },
+{ sound: "SES", meaning: "troubles", status: "BAD" },
+{ sound: "SU", meaning: "delay", status: "BAD" },
+{ sound: "SUE", meaning: "delay", status: "BAD" },
+{ sound: "SLO", meaning: "delay", status: "BAD" },
+{ sound: "SLOW", meaning: "delay", status: "BAD" },
+{ sound: "SV", meaning: "victory over problems", status: "GOOD" },
+{ sound: "TA", meaning: "life progress", status: "GOOD" },
+{ sound: "TI", meaning: "family problems", status: "BAD" },
+{ sound: "TIE", meaning: "family problems", status: "BAD" },
+{ sound: "TIT", meaning: "family problems", status: "BAD" },
+{ sound: "TAL", meaning: "life development", status: "GOOD" },
+{ sound: "TOL", meaning: "life development", status: "GOOD" },
+{ sound: "UP", meaning: "difficulties", status: "BAD" },
+{ sound: "UI", meaning: "difficulties", status: "BAD" },
+{ sound: "UK", meaning: "Name fame", status: "GOOD" },
+{ sound: "UG", meaning: "Name fame", status: "GOOD" },
+{ sound: "UA", meaning: "Name fame", status: "GOOD" },
+{ sound: "UD", meaning: "victory", status: "GOOD" },
+{ sound: "VIN", meaning: "victory", status: "GOOD" },
+{ sound: "VN", meaning: "victory", status: "GOOD" },
+{ sound: "VIND", meaning: "victory", status: "GOOD" },
+{ sound: "VC", meaning: "health issues", status: "BAD" },
+{ sound: "VD", meaning: "health issues", status: "BAD" },
+{ sound: "VR", meaning: "up and down life", status: "BAD" },
+{ sound: "VEN", meaning: "up and down life", status: "BAD" },
+{ sound: "VM", meaning: "happiness joy", status: "GOOD" },
+{ sound: "VI", meaning: "happiness joy", status: "GOOD" },
+{ sound: "VL", meaning: "happiness joy", status: "GOOD" },
+{ sound: "WARI", meaning: "struggles", status: "BAD" },
+{ sound: "WA", meaning: "development", status: "GOOD" },
+{ sound: "NM", meaning: "gives name fame", status: "GOOD" },
+{ sound: "MN", meaning: "knowledge confident", status: "GOOD" },
+{ sound: "CP", meaning: "leader & influencer", status: "GOOD" },
+{ sound: "PC", meaning: "reach goals", status: "GOOD" },
+{ sound: "AG", meaning: "maturity wisdom", status: "GOOD" },
+{ sound: "GA", meaning: "Happiness", status: "GOOD" },
+{ sound: "DA", meaning: "removes hurdles", status: "GOOD" },
+{ sound: "AD", meaning: "gives comfort & luxury", status: "GOOD" },
+{ sound: "GV", meaning: "controlling powers", status: "GOOD" },
+{ sound: "VG", meaning: "happiness & joy", status: "GOOD" },
+{ sound: "RJ", meaning: "gives short temper", status: "BAD" },
+{ sound: "JR", meaning: "delay in success", status: "BAD" },
+{ sound: "VS", meaning: "support from others", status: "GOOD" },
+{ sound: "SV", meaning: "savings", status: "GOOD" },
+{ sound: "MP", meaning: "travelling", status: "GOOD" },
+{ sound: "MK", meaning: "good communication", status: "GOOD" },
+{ sound: "CV", meaning: "leadership qualities", status: "GOOD" },
+{ sound: "PK", meaning: "name fame", status: "GOOD" },
+{ sound: "VN", meaning: "victory", status: "GOOD" },
+{ sound: "NV", meaning: "gives new opportunities", status: "GOOD" },
+{ sound: "SA", meaning: "gives success in business", status: "GOOD" },
+{ sound: "NJ", meaning: "happiness & zeal", status: "GOOD" },
+{ sound: "PP", meaning: "fault finding", status: "BAD" },
+{ sound: "AIR", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "AB", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "AC", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "AL", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "AM", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "AN", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "AT", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "AZ", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "BH", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "BC", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "BE", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "BI", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "BN", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "BO", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "BR", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "CA", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "CI", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "CM", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "CN", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "CP", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "CR", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "DA", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "DC", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "DD", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "DG", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "DG", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "DH", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "DJ", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "DO", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "DP", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "DR", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "DE", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "EA", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "EB", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "EK", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "ED", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "EG", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "EM", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "EZ", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "FA", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "FB", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "FH", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "FM", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "FR", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "FT", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "FY", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "GD", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "GE", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "GH", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "GK", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "GL", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "GM", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "GN", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "GO", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "GR", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "GU", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "GV", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "GY", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "HE", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "HP", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "HM", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "HR", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "HU", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "ID", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "IE", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "IF", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "IG", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "IM", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "IP", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "IS", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "IT", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "IZ", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "JB", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "JO", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "JH", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "JP", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "JR", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "JZ", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "KA", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "KC", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "KG", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "KI", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "KM", meaning: "GOOD SOUND", status: "GOOD" },
+{ sound: "KP", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "KY", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "LA", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "LD", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "LG", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "LH", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "LM", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "LT", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "MA", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "MB", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "MC", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "MD", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "MH", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "MK", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "ML", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "MP", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "MR", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "MY", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "NB", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "NG", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "NP", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "NU", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "NV", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "NY", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "OD", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "OK", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "OL", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "OM", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "ON", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "OP", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "OR", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "OT", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "OX", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "PA", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "PC", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "PG", meaning: "GOOD SOUND", status: "GOOD" },
+{ sound: "PH", meaning: "GOOD SOUND", status: "GOOD" },
+{ sound: "PK", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "PN", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "PR", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "PV", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "PY", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "RC", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "RD", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "RH", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "RK", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "RO", meaning: "GOOD SOUND", status: "GOOD" },
+{ sound: "RT", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "RU", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "RY", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "SA", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "SE", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "SG", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "SM", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "SR", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "ST", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "SY", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "SI", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "TA", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "TC", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "TH", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "TJ", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "TK", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "TN", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "TO", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "TR", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "TX", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "UA", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "UC", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "UK", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "UN", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "UP", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "UR", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "US", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "VA", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "VE", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "VH", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "VN", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "VR", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "VZ", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "WE", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "WA", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "WC", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "WH", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "WL", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "WN", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "WT", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "YA", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "YH", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "YN", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "YO", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "YR", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "YS", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "YT", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "YZ", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "UP", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "ON", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "DAY", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "JAYA", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "RS", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "GAR", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "FATH", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "FETH", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "IN", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "JH", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "JAY", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "JAKI", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "OK", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "KA", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "KI", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "LAC", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "LAK", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "LAM", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "LION", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "LV", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "LEO", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "LK", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "MAS", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "MANI", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "MET", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "MY", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "MV", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "MIT", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "NJ", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "NC", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "OO", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "QE", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "RNAI", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "TAL", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "TOL", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "VN", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "VEIL", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "WAY", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "DAY", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "DAYA", meaning: "GOOD Sound", status: "GOOD" },
+{ sound: "OO", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "KVR", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "SC", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "VR", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "MAL", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "NI", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "DI", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "DY", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "LAL", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "LAN", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "EE", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "ER", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "ES", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "MAR", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "KK", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "BAD", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "WAR", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "NIL", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "POOR", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "ER", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "MALA", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "SAD", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "MAD", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "AIR", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "RAM", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "SUE", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "ALL", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "APE", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "BACH", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "DIN", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "DIE", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "DU", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "DY", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "EET", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "IFR", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "GO", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "HAND", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "KL", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "KILL", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "NLR", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "PAY", meaning: "It can be utilised as per the DOB", status: "GOOD" },
+{ sound: "RP", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "SO", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "CHES", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "SWAM", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "THA", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "VARI", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "VAR", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "WHY", meaning: "BAD SOUND", status: "BAD" },
+{ sound: "WIO", meaning: "BAD SOUND", status: "BAD" },		
+		
+    ];
+}
 
-const medicalSounds = {
-    "SH":"sick or silent",
-    "OO":"downfall, double zero",
-    "AH":"ache suffering physical or mentally, loss of money",
-    "VI":"weak suffering from body ailments low immunity",
-    "KVR":"weak suffering from body ailments low immunity",
-    "VC":"weak suffering from body ailments low immunity",
-    "SC":"sick or weak physical or mentally",
-    "SK":"sick or weak physical or mentally",
-    "VAR":"stubbornness struggles in life",
-    "KUMAR":"courage boldness to fight problems",
-    "VR":"fights quarrels, struggles, disagreements, short temper, tendency to hurt others",
-    "WAR":"fights quarrels, struggles, disagreements, short temper, tendency to hurt others",
-    "WARI":"fights quarrels, struggles, disagreements, short temper, tendency to hurt others",    
-    "MAL":"male, manly quality",
-    "IL":"physically weak wavering mind",
-    "ILL":"physically weak wavering mind",
-    "NO":"same as multiple 5",
-    "NA":"same as multiple 5",
-    "NI":"same as multiple 5",
-    "KL":"kill no peace at home",
-    "DI":"die in an unfortunate accident",
-    "DY":"die in an unfortunate accident",
-    "LAL":"gradually weak cannot come to forefront",
-    "LAN":"getting lean or becoming weak",
-    "AB":"ever active physical strength to face hardships",
-    "EE":"nerves, teeth or stomach problem, anxiety issues",
-    "ER":"health issues",
-    "ES":"health issues",
-    "MAR":"gets angry often face many problems",
-    "LO":"low obstacles failures",
-    "END":"failures incomplete work (struggling life)",
-    "KK":"fault finding / low immunity",
-    "SU":"litigation obstacles; spouse can also get problems"
-};
-
-
-/* SOUND PATTERNS ARE NOT PYTHAGOREAN: they are spelling/sound patterns only. */
+/* PRONOLOGY SOUND MATCHING
+   The sound database above is the single source for:
+   - Sound
+   - Meaning
+   - Good / Bad classification
+*/
 function findSounds(name) {
     const upper = name.toUpperCase();
+    const details = getPronologySoundDetails();
 
-    // These two requested examples intentionally allow the overlapping N:
-    // MANOJ = MAN (positive) + NO (negative)
-    // VINOD = VIN (positive) + NO (negative)
-    if (upper === "MANOJ") {
-        return [
-            {sound:"MAN", type:"good", index:0, end:3},
-            {sound:"NO", type:"bad", index:2, end:4}
-        ];
-    }
-    if (upper === "VINOD") {
-        return [
-            {sound:"VIN", type:"good", index:0, end:3},
-            {sound:"NO", type:"bad", index:2, end:4}
-        ];
-    }
-    // MUKESH: ES and SH are both negative sounds and overlap on S.
-    if (upper === "MUKESH") {
-        return [
-            {sound:"ES", type:"bad", index:3, end:5},
-            {sound:"SH", type:"bad", index:4, end:6}
-        ];
-    }
-
-    const patterns = [
-        ...Object.keys(medicalSounds).map(sound => ({sound, type:"medical"})),
-        ...goodSounds.map(sound => ({sound, type:"good"})),
-        ...badSounds.map(sound => ({sound, type:"bad"}))
-    ].sort((a,b) => b.sound.length - a.sound.length);
+    // Universal rule: scan the COMPLETE name and return EVERY matching
+    // sound, including overlapping Good and Bad sounds. No match is
+    // discarded merely because another sound occupies the same letters.
+    const patterns = details
+        .filter(item => item.sound)
+        .map(item => ({
+            ...item,
+            type: item.status === "GOOD" ? "good" : "bad"
+        }))
+        .sort((a,b) => b.sound.length - a.sound.length);
 
     const found = [];
+
     for (const item of patterns) {
         let from = 0;
         while (from < upper.length) {
             const index = upper.indexOf(item.sound, from);
             if (index === -1) break;
-            found.push({sound:item.sound,type:item.type,index,end:index+item.sound.length});
+
+            found.push({
+                ...item,
+                index,
+                end: index + item.sound.length
+            });
+
+            // Move by one character so overlapping matches are ALWAYS found.
             from = index + 1;
         }
     }
 
-    found.sort((a,b) => a.index-b.index || b.sound.length-a.sound.length);
-    const selected=[];
-    for (const item of found) {
-        if (!selected.some(x => item.index < x.end && x.index < item.end)) selected.push(item);
+    // Sort by position, then longest sound first, while retaining ALL matches.
+    return found.sort((a,b) => a.index - b.index || b.sound.length - a.sound.length);
+}
+
+function characterSoundClass(index, sounds) {
+    const active = sounds.filter(item => index >= item.index && index < item.end);
+    const hasGood = active.some(item => item.type === "good");
+    const hasBad = active.some(item => item.type === "bad");
+
+    if (hasGood && hasBad) return "sound-char sound-char-common";
+    if (hasGood) return "sound-char sound-char-positive";
+    if (hasBad) return "sound-char sound-char-negative";
+    return "sound-char sound-char-neutral";
+}
+
+function highlightSoundsInName(name) {
+    if (!name.trim()) return "—";
+
+    const sounds = findSounds(name);
+    if (!sounds.length) return escapeHtml(name);
+
+    return '<span class="sound-word" aria-label="Pronology sound matches">' +
+        Array.from(name).map((ch,i) =>
+            '<span class="' + characterSoundClass(i,sounds) + '">' +
+            escapeHtml(ch) +
+            '</span>'
+        ).join('') +
+        '</span>';
+}
+
+function renderSounds(name) {
+    const box = document.getElementById("soundResults");
+    if (!box) return;
+
+    if (!name.trim()) {
+        box.innerHTML =
+            '<div class="sound-item sound-neutral">' +
+            'Start typing your name to check the sounds in the name...' +
+            '</div>';
+        return;
     }
-    return selected.sort((a,b)=>a.index-b.index);
+
+    const sounds = findSounds(name);
+    if (!sounds.length) {
+        box.innerHTML =
+            '<div class="sound-item sound-neutral">' +
+            '<strong>No listed sound pattern found.</strong>' +
+            '</div>';
+        return;
+    }
+
+    // Highlight the entered name character-by-character. If a character
+    // belongs to both a Good and Bad pattern, it is shown as a split/common
+    // character so both classifications remain visible.
+    const namePreview =
+        '<span class="sound-word" aria-label="Pronology colour coded name">' +
+        Array.from(name).map((ch, i) =>
+            '<span class="' + characterSoundClass(i, sounds) + '">' +
+            escapeHtml(ch) +
+            '</span>'
+        ).join('') +
+        '</span>';
+
+    // Pronology breakdown: show every matched pattern separately, in the
+    // order in which it occurs in the entered name. Overlapping patterns are
+    // intentionally retained (for example MODI can show OD + DI).
+    const breakdown = sounds.map(item => {
+        const status = item.status === "GOOD" ? "GOOD" : "BAD";
+        const cssClass = status === "GOOD"
+            ? "sound-positive-segment"
+            : "sound-negative-segment";
+
+        return `
+            <span class="sound-segment ${cssClass}"
+                  title="${escapeHtml(item.meaning || "")}">
+                ${escapeHtml(item.sound)}
+                <small class="sound-segment-status">${status}</small>
+            </span>
+        `;
+    }).join('<span class="sound-segment-separator">+</span>');
+
+    const breakdownHtml =
+        '<div class="sound-segmentation">' +
+            '<div class="sound-segmentation-title">Pronology Breakdown</div>' +
+            '<div class="sound-segments">' + breakdown + '</div>' +
+            '<div class="sound-segmentation-note">' +
+                'Green = Positive / Good Sound &nbsp; | &nbsp; ' +
+                'Red = Negative / Bad Sound' +
+            '</div>' +
+        '</div>';
+
+    const details = sounds.map(item => {
+        const status = item.status === "GOOD" ? "GOOD" : "BAD";
+        const cssClass = status === "GOOD" ? "sound-good" : "sound-bad";
+        const icon = status === "GOOD" ? "✓" : "✗";
+
+        return `
+            <div class="sound-item ${cssClass}">
+                <div class="sound-match">
+                    ${icon} ${status} SOUND:
+                    <span class="matched-sound">${escapeHtml(item.sound)}</span>
+                </div>
+                <div class="sound-interpretation">
+                    <strong>Meaning:</strong>
+                    ${escapeHtml(item.meaning || "No meaning supplied")}
+                </div>
+                <div class="sound-classification">
+                    <strong>Good or Bad:</strong>
+                    ${escapeHtml(status)}
+                </div>
+            </div>
+        `;
+    }).join("");
+
+    box.innerHTML =
+        '<div class="sound-name-preview">' +
+            namePreview +
+        '</div>' +
+        breakdownHtml +
+        details;
 }
 
 function escapeHtml(text) {
@@ -4845,23 +5547,6 @@ function escapeHtml(text) {
     }[ch]));
 }
 
-function requestedExampleSounds(name) {
-    const upper = name.toUpperCase();
-    if (upper === "MANOJ") return [
-        {sound:"MAN", type:"good", index:0, end:3},
-        {sound:"NO", type:"bad", index:2, end:4}
-    ];
-    if (upper === "VINOD") return [
-        {sound:"VIN", type:"good", index:0, end:3},
-        {sound:"NO", type:"bad", index:2, end:4}
-    ];
-    if (upper === "MUKESH") return [
-        {sound:"ES", type:"bad", index:3, end:5},
-        {sound:"SH", type:"bad", index:4, end:6}
-    ];
-    return null;
-}
-
 function characterSoundClass(index, sounds) {
     const active = sounds.filter(item => index >= item.index && index < item.end);
     const hasGood = active.some(item => item.type === "good");
@@ -4872,88 +5557,6 @@ function characterSoundClass(index, sounds) {
     if (hasBad) return "sound-char sound-char-negative";
     if (hasMedical) return "sound-char sound-char-negative";
     return "sound-char sound-char-neutral";
-}
-
-function highlightSoundsInName(name) {
-    if (!name.trim()) return "—";
-
-    const sounds = findSounds(name);
-    if (!sounds.length) return escapeHtml(name);
-
-    // Requested examples show the actual word with sound colours applied.
-    // For MANOJ/VINOD the common N is split between positive and negative.
-    // For MUKESH, both ES and SH are negative, so E-S-H are red.
-    if (requestedExampleSounds(name)) {
-        return '<span class="sound-word">' +
-            Array.from(name).map((ch,i) =>
-                '<span class="' + characterSoundClass(i,sounds) + '">' + escapeHtml(ch) + '</span>'
-            ).join('') +
-            '</span>';
-    }
-
-    let result = "";
-    let cursor = 0;
-    for (const item of sounds) {
-        const start = item.index;
-        const end = item.index + item.sound.length;
-        if (start < cursor) continue;
-        result += escapeHtml(name.slice(cursor, start));
-        const className = item.type === "good" ? "name-good-highlight" : item.type === "medical" ? "name-medical-highlight" : "name-bad-highlight";
-        result += `<span class="${className}">${escapeHtml(name.slice(start, end))}</span>`;
-        cursor = end;
-    }
-    result += escapeHtml(name.slice(cursor));
-    return result;
-}
-
-function renderSounds(name) {
-    const box = document.getElementById("soundResults");
-    if (!box) return;
-    if (!name.trim()) {
-        box.innerHTML = '<div class="sound-item sound-neutral">Start typing your name to check the sounds in the name...</div>';
-        return;
-    }
-
-    const sounds = findSounds(name);
-    let segments = "";
-
-    // Requested examples: show the complete word with sound colours applied.
-    // MANOJ/VINOD split the common N; MUKESH marks ES and SH in red.
-    if (requestedExampleSounds(name)) {
-        segments = '<span class="sound-word" aria-label="Positive MAN or VIN and negative NO; N is common to both sounds">' +
-            Array.from(name).map((ch,i) =>
-                '<span class="' + characterSoundClass(i,sounds) + '">' + escapeHtml(ch) + '</span>'
-            ).join('') +
-            '</span>';
-    } else {
-        let cursor = 0;
-        for (const item of sounds) {
-            if (item.index < cursor) continue;
-            if (item.index > cursor) segments += '<span class="sound-segment sound-neutral-segment">' + escapeHtml(name.slice(cursor,item.index)) + '</span>';
-            const cls = item.type === "good" ? "sound-segment sound-positive-segment" : item.type === "bad" ? "sound-segment sound-negative-segment" : "sound-segment sound-medical-segment";
-            segments += '<span class="' + cls + '">' + escapeHtml(name.slice(item.index,item.end)) + '</span>';
-            cursor=item.end;
-        }
-        if (cursor<name.length) segments += '<span class="sound-segment sound-neutral-segment">' + escapeHtml(name.slice(cursor)) + '</span>';
-    }
-
-    const details = sounds.length ? sounds.map(item => {
-        if(item.type==="medical") return '<div class="sound-item sound-medical"><div class="sound-match">⚕ MEDICAL SOUND: <span class="matched-sound">'+escapeHtml(item.sound)+'</span></div><div class="sound-interpretation"><strong>Interpretation:</strong> '+escapeHtml(medicalSounds[item.sound])+'</div></div>';
-        if(item.type==="good") return '<div class="sound-item sound-good"><div class="sound-match">✓ POSITIVE SOUND: <span class="matched-sound">'+escapeHtml(item.sound)+'</span></div><div class="sound-interpretation"><strong>Interpretation:</strong> Positive sound</div></div>';
-        return '<div class="sound-item sound-bad"><div class="sound-match">✗ NEGATIVE SOUND: <span class="matched-sound">'+escapeHtml(item.sound)+'</span></div><div class="sound-interpretation"><strong>Interpretation:</strong> Negative sound</div></div>';
-    }).join("") : '<div class="sound-item sound-neutral"><strong>No listed sound pattern found.</strong></div>';
-
-    const upperName = name.toUpperCase();
-    const legend = upperName === "MUKESH"
-        ? '<div class="sound-legend"><span class="negative-legend">ES / SH (ESH) = Negative</span></div>'
-        : requestedExampleSounds(name)
-            ? '<div class="sound-legend"><span class="positive-legend">MAN / VIN = Positive</span><span class="negative-legend">NO = Negative</span><span class="common-legend">N = Common to both sounds</span></div>'
-            : '';
-
-    const note = upperName === "MUKESH"
-        ? 'Negative sounds are shown in red. In MUKESH, ES and SH overlap on S, so the ESH sound is displayed as one continuous red sound.'
-        : 'Positive sounds are shown in green; negative sounds are shown in red. The common N is split between the two colours for MAN/VIN + NO.';
-    box.innerHTML = '<div class="sound-segmentation"><div class="sound-segmentation-title">Sound segmentation</div><div class="sound-segments">'+segments+'</div>'+legend+'<div class="sound-segmentation-note">'+note+'</div></div>'+details;
 }
 
 function calculateName(name, system) {
@@ -4983,7 +5586,20 @@ function showInterpretation(listId, titleId, compound) {
 
     lines.forEach(text => {
         const li = document.createElement("li");
-        li.textContent = text;
+        const dotIndex = text.indexOf(".");
+
+        // Keep the compound-number prefix normal, but make the
+        // interpretation sentence after the first dot prominent.
+        if (dotIndex !== -1) {
+            const prefix = text.slice(0, dotIndex + 1);
+            const sentence = text.slice(dotIndex + 1).trim();
+
+            li.innerHTML = `<span class="compound-number-prefix">${escapeHtml(prefix)}</span> ` +
+                           `<strong class="compound-interpretation-text">${escapeHtml(sentence)}</strong>`;
+        } else {
+            li.innerHTML = `<strong class="compound-interpretation-text">${escapeHtml(text)}</strong>`;
+        }
+
         list.appendChild(li);
     });
 }
@@ -4991,7 +5607,7 @@ function showInterpretation(listId, titleId, compound) {
 function updateCard(prefix, name, result) {
     document.getElementById(prefix + "Name").innerHTML =
         prefix === "chaldean"
-            ? highlightSoundsInName(name)
+            ? '<span style="color:#000000 !important; font-weight:800;">' + escapeHtml(String(name || "—").toUpperCase()) + '</span>'
             : escapeHtml(name || "—");
 
     document.getElementById(prefix + "Total").textContent =
@@ -5027,28 +5643,40 @@ function updateCard(prefix, name, result) {
     // There is intentionally NO sound matching here for Pythagorean.
 }
 
-document.getElementById("nameInput").addEventListener("input", function() {
-    const name = this.value;
+function calculateChaldeanName(name) {
+    const cleanName = String(name || "").toUpperCase();
+    let total = 0;
 
-    // CHALDEAN:
-    // Sound-pattern analysis is based ONLY on the typed spelling.
-    // It does NOT use Chaldean or Pythagorean numerical values.
-    updateCard(
-        "chaldean",
-        name,
-        calculateName(name, chaldean)
-    );
+    // Chaldean calculation uses letters only. Spaces, punctuation and
+    // numbers are ignored; each alphabetic character is mapped once.
+    for (const char of cleanName) {
+        if (Object.prototype.hasOwnProperty.call(chaldeanValues, char)) {
+            total += chaldeanValues[char];
+        }
+    }
 
-    // PYTHAGOREAN:
-    // Calculate numbers only. NEVER call renderSounds() here.
-    updateCard(
-        "pythagorean",
-        name,
-        calculateName(name, pythagorean)
-    );
-});
+    return {
+        total,
+        final: total > 0 ? reduceNumber(total) : 0
+    };
+}
 
-function clearName() {
+window.calculateChaldeanNumerology = function () {
+    const input = document.getElementById("nameInput");
+    const name = input ? input.value : "";
+    updateCard("chaldean", name, calculateChaldeanName(name));
+    updateCard("pythagorean", name, calculateName(name, pythagorean));
+};
+
+const nameInputElement = document.getElementById("nameInput");
+if (nameInputElement) {
+    nameInputElement.addEventListener("input", window.calculateChaldeanNumerology);
+}
+
+// Calculate once on load so the Chaldean card is always initialized.
+window.calculateChaldeanNumerology();
+
+window.clearName = function clearName() {
     const input = document.getElementById("nameInput");
     input.value = "";
     input.dispatchEvent(new Event("input"));
@@ -5079,6 +5707,7 @@ function ddmmyyyyToISO(value){
 function syncName(){
  const name=masterName.value; hiddenName.value=name; pythName.value=name;
  hiddenName.dispatchEvent(new Event('input',{bubbles:true}));
+ if(window.calculateChaldeanNumerology) window.calculateChaldeanNumerology();
  pythName.dispatchEvent(new Event('input',{bubbles:true}));
 }
 function syncDOB(){
@@ -5096,3 +5725,9 @@ clearBtn.addEventListener('click',function(){
 if(window.calculatePythagorasNumerology)window.calculatePythagorasNumerology();
 })();
 </script></body></html>
+
+<!--
+
+When i enter Name in the input box then simultaneously Name is also typed below the Chaldean Numerology in colors i don't want that COLOR. It should appear in Capital Letters and black colour as in Pythagorean Numerology. Just rectify only this part from the code
+
+-->

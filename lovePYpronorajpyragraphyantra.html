@@ -341,34 +341,38 @@ footer{background:linear-gradient(90deg,#fff7d6,#f3edff,#eaf7ff)!important;borde
 
 .addon-energiser .matrix-container{
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .addon-energiser .matrix-card{
     background: rgba(255,255,255,0.97);
-    border-radius: 20px;
-    padding: 2px;
-    box-shadow: 0 8px 28px rgba(65,50,95,0.11);
+    border-radius: 14px;
+    padding: 10px;
+    box-shadow: 0 5px 18px rgba(65,50,95,0.10);
     border: 1px solid #e5deed;
+    min-width: 0;
 }
 
 .addon-energiser .matrix-card h2{
     text-align: center;
-    margin: 0 0 15px;
-    font-size: 22px;
+    margin: 0 0 9px;
+    font-size: 18px;
+    line-height: 1.2;
     color: #513c70;
 }
 
 .addon-energiser .matrix-wrapper{
     width: 100%;
-    overflow-x: auto;
+    overflow: hidden;
 }
 
 .addon-energiser .matrix{
     display: table !important;
     width: 100%;
-    min-width: 560px;
+    min-width: 0;
     border-collapse: collapse;
     table-layout: fixed;
     margin: 0;
@@ -379,20 +383,21 @@ footer{background:linear-gradient(90deg,#fff7d6,#f3edff,#eaf7ff)!important;borde
 }
 
 /* The Name & DOB Energiser is ALWAYS a 5 × 5 matrix.
-   Keep exactly five equal columns visible, including the
-   fifth row and fifth column totals. */
+   Keep all five columns visible without horizontal scrolling. */
 .addon-energiser .matrix tr{
     display: table-row;
 }
 
 .addon-energiser .matrix td{
     width: 20%;
-    height: 75px;
-    border: 2px solid #aaa4b2;
+    height: 52px;
+    padding: 2px;
+    border: 1px solid #aaa4b2;
     background: white;
     text-align: center;
     vertical-align: middle;
-    font-size: 22px;
+    font-size: clamp(13px, 1.7vw, 19px);
+    line-height: 1.1;
     font-weight: 700;
     color: #333;
 }
@@ -405,10 +410,11 @@ footer{background:linear-gradient(90deg,#fff7d6,#f3edff,#eaf7ff)!important;borde
 
     .addon-energiser .matrix-container{
         grid-template-columns: 1fr;
+        max-width: 520px;
+        gap: 12px;
     }
 
     .addon-energiser .matrix-card{
-        max-width: 700px;
         width: 100%;
         margin: auto;
     }
@@ -417,26 +423,51 @@ footer{background:linear-gradient(90deg,#fff7d6,#f3edff,#eaf7ff)!important;borde
 @media (max-width: 600px) {
 
     .addon-energiser{
-        padding: 12px;
+        padding: 8px;
     }
 
     .addon-energiser .inputs{
         grid-template-columns: 1fr;
-        gap: 14px;
+        gap: 10px;
+    }
+
+    .addon-energiser .matrix-container{
+        width: 100%;
+        max-width: 100%;
+        gap: 10px;
     }
 
     .addon-energiser .matrix-card{
-        padding: 14px;
+        padding: 8px;
+        border-radius: 11px;
     }
 
     .addon-energiser .matrix-card h2{
-        font-size: 19px;
+        font-size: 16px;
+        margin-bottom: 7px;
     }
 
     .addon-energiser .matrix td{
-        height: 58px;
-        font-size: 18px;
-        min-width: 48px;
+        height: 43px;
+        min-width: 0;
+        padding: 1px;
+        font-size: clamp(11px, 4vw, 16px);
+    }
+}
+
+@media (max-width: 380px) {
+
+    .addon-energiser .matrix-card{
+        padding: 6px;
+    }
+
+    .addon-energiser .matrix-card h2{
+        font-size: 15px;
+    }
+
+    .addon-energiser .matrix td{
+        height: 38px;
+        font-size: 12px;
     }
 }
 
@@ -2982,6 +3013,83 @@ footer{
 .top-social-telegram{color:#229ED9!important}
 .top-social-telegram svg{color:inherit!important}
 </style>
+
+<style id="energiser-mobile-no-horizontal-scroll">
+/* FINAL MOBILE FIX: DOB + New Name Energiser must never create horizontal page scroll */
+#energiserModule {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: hidden !important;
+}
+#energiserModule *,
+#energiserModule .matrix-container,
+#energiserModule .matrix-card,
+#energiserModule .matrix-wrapper {
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+#energiserModule .matrix-container {
+  width: 100% !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+#energiserModule .matrix-card {
+  width: 100% !important;
+  overflow: hidden !important;
+}
+#energiserModule .matrix-wrapper {
+  width: 100% !important;
+  overflow: hidden !important;
+}
+#energiserModule .matrix {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  table-layout: fixed !important;
+}
+#energiserModule .matrix td {
+  width: 20% !important;
+  min-width: 0 !important;
+  max-width: 20% !important;
+  padding: 1px !important;
+  overflow: hidden !important;
+  word-break: break-word !important;
+}
+@media (max-width: 600px) {
+  #energiserModule {
+    padding: 6px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  #energiserModule .addon-title {
+    font-size: 17px !important;
+    margin-bottom: 8px !important;
+    padding: 7px 5px !important;
+  }
+  #energiserModule .matrix-container {
+    gap: 8px !important;
+  }
+  #energiserModule .matrix-card {
+    padding: 5px !important;
+  }
+  #energiserModule .matrix-card h2 {
+    font-size: 14px !important;
+    margin-bottom: 5px !important;
+  }
+  #energiserModule .matrix td {
+    height: 36px !important;
+    font-size: 12px !important;
+    line-height: 1 !important;
+  }
+}
+@media (max-width: 380px) {
+  #energiserModule { padding: 4px !important; }
+  #energiserModule .matrix-card { padding: 4px !important; }
+  #energiserModule .matrix td { height: 32px !important; font-size: 11px !important; }
+}
+</style>
 </head>
 <body>
 <div class="container">
@@ -4432,151 +4540,91 @@ const pythagorean = {
 
 /* Source-derived compound-number interpretations: 1–108 */
 const interpretations = {
-         1: [
-			"The Sun",
-			"Independence",
-			"Original thought",
-			"leadership",
-			"Authority"
-           
+        1: [
+            "but it is not",
+            "advisable to use this number."
         ],
         2: [
-			"The Moon",
-			"Sensitivity",
-			"Empathy",
-			"Diplomacy",
-			"Cooperation.",
             "Lack of self confidence",
             "Fear and anxiety",
             "Good imagination",
-            "Missed opportunities",
-            
+            "Wasted life and missed opportunities",
+            "Really care name, still not helpful though"
         ],
         3: [
-			"Jupiter",
-			"Wisdom",
-			"Creative expansion",
-			"Teaching",
-			"Optimism.",
             "Spiritual and strong intelligence",
             "Honest and optimistic",
             "Good in academics",
             "Creativity and abundance",
             "Self made person",
-            "Overall good name except for no.6 ones"
+            "Overall good name except no. 6 ones"
         ],
         4: [
-			"Rahu",
-			"Unconventional",
-			"Sudden events",
-			"Deep focus",
-			"Structural mind."
+            "and"
         ],
         5: [
-			"Mercury",
-			"Communication",
-			"Intellectual",
-			"Adaptable.",
             "Name and fame",
             "Multitalented",
             "Mindset of getting pleasure and comfort",
             "Divine grace and knack of getting money"
         ],
         6: [
-			"Venus",
-			"Art",
-			"Family Oriented",
-			"Harmony",
-			"Domestic Responsibilities",
-			"Magnetic affection.",
-			"Healing and Practising any Art form is an Inborn Talent"
-            
+            "people"
         ],
         7: [
-			"Ketu",
-			"Mysticism",
-			"Isolation", 
-			"Investigative",
-			"Analysis",
-			"Spiritual seeking.",
             "This is like onion. There is too much layers",
+            "You are like onion, comprised of multiple layers",
+            "Amazing mental capacities. You are like of knowledge",
             "Your personal life may not be good",
             "Always searching for deeper meaning",
-            "Struggling to get deserving success",
+            "You are smart, learned, intelligent yet struggling to get deserving success",
             "Better to avoid this name for happy, Overall life family issue",
             "Frequent change in life, No family pleasure, person with their own goals in life",
-            "Mass support for public life, Superb counsellors","Efforts will not produce the desired results"
+            "Mass support for public life, Superb counsellors, efforts will not produce",
+            "the desired results"
         ],
         8: [
-			"Saturn",
-			"Unwanted Delays", 
-			"Hurdles and Friction",
-			"Dangers and accidents",
-			"Karmic discipline",
-			"Hardworking",
-			"Labourious",
-			"Perseverance",
+            "Complete influence of Saturn hence struggle",
+            "Dangers and accidents",
             "Turn towards spirituality to bring harmony and meaning to life",
             "Not at all good for Prominent 1’s and 4’s"
         ],
         9: [
-			"Mars",
-			"Couragious",
-			"Assertive force",
-			"Humanitarian",
-			"Army, Police, Athletics ie high energy demand jobs suits them",
-			"Intense Endings."
-            
+            "person"
         ],
         10: [
-			"The Wheel of Fortune",
-			"Instant manifestation",
-			"Cyclical Success",
-			"Honors",
-            "No shortage of wealth",
-			"Fluctuations in Life",
-            "Its pleasure to be with these people",
+            "No shortage of wealth, Fluctuations",
+            "Ex: Shahid Afridi- Jersey No.10",
+            "Fluctuations, Its pleasure to be with these people",
             "Better no than standalone 1",
             "Attentions – Never ever shout on low class, maintain honesty"
         ],
         11: [
-			"The Lion’s Muzzle",
-			"High spiritual strength",
-			"Hidden trials",
-			"Treachery Warning.",
             "Liable to be let down by friend and relatives",
             "Honest",
-            "Faith or no faith in God decides the destiny?",
+            "Faith or not faith in God decides the destiny?",
             "Be careful in money matters",
             "Danger with water, careful with accidents",
-            "Many jobs / business"
+            "In many jobs / business"
         ],
         12: [
-			"The Sacrifice",
-			"Learning through delays",
-			"Honest",
-			"Intellectual Illumination.",
-            "Wonder-stuck with oratory skills",
+            "Wonder-stuck with oratory skills, Honest",
             "Sharing difficulty of others by shouldering their burdens",
             "Working for welfare",
             "Tend towards social causes",
             "Initial trouble later prosperous",
             "Good number for NGO’s",
+            "Don’t use for"
         ],
         13: [
-			"Transformation / Re-birth",
-			"Destruction before sudden elevation or power.",
             "Mis-Luck",
             "Never ever go for extra marital affair",
             "Life with struggles",
-            "Men of this number have bitter experiences and face a lot of difficulties because of women",
+            "Men of this number have bitter experiences and face a lot",
+            "of difficulties because of women",
             "Though these people manage to come up in life materially, they would still lead sad lives, full of struggles"
         ],
         14: [
-			"Temperance / Fluidity",
-			"Creative communication",
-			"Success in media",
-			"Travel fortune.",
             "Successful in many trades and meet lot of people",
             "Friends, Colorful life, parties, Travel",
             "Not easy to handle and won’t settle easily",
@@ -4585,10 +4633,6 @@ const interpretations = {
             "Marriage matters-Be very careful or ready to repent"
         ],
         15: [
-		    "The Magician",
-			"High personal magnetism",
-			"Spellbinding speech",
-			"Material fortune.",
             "Presentable, Neat and clean",
             "Gift of the gab and Personal Magnetism",
             "More than one source of income",
@@ -4598,10 +4642,6 @@ const interpretations = {
             "No 3s should avoid"
         ],
         16: [
-			"The Shattered Tower",
-			"Sudden karmic updates",
-			"Collapse of Pride",
-			"Rebuilding",
             "Good beginning but poor end",
             "It shows a fall from power, grace, office, position",
             "Unexpected shock or catastrophe",
@@ -4609,10 +4649,6 @@ const interpretations = {
             "This number severely impacts those with a prominent"
         ],
         17: [
-		    "The Star of the Magi",
-			"Divine protection", 
-			"Legacy",
-			"Rising superior to trials.",
             "Leader",
             "Honest",
             "Take person to great heights",
@@ -4623,9 +4659,6 @@ const interpretations = {
             "Ambition"
         ],
         18: [
-			"Spiritual Illusion",
-			"Internal conflicts", 
-			"Warning of secret plots or deceptions.",
             "Number of extremes",
             "Though some 18s are extremely successful(same is seen in",
             "1 and 8 combination)",
@@ -4634,10 +4667,6 @@ const interpretations = {
             "Selfishness"
         ],
         19: [
-			"The Sun Prince", 
-			"Absolute victory",
-			"Clarity",
-			"Fulfillment after trials",
             "The number indicates the RISING SUN",
             "Successful completion of any endeavor",
             "Position, status, happiness, success and wealth will be on a continuous rise.",
@@ -4645,27 +4674,16 @@ const interpretations = {
             "Profession – shine well in politics, admin work, army, social work"
         ],
         20: [
-			"The Awakening",
-			"Spiritual calling",
-			"Critical life reviews",
-			"Calculated risks",
-            "Artist, Creative, Emotional, Peace-lover",
-			"Profession – Suitable for Medicine",
+            "Artist, Creative, Emotional, Peace-lover Profession – Medicine",
             "Caution – Anger and self interest should be managed Avoid giving this no’s for"
         ],
         21: [
-			"The Crown of the Magi",
-			"Global success",
-			"High social honors", 
-			"Absolute victory",
             "Self centeredness-Own happiness and matters profitable to them",
             "With growing age you grow in both wealth and wisdom",
             "You are cunning, you are planner and achiever",
             "You go beyond the limit to achieve your goals"
         ],
         22: [
-			"The Master Builder",
-			"Colossal creative power but accompanied by a heavy weight of duty",
             "They don’t want to listen too many suggestions",
             "Self destructions - You loose out your things because of your own ways of working",
             "Humiliations and Vyasan",
@@ -4673,13 +4691,8 @@ const interpretations = {
             "They are good administrators",
             "Positive – Multidimensional and multitalented",
             "Dominant 8, 9 ( Health issue)"
-        ],		
-		
-		
+        ],
         23: [
-			"The Royal Star of the Lion",
-			"Incredible protection",
-			"Effortless success via speech",
             "Luck number",
             "Getting success in what they aspire for",
             "Earn good reputation over the period of time",
@@ -4689,32 +4702,26 @@ const interpretations = {
             "Profession – Politics, Business, Transport and commission work"
         ],
         24: [
-			"Love and Art",
-			"Financial gain through creative ventures, luxury",
             "Partner from higher background / status",
-            "Man gets rich / dignified / famous wife and vice versa as well Business Expansion",
+            "Man gets rich / dignified / famous wife and vice versa as",
+            "well",
+            "Business expansion",
             "It’s quite good to have them as a friend",
             "Profession – Media, Politics, Social work, Defense / Police / Military"
         ],
         25: [
-			"The Deep Researcher",
-			"Spiritual gains through careful analytical study",
             "Your social life will have glamour effect and personal life will have dullness",
             "Lose your hard earned money",
             "Trials and Tribulations",
             "Earn international fame and reputations"
         ],
         26: [
-			"The Conflict",
-			"Power struggles, severe warning against poor advice.",
             "Losses due to partnership and friends",
             "Be cautious in investment matters",
             "Business and professions are adversely affected due to indirect enemies",
             "False promises"
         ],
         27: [
-			"The Warrior Sage", 
-			"Intellectual bravery, independent victory, command",
             "Equally good as 24",
             "Authority, power and command",
             "Don’t be submissive",
@@ -4723,8 +4730,6 @@ const interpretations = {
             "Profession – Army, Healing, Occult science"
         ],
         28: [
-			"The Overthrow",
-			"Severe loss when trying to dominate others blindly",
             "They may have to start their life again and again",
             "Struggles, challenges, court cases, bad luck, failures",
             "Hard earned money may be lost unexpectedly",
@@ -4732,35 +4737,26 @@ const interpretations = {
             "Though these numbers have power of"
         ],
         29: [
-			"The Emotional Trial",
-			"Intense sensitivity, relationship trials, karmic test",
-            "Trouble due to opposite sex",
+            "Trouble due to opposite sex, marital bliss",
             "When they find one recessive, they try to bully",
             "Involvement in police complaints",
             "Strong willpower, creativity",
-            "Remedy- Don’t try to bully anyone"
+            "Remedy- Don’t try to bull anyone"
         ],
         30: [
-			"The Creative Mind",
-			"Introspective expression",
-			"Temporary mental isolation.",
-            "Understands and helps others easily",
-            "They don’t make compromise for the fame or ego"
+            "understands and helps others easily",
+            "They don’t make compromise for the fame, ego"
         ],
         31: [
-			"The Isolated Thinker",
-			"Opposition from society, eccentric mindset, delays",
             "You are non-conventional",
             "You are business lover",
             "You love freedom of speech and act",
             "They always love to be independent and fly like free birds",
             "They don’t want to listen others",
             "Some of them give up family life",
-            "They get relief in Spirituality, Yoga, Occult sciences"
+            "Spirituality, Yoga, Occult sciences"
         ],
         32: [
-			"Gentle Growth",
-			"Peaceful expansion, great connections, steady wealth.",
             "This is a magical name, Unique ideas and technique",
             "Ability to discover new techniques and implement these ideas",
             "They have good intelligence and have an impressive appearance",
@@ -4775,27 +4771,21 @@ const interpretations = {
             "They attract variety of people"
         ],
         33: [
-			"The Master Teacher", 
-			"It is the number of Ashta Laxmi, Kubera(The Lord of Wealth)",
-			"Profound compassion, high responsibilities, guiding others.",
-            "Astrology, Medicine and Spiritual Wisdom",
+            "Ashta Laxmi",
+            "Astrology, Medicine and Spiritual, Wisdom",
             "They get all kinds of wealth like gold, money, house, vehicle and such",
             "They get money in many ways and means",
             "Prosperity will always be on rise",
             "Life will be full of luxury, everlasting wealth",
-            "They are good in education, well travelled, gifted talkers"
+            "They are good in education, well travelled, gifted talkers",
+            "Good vehicle"
         ],
         34: [
-			"The Strain",
-			"Internal anxiety, obstacle courses, hidden domestic burdens.",
-            "It is very easy for number 34 people to earn money",
-			"Quite easily money will come but some strange habits give them issues",
+            "It is very easy for 34 no. people to earn money, quite easily money will come but some strange habits give them issue",
             "Confusion, specially related to home activities",
             "They get addicted in sexual and materialistic things"
         ],
-        35: [    
-			"The Strategist",
-			"Highly diplomatic persuasion, sharp financial sense",
+        35: [
             "Issues due to friends and associates",
             "They will adopt immoral ways in order to earn money",
             "Trials and tribulations, Litigations",
@@ -4804,40 +4794,29 @@ const interpretations = {
             "It is found that the center of the house (Brahmsthan) of these people disturbed"
         ],
         36: [
-			"The Heavy Burden",
-			"Emotional responsibility, family duties, creative labor",
             "If they will stay in home town they will struggle, if they will go away from home town then succeed – Choice of them",
             "They have to go away from home town to get success",
             "Profession – Good number for Sports and Admin jobs"
         ],
         37: [
-			"The Lucky Mystic",
-			"High financial luck",
-			"Safe relationships",
-			"Spiritual focus",
             "Get benefit from opposite sex",
             "It brings success in love",
             "Enjoy high and dignified position in the society",
             "Even if they struggle in starting, they will make up in the end",
             "They have an attractive appearance",
-            "Wealth is constantly on the rise",
+            "Wealth is constantly rise",
             "Unexpected success, they are known for their looks and attractions",
             "These persons may have to live far from their father",
             "At right expectation if the person get good position in life, shouldn’t be very ambitious or egoistic otherwise the power of this number won’t work"
         ],
         38: [
-			"Material Loss",
-			"Financial leakages",
-			"Friend disputes",
-     		"Warning of betrayal.",
             "Good number for public life",
             "They get support of big shots",
             "They may have to suffer because of unexpected dangers that jumps on them suddenly or because of indirect enemies",
             "Accident chance in later stage of life",
             "They grow with a good rate and they earn wealth and fame Even if a very humble being, they may get injured, blood related issue, end of life is troublesome"
         ],
-		39: [
-			"Warrior Communicator","Assertive writing or speech, strategic planning",
+        39: [
             "Name and fame",
             "They work for other’s welfare",
             "Hardworking",
@@ -4846,35 +4825,28 @@ const interpretations = {
             "you earn right ways, Good success in later part of life)"
         ],
         40: [
-			"The Restriction",
-			"Sudden delays, legal red tape, quiet meditation.",
             "This number give good amount of wealth (sudden flow of money)",
             "Good confidence and intelligence",
-            "Later part of life they will lose all their money and in neglect",
+            "Later part of life they will lose all their money and in neglecting",
             "life becomes fruitless and in vein"
         ],
         41: [
-			"The Creative Executive",
-			"Commercial leadership, fast ideas, travel luck.",
-            "Success in almost all endeavors",
+            "Success in al endeavors",
             "Power to govern",
             "Triumph over competition",
             "Good number for international fame",
             "Leader respected by masses",
-            "If you are in an organization, everyone knows you by name"
+            "If you are in small organization, everyone know by their name"
         ],
         42: [
-			"Cosmic Love",
-			"Harmonious marriage, community work, artistic eye.",
             "Good number to fulfill endeavor",
             "Do good in politics, Social wealth, arts, mass media, public life",
             "Good number to cure any illness",
             "Good physique and looks, charismatic",
-            "Power to subdue others"
+            "Power to subdue others",
+            "Special Tip?"
         ],
         43: [
-			"The Battle",
-			"Abrupt change, conflicts, need for absolute integrity.",
             "Dual, Fickle mind, and confusions",
             "Speaking and writing, imagination",
             "Trial, Tribulations and Revolutionary changes",
@@ -4882,26 +4854,21 @@ const interpretations = {
             "Family life is not quite peaceful / shaky"
         ],
         44: [
-			"Double Foundation",
-			"Heavy institutional weight, structural tests, solid gain",
             "Shoulder family burden",
+            "Honest",
             "This number indicates that they will have to spend some time in prison",
             "End is drastic and not so happy",
             "Physical illness and mental affliction"
         ],
         45: [
-			"The Shield",
-			"Good number for Health and protection from illness",
-			"Victory via legal or protective professions, dynamic focus",
             "They get good name, fame and position",
             "They keep their cards near to their chest",
+            "Good number to protect from illness",
             "It indicates a strong body and a strong willpower",
             "Happy life and good amount of wealth",
             "Brilliant at running large organizations"
         ],
         46: [
-			"The Royal Crown",
-			"High intuitional power, political success, protection",
             "Symbol of success, luck, wealth, knowledge and international fame",
             "Even if you are born in small family, with time your success stories will be talk of town",
             "Divine support",
@@ -4909,18 +4876,16 @@ const interpretations = {
             "Will reach to the topmost position of whatever profession"
         ],
         47: [
-			"The Seeker",
-			"Deep spiritual investigation, quiet intuition, analytical",
             "Ability to think out of the box",
-            "Sudden richness, sudden growth, even ordinary person can become rich",
+            "Sudden richness, sudden growth, even ordinary person",
+            "can become rich",
             "Great at solving typical issues",
-            "Concerned about their own progress and will not rest until its completed",
+            "Concerned about their own progress and will not rest until",
+            "its completed",
             "Good in money related things"
         ],
         48: [
-			"Divine Sacrifice",
-			"An avoidable compound number",
-			"Delayed material success due to serving a higher cause Welfare of others.",
+            "Welfare of others.",
             "They will do a lot of work for public welfare",
             "Will engage in public service but have to face stiff opposition",
             "Over extending, feeling burdened and struggling, trying to do much by shouldering all the work",
@@ -4928,16 +4893,13 @@ const interpretations = {
             "Earning money and wealth but loosing it, fate is not that good"
         ],
         49: [
-			"The Disruptor",
-			"Radical reforms, public shifts, clearing outdated grids",
-            "Sudden money, immovable Celebration, freedom, rejoicing over success, Eventful life Travelling",
-			"Sudden fortunes and prosperity",
+            "Sudden money, immovable",
+            "Celebration, freedom, rejoicing over success, Eventful life",
+            "Travelling, Sudden fortunes and prosperity",
             "Even accident will happen suddenly",
             "Gives good imagination"
         ],
         50: [
-			"The Explorer", 
-			"Freedom, major market movements, excellent trade skill",
             "Orator ship, Intelligence, Imagination",
             "Excel in education, Good in analysis",
             "They earn through writing and speaking skills",
@@ -4945,8 +4907,6 @@ const interpretations = {
             "Gets straight to the point, don’t beat around bush"
         ],
         51: [
-			"The Aggressive Winner",
-			"Sudden financial peaks, unexpected professional rise",
             "Sudden prosperity, money from unexpected source",
             "Even person is ordinary he will become great",
             "Dynamic",
@@ -4955,8 +4915,6 @@ const interpretations = {
             "Wide circle of friends and relatives"
         ],
         52: [
-			"The Alert Sentinel",
-			"Good eventual success but commands extreme situational awareness",
             "Loving, tender hearted, intuitive, psychology",
             "Indicates great fame and popularity",
             "Their speech is full of life, they are source of inspiration to others",
@@ -4965,58 +4923,47 @@ const interpretations = {
             "A gifted counselor and a caring friend"
         ],
         53: [
-			"The Royal Sage",
-			"Strategic administration, intuitional mastery",
             "They are disappointed in partnership ventures",
             "They become famous when they take up social service",
-            "They master esoteric arts like magic, yoga and controlling the spirits",
-            "It represents courage and determination to succeed no matter what opposition or obstacle lies ahead",
+            "They master esoteric arts like magic, yoga, mastery of arts",
+            "and controlling the spirits",
+            "They posses extraordinary",
+            "It represents courage and determination to succeed no",
+            "matter what opposition or obstacle lies ahead",
             "They achieve success after hard work"
         ],
         54: [
-			"Karmic Completion",
-			"Good to have if you have any health Issues",
-			"Universal leadership, finishing past debts",
             "Less freedom and more control of others",
             "Struggle in beginning and merry in the end is theme of the life",
-            "High fluctuations in life, good oratory skills",
+            "High fluctuations in life, good orator ship skills",
             "They may begin their lives with prestige, reputations and prosperity",
             "Becoming too wisely and holding lot of things so stomach issues can be seen as well, Accumulate the wealth",
             "Tip: Stay away from greed and proud, impulsive decision and adamantness"
-        ],		
-		
+        ],
         55: [
-			"The Divine Gateway",
-			"Rapid shifts, Immediate spiritual download.",
             "Partnership ventures are not suitable to them",
             "Independent business is suitable",
-            "They are great in counselling people and are scholars",
+            "They are great in counselling people",
             "They have a broad knowledge spread over many fields will bring victory over enemies",
+            "Scholars",
             "People under this number will astonish others by their knowledge and win them over will power and intuitive knowledge"
-             ],
+        ],
         56: [
-			"Team Alliance",
-			"Success through unified efforts, avoiding personal ego",
             "This number is full of happenings to bring fortune and fame",
             "Frequent changes in life",
             "Mental conflict in them",
             "Stay away from temptation and unrealistic projects"
         ],
         57: [
-			"Spiritual Insight",
-			"Inner communication, deep visionary channel",
             "Person running into race so well and in the end loosing it with quite a margin,",
             "Don’t do capital related work",
             "They have to be deliberate in making any decision whatsoever",
-            "Profession: Cinema theatres,Banking, printing presses, coal and iron mining, painting, making of furniture and sports goods and organizing contests will earn them good income",
+            "Profession: Cinema theatres, printing presses, coal and iron mining, painting, making of furniture and sports goods and organizing contests will earn them good income",
             "Hiring out vehicles like buses, lorries and cars will also be rewarding",
-            "Their minds will go astray in seldom"
+            "Banking",
+            "Their minds will go astray in bad ways"
         ],
         58: [
-			"The Aggressive Mind",
-			"Verbal debates, journalism, intense mental drive",
-			"Financial Loss Warning",
-			"Severe material warning, needs asset protection",
             "Outstanding popularity and power to captivate",
             "Mass appeal and High status",
             "Dryness in life",
@@ -5031,18 +4978,13 @@ const interpretations = {
             "Disease - Nervous"
         ],
         60: [
-			"The Comfort Grid",
-			"Abundance, domestic happiness, ease",
             "Peaceful home and a loving wife",
-            "Good in analytical and logical arguments",
+            "Good in tark vitark, logical arguments",
             "Good family life, good fortunate number",
             "They entertain others",
             "They have artistic talents"
-        ],	
-		
+        ],
         61: [
-			"New Love Catalyst",
-			"Shocking relational changes that spark personal growth",
             "Don’t stick on to any place whatever be their business or profession",
             "It is good for them if they live a sedate life",
             "They enjoy great name and fame",
@@ -5050,8 +4992,6 @@ const interpretations = {
             "Life is full of ups and downs"
         ],
         62: [
-			"Secure Partnerships",
-			"Trustworthy business alliances, legal balance.",
             "These people can charm everyone easily",
             "Generally it will give great fame, victories and a comfortable life",
             "They don’t maintain good relationship with relatives",
@@ -5059,10 +4999,6 @@ const interpretations = {
             "They are tempted by anything that is attractive"
         ],
         63: [
-			"Sudden Variable", 
-			"Swift, unpredictably lucky transformations",
-			"Artistic Power House",
-			"Highly creative output via emotional depth",
             "Trouble attractor",
             "Their mind is never stable",
             "Sleep during day",
@@ -5075,17 +5011,14 @@ const interpretations = {
             "They have the privilege of being obliged by many"
         ],
         65: [
-			"Intellectual Artistry",
-			"Accomplishments in literature, teaching, or publishing",
             "It will earn the help of wealthy and powerful patrons",
             "Good number for marital life",
             "This is a great interest in spirituality",
-            "They enjoy the trust and support",
-            "They have a happy and contented life"
+            "They enjoy the support and trust of the great",
+            "They have a happy and contented life",
+            "Thank You"
         ],
         66: [
-			"Double Venus Power",
-			"Luxurious living, profound charisma, attachment traps",
             "Spontaneous and eloquent skills",
             "They should not be addicted to comfort zone they are getting",
             "Abundant happiness, satisfaction",
@@ -5096,8 +5029,6 @@ const interpretations = {
             "This number denotes dynamism and oratorical skills, perfection in the fine arts, patronage from the government authorities and also a comfortable life ."
         ],
         67: [
-			"The Mystic Teacher",
-			"Deep occult authority, humanitarian voice",
             "Intelligent, They are famous persons",
             "They have a mass appeal",
             "Popular support and the support become power for them",
@@ -5109,18 +5040,15 @@ const interpretations = {
             "They can never achieve anything if they are selfish"
         ],
         68: [
-			"The Emotional Maze",
-			"Navigating complex relationship strings.",
             "They make profit in business and occupation related to iron,",
             "machinery, vehicles, commission, real estate",
             "You are always moving from one option to another",
             "It is a fortunate number for those with a prominent 5, 8 or 9 in their birth date",
-            "He is like a performer, who keeps all the balls in continuous motion",
+            "He is like a performer, who keeps all the balls in continuous",
+            "motion",
             "Caution: Stay away from greed"
-        ],		
+        ],
         69: [
-			"Relational Karma",
-			"Perfect balancing of masculine and feminine currents",
             "Name number indicates success in any endeavor",
             "They enjoy the status of a king of the society",
             "They accumulate a large wealth",
@@ -5130,12 +5058,10 @@ const interpretations = {
             "They overtake others and retain their position safely by their own efforts",
             "They are known to spend money lavishly for their self satisfaction",
             "There is a certain royalty about their speech and actions",
-            "A brilliant name for all, except for those with a prominent 3 in the birth date", 
-			"Royal Bank of Scotland & Danzel Washington are both 69"
+            "A brilliant name for all, except for those with a prominent 3 in the birth",
+            "date. Royal Bank of Scotland & Danzel Washington are both"
         ],
         70: [
-			"The Spiritual Exam",
-			"Temporary withdrawal to gain monumental inner truth",
             "Misfortune plagues the 70 for the first two-thirds of life",
             "After 43 years they come across good progress and fame in life",
             "While they have struggle and fall prey to addiction, as they grow old, they",
@@ -5149,524 +5075,179 @@ const interpretations = {
             "The fame is always growing"
         ],
         71: [
-			"Quiet Strategy",
-			"Unseen operations, chess-master intelligence",
-            "This number is synonymous with the intelligent person. They are men of intelligent thoughts.",
-			"They shape the thoughts of the world of thoughts. They resolve the problems of many.",
-			"They take up mission related to places or worship like renovation of temples",
-			"The beginning of life is full of struggle. As they proceed in life, they get one success after the other.",
-			"They acquire wealth by many means. They take up charitable and benevolent acts wholeheartedly.",
-			"They have the luck of making money by writing and speaking.", 
-			"They become famous as artistes. They get high positions and fame.", 
-			"There is great danger from indirect enemies.",
-			"It indicates extraordinary wisdom. They are the light of wisdom.",
-			"They are impatient and prone to anger.", 
-			"There is a certain speed and haste about their actions.",
-			"They take up great endeavors and fail.",
-			"They can be easily cheated."
-        ],		
-		
+            "This number is synonymous with the intelligent person. They are men of intelligent thoughts. They shape the thoughts of the world of thoughts. They resolve the problems of many. They take up mission related to places or worship like renovation of temples. The beginning of life is full of struggle. As they proceed in life, they get one success after the other. They acquire wealth by many means. They take up charitable and benevolent acts wholeheartedly. They have the luck of making money by writing and speaking. They become famous as artistes. They get high positions and fame. There is great danger from indirect enemies. It indicates extraordinary wisdom. They are the light of wisdom. They are impatient and prone to anger. There is a certain speed and haste about their actions. They take up great endeavors and fail. They can be easily cheated."
+        ],
         72: [
-			"Psychic Empath",
-			"Navigating immense energetic sensitivities.",
             "Quite a good number in 9 series",
             "Good Name number for material success",
             "This number has great potential and administrative ability. They progress in life with their own efforts.",
-            "They accumulate property like house, vehicle and lands. They get wealth by many means.",
-			"They accumulate all varieties of grain and gems.",
-			"Business related to money brings them great wealth.",
-			"Export and Import business also makes them rich.", 
-			"They have to be realistic and adjustable.", 
-			"They have the indications of exercising authority over many.",
-			"This number endows one with money, position, fame and all.", 
-			"It gives a long and happy life."
+            "They accumulate property like house, vehicle and lands. They get wealth by many means. They accumulate all varieties of grain and gems. Business related to money brings them great wealth. Export and Import business also makes them rich. They have to be realistic and adjustable. That will make them very rich persons. They have the indications of exercising authority over many. This number endows one with money, position, fame and all. It gives a long and happy life."
         ],
         73: [
-            "Ancestral Wisdom",
-			"Traditional educational roles, deep legacy",
-            "This number gives the life of a lord. It brings fame, position and riches.",
-			"They stand to be benefit from the government and those in high positions.",
-			"They plan in confidence and achieve success without the knowledge of others.",
-            "They are full of property like land, house and vehicle. They get money from many sources.",
-			"When they remain devoted to God and honest, they come to enjoy all kinds of pleasures in life.",
+            ":",
+            "This number gives the life of a lord. It brings fame, position and riches. They stand to be benefit from the government and those in high positions. They plan in confidence and achieve success without the knowledge of others.",
+            "They are full of property like land, house and vehicle. They get money from many sources. When they remain devoted to God and honest, they come to enjoy all kinds of pleasures in life.",
             "If they have a perfect character, they succeed in anything with the grace of God."
         ],
         74: [
-            "Structural Discipline",
-			"Moving through harsh boundary constraints safely",
-            "However, how much they get they always run short of money",
-			"They have the objective of reforming the society.",
-			"They have staunch faith in religion.",
-			"They keep on facing difficulties.",
-			"They are adept in propaganda.",
-			"Only the life of a sanyasi brings happiness to them. Their sufferings are unending.",
-            "They have problem with their stomach. They are interested in arts and literature. Their mind is not stable at all.",
-			"This number makes life futile and therefore not beneficial."
+            ":",
+            "How ever, much they get, they always run short of money . They have the objective of reforming the society. They have staunch faith in religion. They keep on facing difficulties. They are adept in propaganda. Only the life of a sanyasi brings happiness to them. Their sufferings are unending.",
+            "They have problem with their stomach. They are interested in arts and literature. Their mind is not stable at all. This number makes life futile and therefore not beneficial."
         ],
         75: [
-            "Occult Magnetism",
-			"Unlocked inner magic, esoteric counseling.",
-            "They are creative writers.",
-			"They are always surrounded by friends wherever they go.",
-			"They have great fame.",
-			"They write many books.",
-            "They become suddenly rich and famous.",
-			"They earn with their writing and speech.",
-			"They are by nature helpful to others.",
-			"They have a great many good friends.",
-			"They excel in music and acting."
+            ":",
+            "They are creative writers. They are always surrounded by friends wherever they go. They have great fame. They write many books.",
+            "They become suddenly rich and famous. They earn with their writing and speech. They are by nature helpful to others. They have a great many good friends. They excel in music and acting."
         ],
         76: [
-			"Heavy Karmic Duty",
-			"Clearing older ancestral lineages",
-            "Indicates great status and wealth. But suddenly they lose everything.",
-			"They become famous. When they lose all that they had, they accumulate more than what they had lost.",
-            "They take up new endeavors and succeed.",
-			"Their powers of divine grace keeps on increasing.",
-			"They earn money through spiritual means.",
-			"Half of their life time is spent idly in eating, sleeping and indulging in fruitless things.",
-			"They come to have wealth by means that remain a mystery to others.",
-			"Their life is full of ups and downs throughout."
+            "indicates great status and wealth. But suddenly they lose everything. They become famous. When they lose all that they had, they accumulate more than what they had lost.",
+            "They take up new endeavors and succeed. Their powers of divine grace keeps on increasing. They earn money through spiritual means. Half of their life time is spent idly in eating, sleeping and indulging. They come to have wealth by means that remain a mystery to others. Their life is full of ups and downs throughout."
         ],
-		
         77: [
-            "The Double Mystic",
-			"Severe isolation leading to ultimate internal enlightenment",
-            "This number lodges many an esoteric philosophy.",
-			"They are tenacious and progress with their own efforts.",
-			"They have a very good reputation.",
-			"They are famous.",
-			"They go by the principles of justice and fairness.",
-			"They do not look for any help from anyone but keep working towards their ideals themselves.",
-            "They make considerable progress in life.",
-			"They have a life of high status.",
-			"They take up frequent travel to other places. They visit foreign countries",
-			"When they develop devotion to God and spiritual thoughts, they become very famous.",
-			"They get good positions by taking up social work.",
-			"They live with a mental discipline.",
-			"They live a life of fame and popularity."
+            ":",
+            "This number lodges many an esoteric philosophy. They are tenacious and progress with their own efforts. They have a very good reputation. They are famous. They go by the principles of justice and fairness. They do not look for any help from anyone but keep working towards their ideals themselves.",
+            "They make considerable progress in life. They have a life of high status. They take up frequent travel to other places. They visit foreign countries. When they develop devotion to God and spiritual thoughts, they become very famous. They get good positions by taking up social work. They live with a mental discipline. They live a life of fame and popularity."
         ],
         78: [
-			"Corporate Struggle",
-			"Direct clash with old leadership hierarchies",
-            "have powers of divine aspects and the most virtuous.",
-			"They live a life of justice.",
-			"They have a very fertile imagination.",
-			"Their speech is attractive.",
-			"They excel in acting, creative writing, dance and music.",
-			"They have a great liking for social work.",
-			"They earn money with their intelligence.",
-			"They very easily master magic, incantation and other esoteric arts.",
-			"They are appreciated by many. The government honors them. Their words become true. Enjoying the grace of God, they become pious.",
+            "have powers of divine aspects and the most virtuous. They live a life of justice. They have a very fertile imagination. Their speech is attractive. They excel in acting, creative writing, dance and music. They have a great liking for social work. They earn money with their intelligence. They very easily master magic, incantation and other esoteric arts. They are appreciated by many. The government honors them. Their words become true. Enjoying the grace of God, they become pious.",
             "They are the treasure of arts. They get monetary help from various sources.",
             "Those who become quite mature in wisdom happen to lose all their wealth.",
             "When they are a little cautious, they can avoid it."
         ],
         79: [
-			"Aggressive Karmic Rebirth", 
-			"Swift dismantling of bad habits",
-            "Indicates struggle at the early part of life and popularity in the later part.",
-			"They achieve great progress in business and occupation only to fall to great depths.",
-			"This number indicates the tendency to pursue spiritual life and the worship of God.",
-			"There is a large group of people in waiting to listen to their words. They have the ability to guide others. They have a mass appeal.",
+            "indicates struggle at the early part of life and popularity in the later part. They achieve great progress in business and occupation only to fall to great depths. This number indicates the tendency to pursue spiritual life and the worship of God. There is a large group of people in waiting to listen to their words. They have the ability to guide others. They have a mass appeal.",
             "Their faith in anything is firm.",
-            "Though they stand to be lucky in many ways but their family life is full of quarrels.",
-			"They excel in studies and reasoning",
-			"They have strong will power.",
-			"They remain greatly spiritualistic."
+            "Though they stand to be lucky in many ways, their family life is full of quarrels. They excel in studies and reasoning. They have strong will power. They remain greatly spiritualistic."
         ],
-		
         80: [
-            "Saturn's Heavy Gate",
-			"Massive long-term career endurance",
-            "This name number indicates expertise in philosophy. They have mysterious powers in plenty. Their esoteric tricks succeed.",
-			"They accomplish rare feats and become famous.",
-			"They are constantly working out one revolution or the other.",
-			"They succeed in competitions.",
-			"They accomplish the impossible feats and become famous.",
-			"Their method of worship of God is unique.",
-			"They are knowledgeable in scriptures and science.",
-			"Even in the midst of fearsome life, they live comfortably.",
-			"They face dangers that pass.",
-			"They live according to situations. This number incites extremism. This number brings a lot of changes in life. It is beneficial to a certain extent."
+            ":",
+            "This name number indicates expertise in philosophy. They have mysterious powers in plenty. Their esoteric tricks succeed. They accomplish rare feats and become famous. They are constantly working out one revolution or the other. They succeed in competitions. They accomplish the impossible feats and become famous. Their method of worship of God is unique. They are knowledgeable in scriptures and science. Even in the midst of fearsome life, they live comfortably. They face dangers that pass. They live according to situations. This number incites extremism. This number brings a lot of changes in life. It is beneficial to a certain extent."
         ],
         81: [
-            "Commanding Force",
-			"Gaining real victory after long endurance tests",
-            "This number gives a lot of interest in spiritualism.",
-			"They become teachers and counselors to many.",
-			"There is a certain power about their speech.",
-			"They progress in life steadly and enjoy luck in stages.",
-			"They are very just persons.",
-			"If they are not cautious, they may incur loss of property and disappointment.",
-            "They are very much interested in progressing in life.",
-			"They keep on planning for their betterment.",
-			"They are always surrounded by people.",
-			"They become teachers, scholars and public speakers."
-        ],  
-       
+            ":",
+            "This number gives a lot of interest in spiritualism. They become teachers and counselors to many. There is a certain power about their speech. They progress in life staidly and enjoy luck in stages. They are very just persons. If they are not cautious, they may incur loss of property and disappointment.",
+            "They are very much interested in progressing in life. They keep on planning for their betterment. They are always surrounded by people. They become teachers, scholars and public speakers."
+        ],
         82: [
-            "Emotional Regulator",
-			"Learning control over external situations",
-            "This number has the power of domination. It makes even an ordinary person a great accomplisher.",
-			"It has the fortune of a king. It gives one the power to rule.",
-			"It brings great fame.",
-			"One of the ruler of a fertile nation.",
-			"There is a great attraction in the looks and speech of the person.",
-			"It brings luxurious vehicles.",
-			"They can master magical powers.",
-			"The number has the power of dominance over land.",
-			"It brings romantic affairs.",
-            "They become great by virtue of their sense of duty and hard work.",
-			"They meet challenges and become successful.",
-			"They get the highest offices in the country.",
-			"They enjoy the possession of gold, land and all.",
-			"They are verily princes. They get the wealth of land and gold.",
-			"They acquire esoteric knowledge like magic, yoga, meditation and all such powers.",
-			"They have the ability to rule over people.",
-            "They work nobly and become great.",
-			"There is an attraction in their eyes.",
-			"They are dignified and dutiful.",
-			"They earn a very good reputation."
+            ":",
+            "This number has the power of domination. It makes even an ordinary person a great accomplisher. It has the fortune of a king. It gives one the power to rule. It brings great fame. one the ruler of a fertile nation. There is a grate attraction in the looks and speech of the person. It brings luxurious vehicles. They can master magical powers. The number has the power of dominance over land. It brings romantic affairs.",
+            "They become great by virtue of their sense of duty and hard work. They meet challenges and become successful. They get the highest offices in the country. They enjoy the possession of gold, land and all. They are verily princes. They get the wealth of land and gold. They acquire esoteric knowledge like magic, yoga, meditation and all such powers. They have the ability to rule over people.",
+            "They work nobly and become great. There is an attraction in their eyes. They are dignified and dutiful. They earn a very good reputation."
         ],
         83: [
-            "Strategic Orator",
-			"Persuasion used for large corporate structures",
-            "This number gives the majesty of royalty.",
-			"It brings venerable greatness. It gives a royal life.",
-			"They enjoy sensuous pleasures.",
-			"They are excellent in winning over the enemies.",
-			"They are always the winning.",
-			"They win easily. They succeed in anything easily. They stand to get unexpected large profits in their business.",
-            "They get high status, fame and dignity.",
-			"They help many persons. Great positions come seeking them.",
-			"They have lasting and large wealth.",
-			"The enjoy constant fame.",
-			"They are venerated as the Messiahs and divine beings.",
-			"They live a happy life."
+            ":",
+            "This number gives the majesty of royalty. It brings venerable greatness. It gives a royal life. They enjoy sensuous pleasures. They are excellent in winning over the enemies. They are always the winning. They win easily. They succeed in anything easily. They stand to get unexpected large profits in their business.",
+            "They get high status, fame and dignity. They help many persons. Great positions come seeking them. They have lasting and large wealth. The enjoy constant fame. They are venerated as the Messiahs and divine beings. They live a happy life."
         ],
         84: [
-            "Imperial Debt",
-			"Working closely within institutional law or service",
-            "They are very much interested in spiritualism.",
-			"They are very fastidious.",
-			"They accomplish rare missions.",
-			"Youth is full of struggle.",
-			"They feel anxiety every now and then they stand to gain because of visits abroad.",
-            "They attract unnecessary enmity frequently.",
-			"Their achievements are not commensurate with their efforts.",
-			"They should follow the path of devotion to avoid sufferings in life. Which brings peace to their heart."
+            ":",
+            "They are very much interested in spiritualism. They are very fastidious. They accomplish rare missions. Youth is full of struggle. They feel anxiety every now and then. They stand to gain because of visits abroad.",
+            "They attract unnecessary enmity frequently. Their achievements are not commensurate with their efforts. They should follow the path of devotion to avoid sufferings in life. That brings peace to their heart."
         ],
         85: [
-			"Steely Focus",
-			"Razor-sharp analytical engineering intellect",
-            "They are masters in performing and creative arts.",
-			"They become famous doctors of medicine.",
-			"They have the power to dispel the distress of others.",
-			"They work their way to greatness.",
-			"They win over the evil.",
-			"They have great faith in devoting to God.",
-            "They enjoy scenes of natural beauty and historical places.",
-			"They become venerable masters.",
-			"Struggling through youth, they attain happiness after adolescence.",
-			"They accumulate a lot of name and fame in medicine, defense, religion and spiritualism."
+            "They are masters in performing and creative arts. They become famous doctors of medicine. They have the power to dispel the distress of others. They work their way to greatness. They win over the evil. They have great faith in devoting to God.",
+            "Theyenjoy scenes of natural beauty and historical places. They become venerable masters. Struggling through youth, they attain happiness after adolescence. They accumulate a lot of name and fame in medicine, defense, religion and spiritualism."
         ],
         86: [
-            "Betrayal Warning",
-			"Vital need to screen secondary financial partners.",
-            "This number brings benefits from friends.",
-			"They enjoy the support of the government and influential persons.",
-			"They work hard to greatness and progress.",
-			"They accumulate a large wealth.",
-            "Their life is comfortable.",
-			"They are dignified and virtuous.",
-			"They get the help of many persons.",
-			"The later part of life is better than the earlier part.",
-			"They get money from women.",
-			"They become famous after a lot of struggle."
+            ":",
+            "This number brings benefits from friends. They enjoy the support of the government and influential persons. They work hard to greatness and progress. They accumulate a large wealth.",
+            "Their life is comfortable. They are dignified and virtuous. They get the help of many persons. The later part of life is better than the earlier part. They get money from women. They become famous after a lot of struggle."
         ],
         87: [
-            "The Hidden Ally",
-			"Divine, invisible protection in moments of need"
+            "."
         ],
         88: [
-            "Double Saturn Cross",
-			"Demands extreme material and spiritual balance",
-            "Those whose name number is 88 become very good in spiritualism.",
-			"They are liberal minded.",
-			"They are wise persons.",
-			"They are afraid of committing a sin.",
-            "They are prophetic. They have pure love for all.",
-			"They take up social service wholeheartedly.",
-			"They practice nonviolence, truth, love in life and succeed.",
-			"They get great fame and reputation."
+            ":",
+            "Those whose name number is 88 become very good in spiritualism. They are liberal minded. They are wise persons. They are afraid of committing a sin.",
+            "They are prophetic. They have pure love for all. They take up social service wholeheartedly. They practice nonviolence, truth, love in life and succeed. They get great fame and reputation."
         ],
         89: [
-			"Destiny Reset",
-			"Absolute clearing of a lifestyle to forge a path forward",
-            "They are brisk and skillful persons.",
-			"There is a certain energy about their speech and actions.",
-			"They are likely to face danger from electricity, sharp weapons or instruments or fire.",
-			"They look at anything from a different perspective from that of others.",
-			"They get all forms of wealth.",
-			"They possess farms and cattle wealth.",
-            "They accumulate artistic products.",
-			"They accumulate gems and gold.",
-			"There is a beauty, charm and magic of attractiveness about their face.",
-			"They entice people towards them. Men are liked by women and women by men.",
-			"Their attractive beauty is quite a pleasant surprise.",
-			"They want to become farmers.",
-			"They have a long life.",
-			"They have more of immovable property than the other way.",
-			"They live with their powers of attraction undiminished."
-        ],		
+            "They are brisk and skillful persons. There is a certain energy about their speech and actions. They are likely to face danger from electricity, sharp weapons or instruments and fire. They look at anything from a different perspective from that of others. They get all forms of wealth. They possess farms and cattle wealth.",
+            "They accumulate artistic products. They accumulate gems and gold. There is a beauty, charm and magic of attractiveness about their face. They entice people towards them. Men are liked by women and women by men. Their attractive beauty is quite a pleasant surprise. They want to become farmers. They have a long life. They have more of immovable property than the other way. They live with their powers of attraction undiminished."
+        ],
         90: [
-			"Universal Protector",
-			"Worldwide reach, high philosophical values",
-            "This number gives perennial property like the perennial river.",
-			"They keep on giving others endlessly.",
-			"They get great fame.",
-			"Since they have the fullest auspicious influence of Mars, they become successful in politics.",
-			"They are very fastidious about personal affairs.",
-			"They become leaders of movements.",
-			"They are industrious and brisk.",
-            "They are good in scriptural knowledge.",
-			"They reach their objectives easily and quickly.",
-			"They take up frequent travels abroad and other places.",
-			"They love lands. They have the ability to assess and evaluate lands."
+            "This number gives perennial property like the perennial river. They keep on giving others endlessly. They get great fame. Since they have the fullest auspicious influence of Mars, they become successful in politics. They are very fastidious about personal affairs. They become leaders of movements. They are industrious and brisk.",
+            "They are good in scriptural knowledge. They reach their objectives easily and quickly. They take up frequent travels abroad and other places. They love lands. They have the ability to assess and evaluate lands."
         ],
         91: [
-			"Imperial Crown Octave",
-			"Massive executive command, political reach.",
-            "This number enhances self-confidence.",
-			"It increases divine grace and wealth.",
-			"They take up foreign travel ie beyond the seas. They take up pilgrimages.",
-            "They stand to gain in export and import business.",
-			"They are full of will power.",
-			"They are constantly on travel.",
-			"They are travelers by nature.",
-			"They have a firm mind.",
-            "They achieve success with the practice of esoteric arts like magic, meditation and yoga.",
-			"They live independently.",
-			"They have a comfort able life.",
-			"They make money in business associated with shipping, lorry, airplane."
+            "This number enhances self-confidence. It increases divine grace and wealth. They take up foreign travel ls beyond the seas. They take up pilgrimages.",
+            "They stand to gain in export and import business. They are full of will power. They are constantly on travel. They are travelers by nature. They have a firm mind.",
+            "They achieve success with the practice of esoteric arts like magic, meditation and yoga. They live independently. They have a comfort able life. They make money in business associated with shipping, lorry, airplane."
         ],
         92: [
-			"Divine Compass", 
-			"Absolute guidance through intuitive instincts.",
-            "This number gives a lot of money.",
-			"It also brings all form of wealth like gold, land and gems.",
-			"They acquire lands and farms of considerable quantity.",
-			"They become masters of esoteric arts. They exploit esoteric knowledge to advantage. They know astral travel. They know to shift from one body to another. They know yoga and Pranayam.",
-            "They are knowledgeable in alchemy. They live an in dependent life.",
-			"They never subject themselves to anyone's authority.",
-			"Their family life has problems.",
-			"They do not enjoy very good health.",
-			"They have the luck of crossing the seas.",
-			"During the later part of life, they lose interest in worldly affairs."
+            "This number gives a lot of money. It also brings all form of wealth like gold, land and gems. They acquire lands and farms of considerable quantity. They become masters of esoteric arts. They exploit esoteric knowledge to advantage. They know astral travel. They know to shift from one body to another. They know yoga and Pranayam.",
+            "They are knowledgeable in alchemy. They live an in dependent life. They never subject themselves to anyone's authority. Their family life has problems. They do not enjoy very good health. They have the luck of crossing the seas. During the later part of life, they lose interest in worldly affairs."
         ],
         93: [
-            "Grand Design Sacrifice",
-			"Relinquishing personal desires for a community",
-            "This number bestows great intellectual Powers.",
-			"They accomplish very difficult tasks that are also noble.",
-			"They are knowledgeable in all matters of the world.",
-			"They have the reputation of the knowledgeable person.",
-            "They are successful creative writers.",
-			"They enjoy all pleasures they desire.",
-			"They are in different business and occupations.",
-			"They gain fame, dignity and wealth beyond the ordinary level.",
-			"They excel in cinema, TV and drama.",
-			"They are full of imagination.They achieve feats in literature, music and philosophy."
+            ":",
+            "This number bestows great intellectual Powers. They accomplish very difficult tasks that are also novel. They are knowledgeable in all matters of the world. They have the reputation of the knowledgeable person.",
+            "They are successful creative writers. They enjoy all pleasures they desire. They are in different business and occupations. They gain fame, dignity and wealth beyond the ordinary level. They excel in cinema, TV and drama. They are full of imagination. They achieve feats in literature, music and philosophy."
         ],
         94: [
-			"Structural Change",
-			"Creating new models of tech or infrastructure",
-            "This number brings great fame and dignity.",
-			"They become venerated through the world.",
-			"They work out grand plans for the sake of the betterment of the human kind.",
-			"Happiness and sufferings alternate in their life.",
-            "They dedicate themselves to public welfare.",
-			"They live with great ideals.",
-			"Their principles are adapted by many."
+            "This number brings great fame and dignity. They become venerated through the world. They work out grand plans for the sake of the betterment of the human kind. Happiness and sufferings alternate in their life.",
+            "They dedicate themselves to public welfare. They live with",
+            "great ideals. Their principles are adapted by many."
         ],
         95: [
-			"Planetary Trader",
-			"Massive international import-export or travel grid.",
-            "Those with 95 as name number are persons of dignity duty and discipline.",
-			"They accomplish new records.",
-			"It brings them great fame.",
-			"They are very efficient persons.",
-			"They take up any endeavor with courage and succeed.",
-			"They are always brisk.",
-            "They may have to take up frequent travel to other places and foreign lands.",
-			"They sell fancy articles and imported articles and make money.",
-			"They succeed in dealing with fashionable goods.",
-			"They gain a lot of advertisement for themselves."
+            "Those with 95 as name number are persons of dignity duty and discipline. They accomplish new records. It brings them great fame. They are very efficient persons. They take up any endeavor with courage and succeed. They are always brisk.",
+            "They may have to take up frequent travel to other places and foreign lands. They sell fancy articles and imported articles and make money. They succeed in dealing with fashionable goods. They gain a lot of advertisement for themselves."
         ],
         96: [
-            "Sovereign Beauty",
-			"Patron of fine arts, global design dominance",
-            "This number indicates the grace of the Goddess of Learning, Saraswati. They are experts in all department of knowledge. They get all kinds of wealth.",
-			"They are successful person who complete any job successfully.",
-			"All their plans succeed.",
-			"They have an irresistible appeal for the opposite successful person who complete any job successfully.",
-			"All their plans succeed.",
-            "The men have the ability to attract women and the women, the men. They have an irresistible appeal for the opposite sex.",
-			"They are good in several forms of creative writing.",
-			"This number incites lust. They have to be a little sedate in love affairs.",
-			"They attract the attention of anyone with their skills in the aesthetic and the artistic. They enjoy popular luck."
+            ":",
+            "This number indicates the grace of the Goddess of Learning, Saraswati. They are experts in all department of knowledge. They get all kinds of wealth. They are successful person who complete any job successfully. All their plan s succeed. The men have the ability to attract women, the men. They have an irresistible appeal for the opposite successful person who complete any job successfully. All their plans succeed.",
+            "The men have the ability to attract women and the women, the men. They have an irresistible appeal for the opposite sex. They are good in several forms of creative writing. This number incites lust. They have to be a little sedate in love affairs. They attract the attention of anyone with their skills in the aesthetic and the artistic. They enjoy popular luck."
         ],
         97: [
-			"Elite Sentinel",
-			"Unwavering protection of critical secrets",
-            "This number gives proficiency in the scriptures and fine arts. It also gives eminence in a spiritual career.",
-			"They will be successful in all their efforts and will be prosperous with astounding achievements to their credit."
+            "This number gives proficiency in the scriptures and fine arts. It also gives eminence in a spiritual career. They will be successful in all their efforts and will be prosperous with astounding achievements to their credit."
         ],
         98: [
-			"Global Administrator",
-			"Managing heavy multinational networks.",
-            "indicates living for others. They cannot earn anything for themselves.",
-			"Their knowledge, wisdom and talents are all to the advantage of others.",
-			"They have a great social sense.",
-			"They become teachers.",
-            "They have a continuous string of sufferings in life. Both physical and mental sickness affects them.",
-			"They have two families.",
-			"Sex becomes perverted.",
-			"They can find solutions to their problems with the grace of God.",
-			"They are lords of the arts.",
-			"Own business does not pay them.",
-			"They have to live dependent on others."
+            "indicates living for others. They cannot earn anything for themselves. Their knowledge, wisdom and talents are all to the advantage of others. They have a great social sense. They become teachers.",
+            "They have a continuous string of sufferings in life. Both physical and mental sickness affects them. They have two families. Sex becomes perverted. They can find solutions to their problems with the grace of God. They are lords of the arts. Own business does not pay them. They have to live dependent on others."
         ],
         99: [
-			"The Archetypal Warrior",
-			"Supreme cosmic endings, fierce protection",
-            "This number indicates goods and bad, benefit and ill luck alternatively.",
-			"Unnecessary travel, confusion, two mindedness are indicated.",
-			"Their mind thinks of the evil all the time.",
-			"There are successive in life and at the same time, there is a lot of opposition.",
-            "They are very well educated. They enjoy all pleasures of life. They are courageous and daring.",
-			"Since they have two minds, they are likely to have more than one wife.",
-			"They file cases against others.",
-			"They have the tendency to avenge others.",
-			"They are attacked by indirect enemies. They have to be cautious."
+            "This number indicates goods and bad, benefit and ill luck alternatively. Unnecessary travel, confusion, two mindedness are indicated. Their mind thinks of the evil all the time. There are successive in life and at the same time, there is a lot of opposition.",
+            "They are very well educated. They enjoy all pleasures of life. They are courageous and daring. Since they have two minds, they are likely to have more than one wife. They file cases against others. They have the tendency to avenge others. They are attacked by indirect enemies. They have to be cautious."
         ],
         100: [
-			"Total Awakening",
-			"Absolute integration with source energy, new beginnings.",
-            "This number indicates success in all endeavors.",
-			"Property in the form of land, gold and money accumulates.",
-			"They always have a lot of money at their disposal.",
-			"They are friendly and affectionate towards friends and relatives.",
-			"They do not get good opportunities in life.",
-            "Great enterprises do not give them success.",
-			"They lack worldly experience.",
-			"No remarkable incidents happen in life.",
-            "They get money from small time business.",
-			"They are known for patience.",
-			"They live a life without much of a change and live comfortably."
+            "This number indicates success in all endeavors. Property in the form of land, gold and money accumulates. They always have a lot of money at their disposal. They are friendly and affectionate towards friends and relatives. They do not get good opportunities in life.",
+            "Great enterprises do not give them success. They lack worldly",
+            "experience. No remarkable incidents happen in life.",
+            "They get money from small time business. They are known for patience. They live a life without much of a change and live comfortably."
         ],
         101: [
-            "The New Pioneer",
-			"Harmonizing raw creation with deep diplomatic grace.",
-            "This number gives luck after tireless labor. They are tenacious persons.",
-			"They take up great businesses with the support of the government. Their business slows down very often. There is not much of a profit.",
-			"The can succeed only with the help of the other numbers. This number misleads.",
-            "They get benefits from those in high positions in the government. They get less income. It is good for them to take up business that does not require capital input.",
-			"They are courageous and daring.",
-			"They have spiritual leanings.",
-			"Since it is 1 followed by 0 followed by 1, there are no dramatic changes in life."
+            ":",
+            "This number gives luck after tireless labor. They are tenacious persons. They take up great business with the support of the government. Their business slows down very often. There is not much of a profit. The can succeed only with the help of the other numbers. This number misleads.",
+            "They get benefits from those in high positions in the government. They get less income. It is good for them to take up business that does not require capital input. They are courageous and daring. They have spiritual leanings. Since it is 1 followed by 0 followed by 1, there are no dramatic changes in life."
         ],
         102: [
-			"Universal Expansion",
-			"Limitless educational flow, spiritual optimism.",
-            "Life is like descending into a pit and trying to come out and up.",
-			"Youth is spent in luck and happiness.",
-			"The middle and last parts of life are full of problems.",
-			"The ultimate stage in life indicates confusion and mental disturbance.",
-			"They do not get any significant success in life.",
-			"They may have to lose hard earned wealth.",
-			"They get involved in unconnected issues and spoil their reputation.",
-			"They are adamant by birth.",
-            "Friends are a source of danger to them.",
-			"They shall not take up a business that involves capital input."
+            "Life is like descending into a pit and trying to come out and up. Youth is spent in luck and happiness. The middle and last parts of life are full of problems. The ultimate stage in life indicates confusion and mental disturbance. They do not get any significant success in life. They may have to lose hard earned wealth. They get involved in unconnected issues and spoil their reputation. They are adamant by birth.",
+            "Friends are a source of danger to them. They shall not take up a business that involves capital input."
         ],
         103: [
-			"The Architect",
-			"Building new evolutionary systems from scratch",
-            "Non Veg food, Digital Marketing, Youtube",
-            "This number affords a life of all pleasures and comforts.",
-			"They live the most prosperous life.",
-			"They modernize the traditional business and achieve great success.",
-			"They grow in affluence stage by stage.",
-			"They achieve greatly in creative writing.",
-			"They face opposition of course.",
-			"They have a sharp intelligence.",
-			"They live a life of lasting fame and lasting wealth.",
-			"They live the most affluent life.",
-			"The final stages in life are very remarkable."
+            "(Non Veg food, Digital Marketing, Youtube):",
+            "This number affords a life of all pleasures and comforts. They live the most prosperous life. They modernize the traditional business and achieve great success. They grow in affluence stage by stage. They achieve greatly in creative writing. They face opposition of course. They have a sharp intelligence. They live a life of lasting fame and lasting wealth. They live the most affluent life. The final stages in life are very remarkable."
         ],
         104: [
-            "Rapid Messenger",
-			"Mastering instant data transformation across spaces.",
-            "They do not get results commensurate with their efforts.",
-			"The beginning of life is affluent and dignified.",
-			"But after middle age, they lose all the wealth they have accumulated.",
-			"They always like to be surrounded by people.",
-			"They complete very difficult tasks. But only name and fame stays back.",
-            "They are very heroic.",
-			"They have wealth like house, vehicles and enjoy the services of servants.",
-			"They have a lot of affinity for nature.",
-			"They get awards and rewards in appreciation of their achievements."
+            ":",
+            "They do not get results commensurate with their efforts. The beginning of life is affluent and dignified. But after middle age, they lose all the wealth they have accumulated. They always like to be surrounded by people. They complete very difficult tasks. But only name and fame stays back.",
+            "They are very heroic. They have wealth like house, vehicles and enjoy the services of servants. They have a lot of affinity for nature. They get awards and rewards in appreciation of their achievements."
         ],
         105: [
-			"Harmonic Universe",
-			"Purest expression of deep love, healing, and luxury",
-            "Indicates humanism.",
-			"They get influence, wealth and fame.",
-			"They live a life of extravagance.",
-			"They achieve great success in business and occupation.",
-			"They accumulate wealth. They get great fame.",
-            "They beget good children.",
-			"Many lucky incidents happen in their life. They advance step by step and reach great heights.",
-			"They live a peaceful life.",
-			"Their life is full of happy situations."
+            "indicates humanism. They get influence, wealth and fame. They live a life of extravagance. They achieve great success in business and occupation. They accumulate wealth. They get great fame.",
+            "They beget good children. Many lucky incidents happen in their life. They being advance step by step and reach great heights. They live a peaceful life. Their life is full of happy situations."
         ],
         106: [
-            "Infinite Mystic",
-			"Deep oceanic awareness, boundless spiritual secrets.",
-            "Those whose name number is 106 struggles while young and strive very hard during youth. They achieve great success only in the later part of their life.",
-			"They come to enjoy all pleasure in life only late in life.",
-			"They have strong sexual desires. This number has the power to induce sexual desires to a very great extent.",
-			"Those with this name number should be careful with women if they are men and women should be careful with men. Otherwise, they indulge in illicit affairs and bring shame upon themselves.",
-			"There frequent spells of confusion in the mind.",
-			"They always have some complaint or the other about their health.",
-			"Their greed leads them to great suffering."
+            ":",
+            "Those whose name number is 106 struggles while young and strive very hard during youth. They achieve great success only in the later part of their life. They come to enjoy all pleasure in life only late in life. They have strong sexual desires. This number has the power to induce sexual desires to a very great extent. Those with this name number should be careful with women if they are men and women should be careful with men. Otherwise, they indulge in illicit affairs and bring shame upon themselves. There frequent spells of confusion in the mind. They always have some complaint or the other about their health. Their greed leads them to great suffering."
         ],
         107: [
-			"Eternal Pillars",
-			"Timeless architecture, massive cosmic resilience.",
-            "This number brings difficulties in family life. Husband and wife do not see face to face. Sexual relationship does not last for long.",
-			"Money is there and wealth is also there. But there is no satisfaction.",
-            "They many suffer sleep walking and such ailments.",
-			"They have double mind. They do not get a compatible partner in life and feel frustrated.",
-			"They are famous and popular in the world.",
-			"They get great offices.",
-			"Family life alone is the trouble to them.",
-			"It is Sanyas within family life.",
-			"They have lasting influence and fame."
+            "This number brings difficulties in family life. Husband and wife do not see face to face. Sexual relationship does not last for long. Money is there and wealth is also there. But there is no satisfaction.",
+            "They many suffer sleep walking and such ailments. They have double mind. They do not get a compatible partner in life and feel frustrated. They are famous and popular in the world. They get great offices. Family life alone is the trouble to them. It is Sanyas within family life. They have lasting influence and fame."
         ],
         108: [
-			"The Cosmic Mandala",
-			"The sacred complete loop of reality; absolute fulfillment.",
-            "This number indicates spiritual powers. Great positions seek them.",
-			"They are guardians to the wealth of others.",
-			"They have the wisdom to know happenings in advance. They have foresight.",
-			"The mind feels ashamed to think of evil actions. If they indulge in any evil act, they die suddenly.",
-            "They are able to calculate the opportune time and achieve success.",
-			"They are heroic. Thus they become famous throughout the world. They are leaders.",
-			"They are good friends to many and guides to still many.",
-			"The society always venerates them.",
+            "This number indicates spiritual powers. Great positions seek them. They are guardians to the wealth of others. They have the wisdom to know happenings in advance. They have foresight. The mind feels ashamed to think of evil actions. If they indulge in any evil act, they die suddenly.",
+            "They are able to calculate the opportune time and achieve success. They are heroic. Thus they become famous throughout the world. They are leaders. They are good friends to many and guides to still many. The society always venerates them.",
+            "Thank You"
         ]
     };
 

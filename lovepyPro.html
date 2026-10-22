@@ -5597,6 +5597,37 @@ function highlightSoundsInName(name) {
         '</span>';
 }
 
+function findBoundarySounds(name) {
+    const parts = String(name || "").trim().split(/\s+/).filter(Boolean);
+    if (parts.length < 2) return [];
+
+    const details = getPronologySoundDetails();
+    const patterns = details
+        .filter(item => item.sound && item.sound.length === 2)
+        .map(item => ({ ...item, type: item.status === "GOOD" ? "good" : "bad" }));
+
+    const matches = [];
+    for (let i = 0; i < parts.length - 1; i++) {
+        const left = parts[i].replace(/[^A-Z]/gi, "");
+        const right = parts[i + 1].replace(/[^A-Z]/gi, "");
+        if (!left || !right) continue;
+
+        const pair = (left.slice(-1) + right.charAt(0)).toUpperCase();
+        patterns.filter(item => item.sound.toUpperCase() === pair).forEach(item => {
+            const leftStart = name.toUpperCase().indexOf(parts[i].toUpperCase());
+            matches.push({
+                ...item,
+                boundary: true,
+                boundaryLabel: parts[i] + " → " + parts[i + 1],
+                pair,
+                index: leftStart + left.length - 1,
+                end: leftStart + left.length + 1
+            });
+        });
+    }
+    return matches;
+}
+
 function renderSounds(name) {
     const box = document.getElementById("soundResults");
     if (!box) return;
@@ -5604,23 +5635,29 @@ function renderSounds(name) {
     if (!name.trim()) {
         box.innerHTML =
             '<div class="sound-item sound-neutral">' +
-            'Start typing your name to check the sounds in the name...' +
+            'Start typing your name to check good and bad sounds...' +
             '</div>';
         return;
     }
 
     const sounds = findSounds(name);
-    if (!sounds.length) {
+    const boundarySounds = findBoundarySounds(name);
+    // Mix name-part boundary pairs into the ordinary sound list at their
+    // natural position in the name, rather than displaying them at the end.
+    const allSounds = sounds.concat(boundarySounds).sort((a, b) =>
+        a.index - b.index || b.sound.length - a.sound.length
+    );
+    const goodCount = allSounds.filter(item => item.status === "GOOD").length;
+    const badCount = allSounds.filter(item => item.status !== "GOOD").length;
+
+    if (!allSounds.length) {
         box.innerHTML =
-            '<div class="sound-item sound-neutral">' +
-            '<strong>No listed sound pattern found.</strong>' +
-            '</div>';
+            '<div class="sound-name-preview">' + highlightSoundsInName(name) + '</div>' +
+            '<div class="sound-item sound-neutral"><strong>No listed good or bad sound pattern found.</strong></div>' +
+            '<div class="sound-item sound-neutral"><strong>Overall Result:</strong> No listed sound matches found.</div>';
         return;
     }
 
-    // Highlight the entered name character-by-character. If a character
-    // belongs to both a Good and Bad pattern, it is shown as a split/common
-    // character so both classifications remain visible.
     const namePreview =
         '<span class="sound-word" aria-label="Pronology colour coded name">' +
         Array.from(name).map((ch, i) =>
@@ -5630,35 +5667,22 @@ function renderSounds(name) {
         ).join('') +
         '</span>';
 
-    // Pronology breakdown: show every matched pattern separately, in the
-    // order in which it occurs in the entered name. Overlapping patterns are
-    // intentionally retained (for example MODI can show OD + DI).
-    const breakdown = sounds.map(item => {
+    const breakdown = allSounds.map(item => {
         const status = item.status === "GOOD" ? "GOOD" : "BAD";
         const cssClass = status === "GOOD"
             ? "sound-positive-segment"
             : "sound-negative-segment";
+        const label = item.sound;
 
-        return `
-            <span class="sound-segment ${cssClass}"
-                  title="${escapeHtml(item.meaning || "")}">
-                ${escapeHtml(item.sound)}
-                <small class="sound-segment-status">${status}</small>
-            </span>
-        `;
+        return `<span class="sound-segment ${cssClass}" title="${escapeHtml(item.meaning || "")}">
+            ${label}<small class="sound-segment-status">${status}</small>
+        </span>`;
     }).join('<span class="sound-segment-separator">+</span>');
 
-    const breakdownHtml =
-        '<div class="sound-segmentation">' +
-            '<div class="sound-segmentation-title">Pronology Breakdown</div>' +
-            '<div class="sound-segments">' + breakdown + '</div>' +
-        '</div>';
-
-    const details = sounds.map(item => {
+    const details = allSounds.map(item => {
         const status = item.status === "GOOD" ? "GOOD" : "BAD";
         const cssClass = status === "GOOD" ? "sound-good" : "sound-bad";
         const icon = status === "GOOD" ? "✓" : "✗";
-
         return `
             <div class="sound-item ${cssClass}">
                 <div class="sound-match">
@@ -5670,18 +5694,32 @@ function renderSounds(name) {
                     ${escapeHtml(item.meaning || "No meaning supplied")}
                 </div>
                 <div class="sound-classification">
-                    <strong>Overall Result:</strong>
-                    ${escapeHtml(status)}
+                    <strong>Result:</strong> ${status === "GOOD" ? "Good sound found" : "Bad sound found"}
                 </div>
             </div>
         `;
     }).join("");
 
+    const overallStatus = goodCount && badCount
+        ? "Both good and bad sounds found"
+        : goodCount
+            ? "Good sounds found; no bad sounds found"
+            : "Bad sounds found; no good sounds found";
+
+    const summary =
+        '<div class="sound-item sound-neutral">' +
+        '<strong>Overall Good/Bad Sound Result:</strong> ' + overallStatus +
+        '<br><strong>Good sound matches:</strong> ' + goodCount +
+        '<br><strong>Bad sound matches:</strong> ' + badCount +
+        '</div>';
+
     box.innerHTML =
-        '<div class="sound-name-preview">' +
-            namePreview +
+        '<div class="sound-name-preview">' + namePreview + '</div>' +
+        '<div class="sound-segmentation">' +
+            '<div class="sound-segmentation-title">Pronology Breakdown</div>' +
+            '<div class="sound-segments">' + breakdown + '</div>' +
         '</div>' +
-        breakdownHtml +
+        summary +
         details;
 }
 

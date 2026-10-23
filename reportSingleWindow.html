@@ -6857,14 +6857,11 @@ function clearAll(){
 }
 function downloadPDF(){
   /* Browser print dialog saves the report as PDF. */
-  const gridCheckIds=["mLoshu","mVedic","mPyth"];
-  const previousGridChecks=gridCheckIds.map(id=>{const el=document.getElementById(id);return el?el.checked:false;});
-  gridCheckIds.forEach(id=>{const el=document.getElementById(id);if(el)el.checked=true;});
   const ids={loshu:"mLoshu",vedic:"mVedic",pyth:"mPyth",rajyog:"mRajyog",pronology:"mPronology",energiser:"mEnergiser",pyramid:"mPyramid",namegraph:"mNameGraph",namegridding:"mNameGridding"};
   const report=document.getElementById("gridReport");
   if(report && !report.classList.contains("show")){
     calculateSelected();
-    if(!report.classList.contains("show")){gridCheckIds.forEach((id,index)=>{const el=document.getElementById(id);if(el)el.checked=previousGridChecks[index];});applyModuleVisibility();return;}
+    if(!report.classList.contains("show")) return;
   }
   applyModuleVisibility();
   Object.keys(ids).forEach(k=>document.body.classList.toggle("print-hide-"+k,!(document.getElementById(ids[k])&&document.getElementById(ids[k]).checked)));
@@ -6907,14 +6904,12 @@ function downloadPDF(){
   const reportName=(nameEl&&nameEl.value.trim() || "Numerology")+" Numero-Prono Report";
   const oldTitle=document.title;
   document.title=reportName;
+  document.body.classList.add("pdf-export");
   window.print();
   setTimeout(()=>{
     Object.keys(ids).forEach(k=>document.body.classList.remove("print-hide-"+k));
+    document.body.classList.remove("pdf-export");
     document.title=oldTitle;
-    gridCheckIds.forEach((id,index)=>{const el=document.getElementById(id);if(el)el.checked=previousGridChecks[index];});
-    applyModuleVisibility();
-    gridCheckIds.forEach((id,index)=>{const el=document.getElementById(id);if(el)el.checked=previousGridChecks[index];});
-    applyModuleVisibility();
     if(grid) grid.classList.remove("print-name-medium","print-name-long","print-name-xlong");
     if(pyramid) pyramid.classList.remove("print-pyramid-medium","print-pyramid-long","print-pyramid-xlong","print-dob-pyramid-long","print-dob-pyramid-xlong");
     if(graph) graph.classList.remove("print-graph-medium","print-graph-long","print-graph-xlong");
@@ -10129,8 +10124,7 @@ function showNameGriddingCalculator(type) {
    ========================================================= */
 
 function printCurrentCalculator() {
-
-    window.print();
+  window.print();
 
 }
 
@@ -10755,7 +10749,9 @@ window.updateNameGriddingModule=function(){const m=document.getElementById("name
       host.querySelectorAll('[style*="zoom"]').forEach(el => { el.style.zoom = ''; el.style.width = ''; el.style.height = ''; el.style.maxHeight = ''; el.style.overflow = ''; });
       const panel = document.getElementById(view.id);
       if (view.parent === 'gridReport') {
-        const gridReport = document.getElementById('gridReport');
+        if (typeof window.syncGridNotesForPrint === 'function') window.syncGridNotesForPrint();
+
+    const gridReport = document.getElementById('gridReport');
         gridReport.classList.add('screen-current', 'screen-grid-fit');
         panel.classList.add('screen-grid-current');
       } else {
@@ -10861,12 +10857,14 @@ window.updateNameGriddingModule=function(){const m=document.getElementById("name
       });
     });
 
+    if (typeof window.syncGridNotesForPrint === 'function') window.syncGridNotesForPrint();
+
     const gridReport = document.getElementById('gridReport');
     if (gridReport) {
       savedGridReportClass = gridReport.className;
       const hasVisibleGrid = ['loshuReport', 'vedicReport', 'pythReport'].some(function (id) {
         const item = document.getElementById(id);
-        return item && !item.classList.contains('module-view-hidden') && window.getComputedStyle(item).display !== 'none';
+        return item && !item.classList.contains('module-view-hidden');
       });
       gridReport.classList.toggle('pdf-empty', !hasVisibleGrid);
     }
@@ -10879,7 +10877,7 @@ window.updateNameGriddingModule=function(){const m=document.getElementById("name
     ids.forEach(function (id) {
       const panel = document.getElementById(id);
       if (!panel || panel.classList.contains('module-view-hidden')) return;
-      if (window.getComputedStyle(panel).display === 'none') return;
+
       remember(panel);
       panel.style.setProperty('zoom', '1', 'important');
       panel.style.setProperty('height', 'auto', 'important');
@@ -10887,12 +10885,13 @@ window.updateNameGriddingModule=function(){const m=document.getElementById("name
       panel.style.setProperty('max-width', 'none', 'important');
       panel.style.setProperty('overflow', 'visible', 'important');
 
+      const panelPrintableHeight = panel.id === 'moduleChaldeanPyth' ? printableHeight - (20 * 96 / 25.4) : printableHeight;
       function fits(scale) {
         panel.style.setProperty('zoom', '1', 'important');
         panel.style.setProperty('width', (printableWidth / scale) + 'px', 'important');
         const width = Math.max(panel.scrollWidth, panel.offsetWidth);
         const height = Math.max(panel.scrollHeight, panel.offsetHeight);
-        return width * scale <= printableWidth + 1 && height * scale <= printableHeight + 1;
+        return width * scale <= printableWidth + 1 && height * scale <= panelPrintableHeight + 1;
       }
 
       let low = 0.01;
@@ -10906,6 +10905,7 @@ window.updateNameGriddingModule=function(){const m=document.getElementById("name
       panel.style.setProperty('zoom', String(low), 'important');
     });
     if (typeof window.syncNotesForPrint === 'function') window.syncNotesForPrint();
+    if (typeof window.syncGridNotesForPrint === 'function') window.syncGridNotesForPrint();
   }
 
   function restorePdfModules() {
@@ -10914,6 +10914,8 @@ window.updateNameGriddingModule=function(){const m=document.getElementById("name
       if (entry[1] === null) panel.removeAttribute('style');
       else panel.setAttribute('style', entry[1]);
     });
+    if (typeof window.syncGridNotesForPrint === 'function') window.syncGridNotesForPrint();
+
     const gridReport = document.getElementById('gridReport');
     if (gridReport && savedGridReportClass !== null) gridReport.className = savedGridReportClass;
     savedNodePositions.slice().reverse().forEach(function (entry) {
@@ -10932,8 +10934,77 @@ window.updateNameGriddingModule=function(){const m=document.getElementById("name
 })();
 </script>
 
-</body>
-</html>
+<script id="grid-pdf-notes-script">
+(function () {
+  const report = document.getElementById('gridReport');
+  const specs = [
+    { id: 'loshuReport', key: 'loshu', label: 'LoShu Grid Notes' },
+    { id: 'vedicReport', key: 'vedic', label: 'Vedic Grid Notes' }
+  ];
+  const values = { loshu: '', vedic: '' };
+
+  function ensureFields() {
+    specs.forEach(function (spec) {
+      const panel = document.getElementById(spec.id);
+      if (!panel) return;
+      let textarea = panel.querySelector('.grid-pdf-note-input');
+      if (!textarea) {
+        const wrap = document.createElement('div');
+        wrap.className = 'grid-pdf-note-wrap';
+        const label = document.createElement('label');
+        label.className = 'grid-pdf-note-label';
+        label.textContent = spec.label;
+        textarea = document.createElement('textarea');
+        textarea.className = 'grid-pdf-note-input';
+        textarea.rows = 3;
+        textarea.setAttribute('aria-label', spec.label);
+        textarea.placeholder = 'Type notes to include below this grid in the PDF';
+        textarea.value = values[spec.key];
+        textarea.addEventListener('input', function () {
+          values[spec.key] = textarea.value;
+        });
+        wrap.append(label, textarea);
+        panel.appendChild(wrap);
+      }
+      if (textarea.value !== values[spec.key]) textarea.value = values[spec.key];
+    });
+  }
+
+  window.syncGridNotesForPrint = function () {
+    ensureFields();
+    specs.forEach(function (spec) {
+      const panel = document.getElementById(spec.id);
+      if (!panel) return;
+      const textarea = panel.querySelector('.grid-pdf-note-input');
+      let printNote = panel.querySelector('.grid-pdf-note-print');
+      if (!printNote) {
+        printNote = document.createElement('div');
+        printNote.className = 'grid-pdf-note-print';
+        panel.appendChild(printNote);
+      }
+      printNote.textContent = textarea ? textarea.value.trim() : '';
+      printNote.classList.toggle('has-note', !!printNote.textContent);
+    });
+  };
+
+  if (report) {
+    new MutationObserver(ensureFields).observe(report, { childList: true, subtree: true });
+    ensureFields();
+  }
+})();
+</script></body>
+<style id="grid-pdf-notes-styles">
+.grid-pdf-note-wrap{margin:12px 0 4px;padding:10px;border:1px solid #d8c477;border-radius:8px;background:#fffdf5}
+.grid-pdf-note-label{display:block;margin-bottom:5px;font-weight:700;color:#103866}
+.grid-pdf-note-input{display:block;width:100%;min-height:64px;box-sizing:border-box;padding:8px;border:1px solid #aaa;border-radius:5px;font:inherit;resize:vertical}
+.grid-pdf-note-print{display:none}
+@media print{
+  .grid-pdf-note-wrap{display:block!important;margin:8px 0 0!important;padding:0!important;border:0!important;background:transparent!important}
+  .grid-pdf-note-label,.grid-pdf-note-input{display:none!important}
+  .grid-pdf-note-print.has-note{display:block!important;margin-top:8px!important;padding:7px 9px!important;border:1px solid #aaa!important;border-radius:4px!important;white-space:pre-wrap!important;overflow-wrap:anywhere!important;word-break:break-word!important;font-size:9pt!important;line-height:1.3!important}
+  .grid-pdf-note-print:not(.has-note){display:none!important}
+}
+</style></html>
 <style id="loshu-fresh-pdf-page-fix">
 @media print {
   /* Start the Lo Shu Grid module on its own fresh PDF page. */
@@ -11059,3 +11130,5 @@ window.updateNameGriddingModule=function(){const m=document.getElementById("name
 </style>
 
 <style id="pdf-brand-print-styles">.pdf-brand-header{display:none}@media print{.pdf-brand-header{display:flex!important;justify-content:space-between!important;align-items:center!important;gap:12px!important;border-bottom:2px solid #198754!important;color:#155724!important;padding:0 0 5mm!important;margin:0 0 5mm!important;font-size:12pt!important}.pdf-brand-header a{color:#155724!important;text-decoration:none!important;font-weight:700!important}}</style>
+
+<style id="pdf-export-grid-visibility">@media print{body.pdf-export #gridReport{display:block!important;visibility:visible!important}body.pdf-export #gridReport>#loshuReport:not(.module-view-hidden),body.pdf-export #gridReport>#vedicReport:not(.module-view-hidden),body.pdf-export #gridReport>#pythReport:not(.module-view-hidden){display:block!important;visibility:visible!important}body.pdf-export #gridReport>#loshuReport.module-view-hidden,body.pdf-export #gridReport>#vedicReport.module-view-hidden,body.pdf-export #gridReport>#pythReport.module-view-hidden{display:none!important}}</style>
